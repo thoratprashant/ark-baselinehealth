@@ -1,0 +1,15 @@
+<div class="app-shell admin-shell">
+  <aside class="sidebar">
+    <h1>Admin</h1>
+    <a routerLink="/admin/admin-landing" routerLinkActive="active">Dashboard</a>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <strong>Admin Console</strong>
+      <a routerLink="/auth/login">Logout</a>
+    </header>
+
+    <router-outlet />
+  </main>
+</div>

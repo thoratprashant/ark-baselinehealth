@@ -1,0 +1,19 @@
+.auth-card {
+  h2 {
+    color: #102033;
+    font-size: 22px;
+    margin: 0 0 20px;
+  }
+
+  form {
+    display: grid;
+    gap: 16px;
+  }
+
+  label {
+    color: #35485d;
+    display: grid;
+    font-weight: 600;
+    gap: 8px;
+  }
+}
