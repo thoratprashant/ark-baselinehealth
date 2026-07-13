@@ -1,16 +1,181 @@
-<section class="auth-card">
-  <h2>Registration</h2>
-  <form>
-    <label>
-      Full Name
-      <input class="form-control" type="text" placeholder="Enter full name" />
+<section class="auth-flow d-flex flex-column w-100">
+  <div class="auth-heading d-flex flex-column align-items-center text-center">
+    <div class="heading-icon d-inline-flex align-items-center justify-content-center" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <path d="M10 7l5 5-5 5" />
+        <path d="M15 12H3" />
+        <path d="M14 4h4a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-4" />
+      </svg>
+    </div>
+    <h1 class="font-secondary">Create your account</h1>
+    <p>Medication refills are only a few clicks away</p>
+  </div>
+
+  <form class="auth-card registration-card d-flex flex-column w-100">
+    <label class="field form-label mb-0">
+      <span>Full Name*</span>
+      <span class="input-shell d-flex align-items-center w-100">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M4 6h16v12H4z" />
+          <path d="m4 7 8 6 8-6" />
+        </svg>
+        <input
+          class="form-control border-0 shadow-none p-0"
+          type="text"
+          placeholder="Enter your full name"
+          autocomplete="name"
+          autofocus
+        />
+      </span>
     </label>
 
-    <label>
-      Email
-      <input class="form-control" type="email" placeholder="name@example.com" />
+    <label class="field form-label mb-0">
+      <span>Email Address*</span>
+      <span class="input-shell d-flex align-items-center w-100">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M4 6h16v12H4z" />
+          <path d="m4 7 8 6 8-6" />
+        </svg>
+        <input
+          class="form-control border-0 shadow-none p-0"
+          type="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+        />
+      </span>
     </label>
 
-    <button class="btn btn-primary w-100" type="button">Create Account</button>
+    <label class="field form-label mb-0">
+      <span>Mobile Number*</span>
+      <span class="input-shell d-flex align-items-center w-100">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <rect x="7" y="3" width="10" height="18" rx="2" />
+          <path d="M10 6h4M11 18h2" />
+        </svg>
+        <input
+          class="form-control border-0 shadow-none p-0"
+          type="tel"
+          placeholder="Enter your mobile number"
+          autocomplete="tel"
+        />
+      </span>
+    </label>
+
+    <fieldset class="field gender-field border-0 p-0 m-0">
+      <legend class="mb-2">Gender*</legend>
+      <div class="gender-options">
+        <label class="gender-option">
+          <input type="radio" name="gender" value="male" checked />
+          <span>Male</span>
+        </label>
+        <label class="gender-option">
+          <input type="radio" name="gender" value="female" />
+          <span>Female</span>
+        </label>
+        <label class="gender-option">
+          <input type="radio" name="gender" value="other" />
+          <span>Other</span>
+        </label>
+        <label class="gender-option gender-option-wide">
+          <input type="radio" name="gender" value="prefer-not-to-say" />
+          <span>Prefer not to say</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <label class="field form-label mb-0">
+      <span>State*</span>
+      <span class="input-shell d-flex align-items-center w-100">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+          <circle cx="12" cy="10" r="2.5" />
+        </svg>
+        <input
+          class="form-control border-0 shadow-none p-0"
+          type="text"
+          placeholder="Enter your state name"
+          autocomplete="address-level1"
+        />
+      </span>
+    </label>
+
+    <label class="field form-label mb-0">
+      <span>Password</span>
+      <span class="input-shell d-flex align-items-center w-100">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <rect x="5" y="10" width="14" height="10" rx="2" />
+          <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+        </svg>
+        <input
+          class="form-control border-0 shadow-none p-0"
+          [type]="passwordVisible() ? 'text' : 'password'"
+          placeholder="••••••••"
+          autocomplete="new-password"
+        />
+        <button
+          class="input-action"
+          type="button"
+          [attr.aria-label]="passwordVisible() ? 'Hide password' : 'Show password'"
+          [attr.aria-pressed]="passwordVisible()"
+          (click)="togglePasswordVisibility()"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            @if (passwordVisible()) {
+              <path d="m2 2 20 20" />
+              <path d="M6.7 6.7C4.7 8.1 3.3 10.1 2 12c2.4 3.6 5.7 6 10 6 1.4 0 2.7-.3 3.9-.7" />
+              <path d="M10.7 5.1A10.5 10.5 0 0 1 12 5c4.3 0 7.6 2.4 10 7-.5.8-1.1 1.5-1.7 2.1" />
+              <path d="M14.1 14.1a3 3 0 0 1-4.2-4.2" />
+            } @else {
+              <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
+              <circle cx="12" cy="12" r="3" />
+            }
+          </svg>
+        </button>
+      </span>
+    </label>
+
+    <label class="field form-label mb-0">
+      <span>Confirm Password</span>
+      <span class="input-shell d-flex align-items-center w-100">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <rect x="5" y="10" width="14" height="10" rx="2" />
+          <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+        </svg>
+        <input
+          class="form-control border-0 shadow-none p-0"
+          [type]="confirmPasswordVisible() ? 'text' : 'password'"
+          placeholder="••••••••"
+          autocomplete="new-password"
+        />
+        <button
+          class="input-action"
+          type="button"
+          [attr.aria-label]="confirmPasswordVisible() ? 'Hide confirm password' : 'Show confirm password'"
+          [attr.aria-pressed]="confirmPasswordVisible()"
+          (click)="toggleConfirmPasswordVisibility()"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            @if (confirmPasswordVisible()) {
+              <path d="m2 2 20 20" />
+              <path d="M6.7 6.7C4.7 8.1 3.3 10.1 2 12c2.4 3.6 5.7 6 10 6 1.4 0 2.7-.3 3.9-.7" />
+              <path d="M10.7 5.1A10.5 10.5 0 0 1 12 5c4.3 0 7.6 2.4 10 7-.5.8-1.1 1.5-1.7 2.1" />
+              <path d="M14.1 14.1a3 3 0 0 1-4.2-4.2" />
+            } @else {
+              <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
+              <circle cx="12" cy="12" r="3" />
+            }
+          </svg>
+        </button>
+      </span>
+    </label>
+
+    <button class="primary-btn btn w-100" type="button">Create account</button>
   </form>
+
+  <a class="signin-link text-center text-decoration-none" routerLink="/auth/login">
+    <span>Already have an account?</span>
+    <strong>Log In</strong>
+  </a>
+
+  <p class="security-note mb-0 text-center">Protected by HIPAA-compliant security</p>
 </section>

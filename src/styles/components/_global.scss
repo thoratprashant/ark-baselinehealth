@@ -1,0 +1,92 @@
+@use "../abstracts/breakpoints" as breakpoints;
+@use "../abstracts/variables" as variables;
+
+html,
+body {
+  font-family: variables.$font-primary;
+}
+
+app-admin-layout,
+app-provider-layout,
+app-patient-layout {
+  .app-shell {
+    background: var(--shell-background, #{variables.$color-shell-background});
+    display: grid;
+    grid-template-columns: 16.25rem 1fr;
+    min-height: 100dvh;
+  }
+
+  .sidebar {
+    background: var(--sidebar-background);
+    color: variables.$color-white;
+    padding: 1.5rem;
+
+    h1 {
+      font-size: clamp(1.25rem, 1.175rem + 0.3vw, 1.375rem);
+      margin: 0 0 1.75rem;
+    }
+
+    a {
+      border-radius: variables.$radius-small;
+      color: var(--sidebar-link-color, #{variables.$color-sidebar-link});
+      display: block;
+      padding: 0.75rem 0.875rem;
+      text-decoration: none;
+    }
+
+    a.active {
+      background: rgba(variables.$color-white, 0.12);
+      color: variables.$color-white;
+    }
+  }
+
+  .content {
+    min-width: 0;
+  }
+
+  .topbar {
+    align-items: center;
+    background: variables.$color-white;
+    border-bottom: 0.0625rem solid variables.$color-topbar-border;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.125rem 1.5rem;
+
+    a {
+      color: #0f766e;
+      text-decoration: none;
+    }
+  }
+}
+
+app-admin-layout {
+  --sidebar-background: #{variables.$color-admin-sidebar};
+}
+
+app-provider-layout {
+  --sidebar-background: #{variables.$color-provider-sidebar};
+}
+
+app-patient-layout {
+  --shell-background: #{variables.$color-patient-shell-background};
+  --sidebar-background: #{variables.$color-patient-sidebar};
+  --sidebar-link-color: #{variables.$color-patient-sidebar-link};
+}
+
+.page {
+  padding: 1.5rem;
+}
+
+@include breakpoints.down(breakpoints.$tablet) {
+  app-admin-layout,
+  app-provider-layout,
+  app-patient-layout {
+    .app-shell {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar h1 {
+      margin-bottom: 1rem;
+    }
+  }
+}

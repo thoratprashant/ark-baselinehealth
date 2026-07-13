@@ -1,24 +1,17 @@
-<main class="auth-layout">
+<main class="auth-layout container-fluid p-0">
   <span class="ambient ambient-primary"></span>
   <span class="ambient ambient-secondary"></span>
   <span class="ambient ambient-tertiary"></span>
 
-  <section class="brand-pane" aria-label="Baseline Health">
+  <section class="brand-pane d-flex align-items-center justify-content-center" aria-label="Baseline Health">
     <div class="brand-wrap">
-      <div class="logo-text">
-        <span>Baseline</span>
-        <span>
-          Health
-          <i class="pulse-line" aria-hidden="true"></i>
-          <i class="sunburst" aria-hidden="true"></i>
-        </span>
-      </div>
+      <img class="auth-logo img-fluid" src="assets/images/auth-logo.svg" alt="Baseline Health" />
       <span class="outline-circle outline-large"></span>
       <span class="outline-circle outline-small"></span>
     </div>
   </section>
 
-  <section class="form-pane">
+  <section class="form-pane d-flex align-items-center justify-content-center">
     <router-outlet />
   </section>
 </main>
