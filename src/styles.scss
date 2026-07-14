@@ -4,3 +4,16 @@
 @use "styles/base/buttons";
 @use "styles/components/authentication";
 @use "styles/components/global";
+.route--wrapper > * {
+  animation: showPageAnim 1000ms ease-out;
+} 
+@keyframes showPageAnim {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
