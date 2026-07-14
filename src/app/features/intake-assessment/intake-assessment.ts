@@ -9,6 +9,12 @@ interface WellbeingConcern {
   icon: string;
 }
 
+interface Phq9Answer {
+  label: string;
+  description: string;
+  icon?: string;
+}
+
 type SectionState = 'is-active' | 'is-before' | 'is-after';
 
 @Component({
@@ -33,6 +39,13 @@ export class IntakeAssessment implements OnInit {
     communications: new FormControl(false, { nonNullable: true })
   });
 
+  protected readonly historyForm = new FormGroup({
+    lifetimeSeizures: new FormControl('', { nonNullable: true }),
+    lastSeizureDate: new FormControl('', { nonNullable: true }),
+    seizureMedications: new FormControl('', { nonNullable: true }),
+    wellbutrin: new FormControl('', { nonNullable: true })
+  });
+
   protected readonly concerns: readonly WellbeingConcern[] = [
     { label: 'Depression Mood', icon: '\u{1F614}' },
     { label: 'Anxiety or Panic', icon: '\u26A1' },
@@ -43,6 +56,16 @@ export class IntakeAssessment implements OnInit {
   ];
 
   protected readonly selectedConcerns = signal(new Set<string>(['Depression Mood']));
+
+  protected readonly phq9Answers: readonly Phq9Answer[] = [
+    { label: 'Not at all', description: 'No symptoms reported', icon: '\u{1F600}' },
+    { label: 'Several Days', description: 'Mild Symptoms Frequency' },
+    { label: 'More than half the days', description: 'Moderate Symptoms Frequency' },
+    { label: 'Nearly every day', description: 'Severe Symptoms Frequency' }
+  ];
+
+  protected readonly selectedPhq9Answer = signal('Not at all');
+  protected readonly selectedSafetyAnswer = signal<'No' | 'Yes'>('No');
 
   ngOnInit(): void {
     this.flow.reset();
@@ -83,6 +106,32 @@ export class IntakeAssessment implements OnInit {
 
   protected continueFromWellbeing(): void {
     if (this.selectedConcerns().size > 0 && this.flow.goNext()) {
+      this.scrollActiveSectionToTop();
+    }
+  }
+
+  protected selectPhq9Answer(answer: string): void {
+    this.selectedPhq9Answer.set(answer);
+  }
+
+  protected continueFromPhq9(): void {
+    if (this.selectedPhq9Answer() && this.flow.goNext()) {
+      this.scrollActiveSectionToTop();
+    }
+  }
+
+  protected selectSafetyAnswer(answer: 'No' | 'Yes'): void {
+    this.selectedSafetyAnswer.set(answer);
+  }
+
+  protected continueFromSafety(): void {
+    if (this.selectedSafetyAnswer() && this.flow.goNext()) {
+      this.scrollActiveSectionToTop();
+    }
+  }
+
+  protected continueFromHistory(): void {
+    if (this.flow.goNext()) {
       this.scrollActiveSectionToTop();
     }
   }

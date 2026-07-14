@@ -146,4 +146,197 @@
       </footer>
     </div>
   </section>
+
+  <section class="assessment-section" [class]="sectionState(2)" [attr.aria-hidden]="flow.currentIndex() !== 2"
+    [attr.inert]="flow.currentIndex() === 2 ? null : ''">
+    <div class="assessment-step phq9-section">
+      <article class="assessment-card phq9-card">
+        <div class="step-heading phq9-heading">
+          <div class="step-eyebrow"><span></span>Depressed Mood</div>
+          <h1>Over the past 2 weeks, how often have you been bothered by:</h1>
+          <blockquote>“Little interest or pleasure in doing things”</blockquote>
+        </div>
+
+        <div class="phq9-options" role="radiogroup" aria-label="Symptom frequency">
+          @for (answer of phq9Answers; track answer.label) {
+          <button class="phq9-option" type="button" role="radio"
+            [class.selected]="selectedPhq9Answer() === answer.label"
+            [attr.aria-checked]="selectedPhq9Answer() === answer.label"
+            (click)="selectPhq9Answer(answer.label)">
+            <span class="phq9-option__content">
+              @if (answer.icon) {
+              <span class="phq9-option__icon" aria-hidden="true">{{ answer.icon }}</span>
+              }
+              <span class="phq9-option__copy">
+                <strong>{{ answer.label }}</strong>
+                <small>{{ answer.description }}</small>
+              </span>
+            </span>
+            @if (selectedPhq9Answer() === answer.label) {
+            <svg viewBox="0 0 18 18" aria-hidden="true">
+              <path d="m3.75 9 3.25 3.25 7.25-7.25" />
+            </svg>
+            }
+          </button>
+          }
+        </div>
+      </article>
+
+      <footer class="step-actions">
+        <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M16 10H5M9 6l-4 4 4 4" /></svg>
+          <span>Back</span>
+        </button>
+
+        <button class="primary-btn assessment-nav-btn" type="button" [disabled]="!selectedPhq9Answer()"
+          (click)="continueFromPhq9()">
+          <span>Continue</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M4 10h11M11 6l4 4-4 4" /></svg>
+        </button>
+      </footer>
+    </div>
+  </section>
+
+  <section class="assessment-section" [class]="sectionState(3)" [attr.aria-hidden]="flow.currentIndex() !== 3"
+    [attr.inert]="flow.currentIndex() === 3 ? null : ''">
+    <div class="assessment-step safety-section">
+      <article class="assessment-card safety-card">
+        <div class="step-heading safety-heading">
+          <div class="step-eyebrow"><span></span>Safety Check</div>
+          <h1>Are you having thoughts of harming yourself or others?</h1>
+          <p>Your safety matters most. Please answer honestly.</p>
+        </div>
+
+        <div class="safety-options" role="radiogroup" aria-label="Safety check">
+          <button class="phq9-option safety-option safety-option--no" type="button" role="radio"
+            [class.selected]="selectedSafetyAnswer() === 'No'"
+            [attr.aria-checked]="selectedSafetyAnswer() === 'No'" (click)="selectSafetyAnswer('No')">
+            <span class="phq9-option__content">
+              <span class="safety-option__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7" /></svg>
+              </span>
+              <span class="phq9-option__copy">
+                <strong>No</strong>
+                <small>I’m not currently experiencing those thoughts</small>
+              </span>
+            </span>
+          </button>
+
+          <button class="phq9-option safety-option safety-option--yes" type="button" role="radio"
+            [class.selected]="selectedSafetyAnswer() === 'Yes'"
+            [attr.aria-checked]="selectedSafetyAnswer() === 'Yes'" (click)="selectSafetyAnswer('Yes')">
+            <span class="phq9-option__content">
+              <span class="safety-option__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 4 3.5 19h17L12 4Z" /><path d="M12 9v4M12 16h.01" />
+                </svg>
+              </span>
+              <span class="phq9-option__copy">
+                <strong>Yes</strong>
+                <small>Do not wait for a prescriber to respond, contact emergency services immediately</small>
+              </span>
+            </span>
+          </button>
+        </div>
+
+        <aside class="safety-alert">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3 5 6v5c0 4.5 2.8 7.8 7 10 4.2-2.2 7-5.5 7-10V6l-7-3Z" />
+          </svg>
+          <p><strong>In immediate danger?</strong> Call <a href="tel:988">988</a> (Suicide &amp; Crisis Lifeline) or
+            <a href="tel:911">911</a>. Or go to your <strong class="safety-alert__emphasis">Local urgent
+              care/emergency department</strong> immediately.</p>
+        </aside>
+      </article>
+
+      <footer class="step-actions">
+        <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M16 10H5M9 6l-4 4 4 4" /></svg>
+          <span>Back</span>
+        </button>
+
+        <button class="primary-btn assessment-nav-btn" type="button" [disabled]="!selectedSafetyAnswer()"
+          (click)="continueFromSafety()">
+          <span>Continue</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M4 10h11M11 6l4 4-4 4" /></svg>
+        </button>
+      </footer>
+    </div>
+  </section>
+
+  <section class="assessment-section" [class]="sectionState(4)" [attr.aria-hidden]="flow.currentIndex() !== 4"
+    [attr.inert]="flow.currentIndex() === 4 ? null : ''">
+    <div class="assessment-step history-section">
+      <form [formGroup]="historyForm" (ngSubmit)="continueFromHistory()">
+        <article class="assessment-card history-card">
+          <div class="step-heading history-heading">
+            <div class="step-eyebrow"><span></span>Psychiatric History · Question 1 of 4</div>
+            <h1>Your health background</h1>
+            <p>A complete picture helps your clinician personalize care. Skip anything that doesn't apply.</p>
+          </div>
+
+          <section class="history-panel" aria-labelledby="medical-history-title">
+            <header class="history-panel__header">
+              <span class="history-panel__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M7 3h7l4 4v14H7V3Z" /><path d="M14 3v5h5M10 12h5M10 16h5" />
+                </svg>
+              </span>
+              <strong id="medical-history-title">Medical &amp; surgical history</strong>
+            </header>
+
+            <p class="history-panel__question">Have you been diagnosed with a seizure disorder or ever had a seizure
+              in your lifetime?</p>
+
+            <label class="history-field">
+              <span>List approximate number of lifetime seizures</span>
+              <input type="text" formControlName="lifetimeSeizures" placeholder="Type here....." />
+            </label>
+
+            <label class="history-field">
+              <span>Approximate date of last seizure</span>
+              <input type="text" formControlName="lastSeizureDate" placeholder="Type here....." />
+            </label>
+
+            <label class="history-field">
+              <span>Are you taking seizure medications?</span>
+              <input type="text" formControlName="seizureMedications" placeholder="Type here....." />
+            </label>
+
+            <fieldset class="history-field history-field--radio">
+              <legend>Are you taking the medication Wellbutrin (bupropion)?</legend>
+              <div class="history-radio-options">
+                <label>
+                  <input type="radio" formControlName="wellbutrin" value="Yes" />
+                  <span>Yes</span>
+                </label>
+                <label>
+                  <input type="radio" formControlName="wellbutrin" value="No" />
+                  <span>No</span>
+                </label>
+              </div>
+            </fieldset>
+          </section>
+        </article>
+
+        <footer class="step-actions">
+          <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M16 10H5M9 6l-4 4 4 4" /></svg>
+            <span>Back</span>
+          </button>
+
+          <button class="primary-btn assessment-nav-btn" type="submit">
+            <span>Continue</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M4 10h11M11 6l4 4-4 4" /></svg>
+          </button>
+        </footer>
+      </form>
+    </div>
+  </section>
 </div>

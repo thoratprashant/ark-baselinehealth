@@ -5,8 +5,11 @@ export type IntakeFlowDirection = 'forward' | 'back' | 'none';
 export const ASSESSMENT_TOTAL_STEPS = 14;
 
 export const INTAKE_SECTIONS = [
-  { id: 'welcome' },
-  { id: 'wellbeing' }
+  { id: 'welcome', progress: 0 },
+  { id: 'wellbeing', progress: 44 },
+  { id: 'phq9', progress: 48 },
+  { id: 'safety', progress: 70 },
+  { id: 'history', progress: 78 }
 ] as const;
 
 @Injectable({ providedIn: 'root' })

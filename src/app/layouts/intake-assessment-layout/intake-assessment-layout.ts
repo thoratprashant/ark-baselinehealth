@@ -2,7 +2,7 @@ import { Component, computed } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 import {
-  ASSESSMENT_TOTAL_STEPS,
+  INTAKE_SECTIONS,
   IntakeFlowService
 } from '../../features/intake-assessment/intake-flow.service';
 
@@ -13,8 +13,8 @@ import {
   styleUrl: './intake-assessment-layout.scss'
 })
 export class IntakeAssessmentLayout {
-  protected readonly progress = computed(() =>
-    Math.round((this.flow.currentIndex() / ASSESSMENT_TOTAL_STEPS) * 100)
+  protected readonly progress = computed(
+    () => INTAKE_SECTIONS[this.flow.currentIndex()]?.progress ?? 0
   );
 
   constructor(protected readonly flow: IntakeFlowService) {}
