@@ -9,7 +9,9 @@ export const INTAKE_SECTIONS = [
   { id: 'wellbeing', progress: 44 },
   { id: 'phq9', progress: 48 },
   { id: 'safety', progress: 70 },
-  { id: 'history', progress: 78 }
+  { id: 'history', progress: 78 },
+  { id: 'medication', progress: 96 },
+  { id: 'completed', progress: 100 }
 ] as const;
 
 @Injectable({ providedIn: 'root' })

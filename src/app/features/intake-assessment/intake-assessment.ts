@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import { IntakeFlowService } from './intake-flow.service';
 
@@ -19,7 +20,7 @@ type SectionState = 'is-active' | 'is-before' | 'is-after';
 
 @Component({
   selector: 'app-intake-assessment',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './intake-assessment.html',
   styleUrl: './intake-assessment.scss'
 })
@@ -44,6 +45,10 @@ export class IntakeAssessment implements OnInit {
     lastSeizureDate: new FormControl('', { nonNullable: true }),
     seizureMedications: new FormControl('', { nonNullable: true }),
     wellbutrin: new FormControl('', { nonNullable: true })
+  });
+
+  protected readonly medicationForm = new FormGroup({
+    currentMedications: new FormControl('', { nonNullable: true })
   });
 
   protected readonly concerns: readonly WellbeingConcern[] = [
@@ -131,6 +136,12 @@ export class IntakeAssessment implements OnInit {
   }
 
   protected continueFromHistory(): void {
+    if (this.flow.goNext()) {
+      this.scrollActiveSectionToTop();
+    }
+  }
+
+  protected continueFromMedication(): void {
     if (this.flow.goNext()) {
       this.scrollActiveSectionToTop();
     }

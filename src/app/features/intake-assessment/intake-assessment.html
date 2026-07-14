@@ -339,4 +339,77 @@
       </form>
     </div>
   </section>
+
+  <section class="assessment-section" [class]="sectionState(5)" [attr.aria-hidden]="flow.currentIndex() !== 5"
+    [attr.inert]="flow.currentIndex() === 5 ? null : ''">
+    <div class="assessment-step medication-section">
+      <form [formGroup]="medicationForm" (ngSubmit)="continueFromMedication()">
+        <article class="assessment-card history-card medication-card">
+          <div class="step-heading">
+            <div class="step-eyebrow"><span></span>Medication History · Question 1 of 3</div>
+            <h1>List all your current medications</h1>
+            <p>Include all prescriptions (medical and psychiatric), over-the-counter, and supplements.</p>
+          </div>
+
+          <section class="history-panel medication-panel" aria-labelledby="regular-medications-title">
+            <header class="history-panel__header">
+              <span class="history-panel__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M7 3h7l4 4v14H7V3Z" /><path d="M14 3v5h5M10 12h5M10 16h5" />
+                </svg>
+              </span>
+              <strong id="regular-medications-title">Regular medications</strong>
+            </header>
+
+            <textarea class="medication-list-input" formControlName="currentMedications"
+              aria-label="Current medications" placeholder="Name - Dose - frequency - one per line"></textarea>
+          </section>
+        </article>
+
+        <footer class="step-actions">
+          <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M16 10H5M9 6l-4 4 4 4" /></svg>
+            <span>Back</span>
+          </button>
+
+          <button class="primary-btn assessment-nav-btn" type="submit">
+            <span>Continue</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M4 10h11M11 6l4 4-4 4" /></svg>
+          </button>
+        </footer>
+      </form>
+    </div>
+  </section>
+
+  <section class="assessment-section" [class]="sectionState(6)" [attr.aria-hidden]="flow.currentIndex() !== 6"
+    [attr.inert]="flow.currentIndex() === 6 ? null : ''">
+    <div class="assessment-step completed-section">
+      <article class="assessment-card completion-card">
+        <div class="completion-icon mb-4" aria-hidden="true">
+          <svg viewBox="0 0 40 40">
+            <path d="M20 7.5 22.8 17l9.7 3-9.7 3L20 32.5 17.2 23l-9.7-3 9.7-3L20 7.5Z" />
+            <path d="m30.5 6 .8 2.7L34 9.5l-2.7.8-.8 2.7-.8-2.7-2.7-.8 2.7-.8.8-2.7ZM8 29l.7 2.3L11 32l-2.3.7L8 35l-.7-2.3L5 32l2.3-.7L8 29Z" />
+          </svg>
+        </div>
+
+        <div class="step-heading completion-heading">
+          <div class="step-eyebrow"><span></span>Submitted · 6/4/2026</div>
+          <h1><span>Thank you!</span> <em> You're all set</em></h1>
+          <p>Your intake is securely on its way to your care team. A prescriber will review your responses within 3–5
+            business days and reach out with your preliminary care plan.</p>
+        </div>
+
+        <ol class="completion-steps my-3">
+          <li>Your information has been “saved”.</li>
+          <li>Next you will need to complete the Medication Request.</li>
+          <li>Then select/pay for a subscription plan.</li>
+          <li>Finally, the assessment and medication request will be submitted to your clinical team.</li>
+        </ol>
+
+        <a class="completion-dashboard-link" routerLink="/patient/patient-landing">Go to Dashboard</a>
+      </article>
+    </div>
+  </section>
 </div>

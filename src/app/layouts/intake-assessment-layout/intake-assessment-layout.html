@@ -13,20 +13,20 @@
   </header>
 
   <main class="intake-main">
-    @if (flow.currentIndex() > 0) {
+    @if (flow.currentIndex() > 0 && !isComplete()) {
       <section class="assessment-progress" aria-label="Assessment progress">
         <div class="assessment-progress__meta">
           <span>Your journey</span>
-          <strong>{{ progress() }}%</strong>
+          <strong>{{ displayedProgress() }}%</strong>
         </div>
         <div
           class="assessment-progress__track"
           role="progressbar"
           aria-valuemin="0"
           aria-valuemax="100"
-          [attr.aria-valuenow]="progress()"
+          [attr.aria-valuenow]="displayedProgress()"
         >
-          <span class="assessment-progress__fill" [style.width.%]="progress()"></span>
+          <span class="assessment-progress__fill" [style.width.%]="animatedProgress()"></span>
         </div>
       </section>
     }
