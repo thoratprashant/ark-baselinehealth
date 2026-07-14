@@ -52,15 +52,20 @@ export class IntakeAssessment implements OnInit {
   });
 
   protected readonly concerns: readonly WellbeingConcern[] = [
-    { label: 'Depression Mood', icon: '\u{1F614}' },
-    { label: 'Anxiety or Panic', icon: '\u26A1' },
-    { label: 'ADHD or Focus Issues', icon: '\u{1F9E0}' },
-    { label: 'Sleep Difficulties or Insomnia', icon: '\u{1F319}' },
-    { label: 'Obsessive Compulsive behaviors', icon: '\u2696\uFE0F' },
-    { label: 'Trauma or PTSD', icon: '\u{1F6E1}\uFE0F' }
+    { label: 'Generalized Anxiety Screening', icon: '\u{1F630}' },
+    { label: 'Illness Anxiety Screening', icon: '\u{1F912}' },
+    { label: 'OCD Screening', icon: '\u2696\uFE0F' },
+    { label: 'Insomnia Screening', icon: '\u{1F319}' },
+    { label: 'Panic Disorder Screening', icon: '\u{1F631}' },
+    { label: 'PTSD Screening', icon: '\u{1F6E1}\uFE0F' },
+    { label: 'Major Depressive Disorder Screening', icon: '\u{1F614}' },
+    { label: 'Premenstrual Dysphoric Disorder Screening', icon: '\u{1F629}' },
+    { label: 'Social Anxiety & Agoraphobia Screening', icon: '\u{1F3E0}' }
   ];
 
-  protected readonly selectedConcerns = signal(new Set<string>(['Depression Mood']));
+  protected readonly selectedConcerns = signal(
+    new Set<string>(['Generalized Anxiety Screening'])
+  );
 
   protected readonly phq9Answers: readonly Phq9Answer[] = [
     { label: 'Not at all', description: 'No symptoms reported', icon: '\u{1F600}' },
@@ -69,7 +74,7 @@ export class IntakeAssessment implements OnInit {
     { label: 'Nearly every day', description: 'Severe Symptoms Frequency' }
   ];
 
-  protected readonly selectedPhq9Answer = signal('Not at all');
+  protected readonly selectedPhq9Answers = signal(new Set<string>(['Not at all']));
   protected readonly selectedSafetyAnswer = signal<'No' | 'Yes'>('No');
 
   ngOnInit(): void {
@@ -115,12 +120,16 @@ export class IntakeAssessment implements OnInit {
     }
   }
 
-  protected selectPhq9Answer(answer: string): void {
-    this.selectedPhq9Answer.set(answer);
+  protected togglePhq9Answer(answer: string): void {
+    this.selectedPhq9Answers.update((current) => {
+      const updated = new Set(current);
+      updated.has(answer) ? updated.delete(answer) : updated.add(answer);
+      return updated;
+    });
   }
 
   protected continueFromPhq9(): void {
-    if (this.selectedPhq9Answer() && this.flow.goNext()) {
+    if (this.selectedPhq9Answers().size > 0 && this.flow.goNext()) {
       this.scrollActiveSectionToTop();
     }
   }

@@ -157,12 +157,12 @@
           <blockquote>“Little interest or pleasure in doing things”</blockquote>
         </div>
 
-        <div class="phq9-options" role="radiogroup" aria-label="Symptom frequency">
+        <div class="phq9-options" role="group" aria-label="Symptom frequency">
           @for (answer of phq9Answers; track answer.label) {
-          <button class="phq9-option" type="button" role="radio"
-            [class.selected]="selectedPhq9Answer() === answer.label"
-            [attr.aria-checked]="selectedPhq9Answer() === answer.label"
-            (click)="selectPhq9Answer(answer.label)">
+          <button class="phq9-option" type="button" role="checkbox"
+            [class.selected]="selectedPhq9Answers().has(answer.label)"
+            [attr.aria-checked]="selectedPhq9Answers().has(answer.label)"
+            (click)="togglePhq9Answer(answer.label)">
             <span class="phq9-option__content">
               @if (answer.icon) {
               <span class="phq9-option__icon" aria-hidden="true">{{ answer.icon }}</span>
@@ -172,7 +172,7 @@
                 <small>{{ answer.description }}</small>
               </span>
             </span>
-            @if (selectedPhq9Answer() === answer.label) {
+            @if (selectedPhq9Answers().has(answer.label)) {
             <svg viewBox="0 0 18 18" aria-hidden="true">
               <path d="m3.75 9 3.25 3.25 7.25-7.25" />
             </svg>
@@ -189,7 +189,7 @@
           <span>Back</span>
         </button>
 
-        <button class="primary-btn assessment-nav-btn" type="button" [disabled]="!selectedPhq9Answer()"
+        <button class="primary-btn assessment-nav-btn" type="button" [disabled]="selectedPhq9Answers().size === 0"
           (click)="continueFromPhq9()">
           <span>Continue</span>
           <svg viewBox="0 0 20 20" aria-hidden="true">
