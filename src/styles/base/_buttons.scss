@@ -69,6 +69,8 @@
     cursor: not-allowed;
     opacity: 0.6;
     pointer-events: none;
+    background: variables.$color-primary;
+    color: variables.$color-white;
   }
 }
 
