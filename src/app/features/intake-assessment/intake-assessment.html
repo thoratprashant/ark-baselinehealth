@@ -1,0 +1,149 @@
+<div class="assessment-sections">
+  <section class="assessment-section" [class]="sectionState(0)" [attr.aria-hidden]="flow.currentIndex() !== 0"
+    [attr.inert]="flow.currentIndex() === 0 ? null : ''">
+    <div class="assessment-step">
+      <form [formGroup]="consentForm" (ngSubmit)="continueFromWelcome()">
+        <article class="assessment-card welcome-card">
+          <div class="step-heading">
+            <div class="step-eyebrow"><span></span>Welcome</div>
+            <h1>Help us understand more <em>about you and your needs.</em></h1>
+            <p>
+              We'll ask a few questions about your mental health, history, and medications.
+              This takes about 10–20 minutes......
+            </p>
+          </div>
+
+          <div class="notice-grid">
+            <div class="notice-card notice-card--private">
+              <span class="notice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="5" y="10" width="14" height="10" rx="2" />
+                  <path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
+              </span>
+              <div>
+                <strong>Private &amp; protected</strong>
+                <p>HIPAA-grade encryption. Only your care team can see your answers.</p>
+              </div>
+            </div>
+
+            <div class="notice-card notice-card--emergency">
+              <span class="notice-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 3 2.8 19h18.4L12 3Z" />
+                  <path d="M12 9v4M12 16h.01" /></svg>
+              </span>
+              <div>
+                <strong>Emergency notice</strong>
+                <p>If you're in crisis, don't wait. Call 988, 911, or go to urgent/emergency care.</p>
+              </div>
+            </div>
+          </div>
+
+          <fieldset class="consent-list">
+            <legend>Consent</legend>
+
+            <label class="consent-option" [class.selected]="consentForm.controls.participation.value">
+              <input type="checkbox" formControlName="participation" />
+              <span class="consent-check" aria-hidden="true">
+                @if (consentForm.controls.participation.value) {
+                <svg viewBox="0 0 16 16">
+                  <path d="m3.5 8 3 3 6-6" /></svg>
+                }
+              </span>
+              <span>
+                <strong>I consent to participate</strong>
+                <small>I acknowledge this assessment is voluntary and that the information I provide is
+                  accurate.</small>
+              </span>
+            </label>
+
+            <label class="consent-option" [class.selected]="consentForm.controls.privacy.value">
+              <input type="checkbox" formControlName="privacy" />
+              <span class="consent-check" aria-hidden="true">
+                @if (consentForm.controls.privacy.value) {
+                <svg viewBox="0 0 16 16">
+                  <path d="m3.5 8 3 3 6-6" /></svg>
+                }
+              </span>
+              <span>
+                <strong>Privacy Policy acknowledged</strong>
+                <small>I have read the privacy policy and understand how my information is used.</small>
+              </span>
+            </label>
+
+            <label class="consent-option" [class.selected]="consentForm.controls.communications.value">
+              <input type="checkbox" formControlName="communications" />
+              <span class="consent-check" aria-hidden="true">
+                @if (consentForm.controls.communications.value) {
+                <svg viewBox="0 0 16 16">
+                  <path d="m3.5 8 3 3 6-6" /></svg>
+                }
+              </span>
+              <span>
+                <strong>Care communications</strong>
+                <small>I agree to receive refill plan reminders via email or SMS.</small>
+              </span>
+            </label>
+          </fieldset>
+        </article>
+
+        <footer class="step-actions step-actions--end">
+          <button class="primary-btn assessment-nav-btn" type="submit" [disabled]="consentForm.invalid">
+            <span>Continue</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M4 10h11M11 6l4 4-4 4" /></svg>
+          </button>
+        </footer>
+      </form>
+    </div>
+  </section>
+
+  <section class="assessment-section" [class]="sectionState(1)" [attr.aria-hidden]="flow.currentIndex() !== 1"
+    [attr.inert]="flow.currentIndex() === 1 ? null : ''">
+    <div class="assessment-step wellbeing-section">
+      <article class="assessment-card wellbeing-card">
+        <div class="step-heading">
+          <div class="step-eyebrow"><span></span>Let's get started</div>
+          <h1>What brings you in today?</h1>
+          <p>Pick all options below that apply to your past or current mental health journey.</p>
+        </div>
+
+        <div class="concern-options" aria-label="Mental health concerns">
+          @for (concern of concerns; track concern.label) {
+          <button class="concern-pill" type="button" [class.selected]="selectedConcerns().has(concern.label)"
+            [attr.aria-pressed]="selectedConcerns().has(concern.label)" (click)="toggleConcern(concern.label)">
+            <span class="concern-pill__icon" aria-hidden="true">{{ concern.icon }}</span>
+            <span>{{ concern.label }}</span>
+            @if (selectedConcerns().has(concern.label)) {
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="m3.5 8 3 3 6-6" /></svg>
+            }
+          </button>
+          }
+        </div>
+
+        <p class="selection-note">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <circle cx="10" cy="10" r="7.5" />
+            <path d="M10 9v5M10 6.5h.01" /></svg>
+          Selected {{ selectedConcerns().size }} · there are no wrong answers.
+        </p>
+      </article>
+
+      <footer class="step-actions">
+        <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M16 10H5M9 6l-4 4 4 4" /></svg>
+          <span>Back</span>
+        </button>
+
+        <button class="primary-btn assessment-nav-btn" type="button" [disabled]="selectedConcerns().size === 0"
+          (click)="continueFromWellbeing()">
+          <span>Continue</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M4 10h11M11 6l4 4-4 4" /></svg>
+        </button>
+      </footer>
+    </div>
+  </section>
+</div>

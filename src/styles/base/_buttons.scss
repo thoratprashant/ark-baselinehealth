@@ -41,8 +41,7 @@
   }
 
   &:hover:not(:disabled) {
-    box-shadow: 0 0.75rem 1.5rem -0.5rem rgba(variables.$color-text, 0.65),
-      0 0.25rem 0.5rem rgb(0 0 0 / 14%);
+    box-shadow: 0 0.5rem 1.125rem rgb(45 109 165 / 14%);
     color: variables.$color-text;
     filter: brightness(1.08);
     transform: translateY(-0.125rem);
@@ -60,7 +59,7 @@
   }
 
   &:focus-visible {
-    box-shadow: 0 0 0 0.1875rem rgba(variables.$color-primary, 0.22);
+    box-shadow: 0 0.5rem 1.125rem rgb(45 109 165 / 14%);
     outline: 0;
   }
 
@@ -69,15 +68,85 @@
     cursor: not-allowed;
     opacity: 0.6;
     pointer-events: none;
-    background: variables.$color-primary;
+    background: rgba(88, 107, 128, 0.30);
     color: variables.$color-white;
   }
 }
 
+/* Reusable global secondary button */
+.secondary-btn {
+  align-items: center;
+  background: variables.$color-white;
+  border: 0.0625rem solid variables.$color-border;
+  border-radius: variables.$radius-medium;
+  color: variables.$color-text;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
+  font-weight: 500;
+  justify-content: center;
+  line-height: 1.25;
+  min-height: clamp(2.75rem, 2.5rem + 1vw, variables.$control-height);
+  padding: 0.625rem clamp(1rem, 0.75rem + 1vw, 1.5rem);
+  text-align: center;
+  text-decoration: none;
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+
+  &:hover:not(:disabled) {
+    border-color: variables.$color-primary;
+    box-shadow: 0 0.5rem 1.125rem rgb(45 109 165 / 14%);
+    transform: translateY(-0.0625rem);
+    filter: brightness(1.08);
+  }
+
+  &:active:not(:disabled) {
+    box-shadow: none;
+    transform: translateY(0) scale(0.98);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 0.1875rem rgba(variables.$color-primary, 0.18);
+    outline: 0;
+  }
+
+  &:disabled,
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+/* Compact pill buttons used by assessment navigation. */
+.assessment-nav-btn {
+  border-radius: 999rem;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  min-height: 2.625rem;
+  padding: 0.625rem 1.75rem;
+  width: auto;
+
+  svg {
+    fill: none;
+    height: 1rem;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.6;
+    width: 1rem;
+  }
+}
+
 @include breakpoints.down(breakpoints.$mobile) {
-  .primary-btn {
+  .primary-btn,
+  .secondary-btn {
     border-radius: 0.625rem;
     min-height: 2.75rem;
     padding-inline: 1rem;
+  }
+
+  .assessment-nav-btn {
+    border-radius: 999rem;
+    width: auto;
   }
 }

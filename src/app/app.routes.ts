@@ -14,6 +14,17 @@ export const routes: Routes = [
       import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES)
   },
   {
+    path: 'intake-assessment',
+    loadComponent: () =>
+      import('./layouts/intake-assessment-layout/intake-assessment-layout').then(
+        (m) => m.IntakeAssessmentLayout
+      ),
+    loadChildren: () =>
+      import('./features/intake-assessment/intake-assessment.routes').then(
+        (m) => m.INTAKE_ASSESSMENT_ROUTES
+      )
+  },
+  {
     path: 'patient',
     loadComponent: () =>
       import('./layouts/patient-layout/patient-layout').then((m) => m.PatientLayout),

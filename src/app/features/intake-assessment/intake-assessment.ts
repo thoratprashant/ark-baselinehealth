@@ -1,0 +1,102 @@
+import { DOCUMENT } from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+import { IntakeFlowService } from './intake-flow.service';
+
+interface WellbeingConcern {
+  label: string;
+  icon: string;
+}
+
+type SectionState = 'is-active' | 'is-before' | 'is-after';
+
+@Component({
+  selector: 'app-intake-assessment',
+  imports: [ReactiveFormsModule],
+  templateUrl: './intake-assessment.html',
+  styleUrl: './intake-assessment.scss'
+})
+export class IntakeAssessment implements OnInit {
+  private readonly document = inject(DOCUMENT);
+  protected readonly flow = inject(IntakeFlowService);
+
+  protected readonly consentForm = new FormGroup({
+    participation: new FormControl(true, {
+      nonNullable: true,
+      validators: [Validators.requiredTrue]
+    }),
+    privacy: new FormControl(false, {
+      nonNullable: true,
+      validators: [Validators.requiredTrue]
+    }),
+    communications: new FormControl(false, { nonNullable: true })
+  });
+
+  protected readonly concerns: readonly WellbeingConcern[] = [
+    { label: 'Depression Mood', icon: '\u{1F614}' },
+    { label: 'Anxiety or Panic', icon: '\u26A1' },
+    { label: 'ADHD or Focus Issues', icon: '\u{1F9E0}' },
+    { label: 'Sleep Difficulties or Insomnia', icon: '\u{1F319}' },
+    { label: 'Obsessive Compulsive behaviors', icon: '\u2696\uFE0F' },
+    { label: 'Trauma or PTSD', icon: '\u{1F6E1}\uFE0F' }
+  ];
+
+  protected readonly selectedConcerns = signal(new Set<string>(['Depression Mood']));
+
+  ngOnInit(): void {
+    this.flow.reset();
+  }
+
+  protected sectionState(index: number): SectionState {
+    if (index === this.flow.currentIndex()) {
+      return 'is-active';
+    }
+
+    return index < this.flow.currentIndex() ? 'is-before' : 'is-after';
+  }
+
+  protected continueFromWelcome(): void {
+    if (this.consentForm.invalid) {
+      this.consentForm.markAllAsTouched();
+      return;
+    }
+
+    if (this.flow.goNext()) {
+      this.scrollActiveSectionToTop();
+    }
+  }
+
+  protected toggleConcern(label: string): void {
+    this.selectedConcerns.update((current) => {
+      const updated = new Set(current);
+      updated.has(label) ? updated.delete(label) : updated.add(label);
+      return updated;
+    });
+  }
+
+  protected back(): void {
+    if (this.flow.goBack()) {
+      this.scrollActiveSectionToTop();
+    }
+  }
+
+  protected continueFromWellbeing(): void {
+    if (this.selectedConcerns().size > 0 && this.flow.goNext()) {
+      this.scrollActiveSectionToTop();
+    }
+  }
+
+  private scrollActiveSectionToTop(): void {
+    const view = this.document.defaultView;
+
+    view?.requestAnimationFrame(() => {
+      const activeCard = this.document.querySelector<HTMLElement>(
+        '.assessment-section.is-active .assessment-card'
+      );
+
+      activeCard?.scrollTo({ top: 0, behavior: 'smooth' });
+      view.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+}

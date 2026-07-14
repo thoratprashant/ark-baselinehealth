@@ -3,6 +3,7 @@
 @use "styles/base/typography";
 @use "styles/base/buttons";
 @use "styles/components/authentication";
+@use "styles/components/intake-assessment";
 @use "styles/components/global";
 .route--wrapper > * {
   animation: showPageAnim 1000ms ease-out;

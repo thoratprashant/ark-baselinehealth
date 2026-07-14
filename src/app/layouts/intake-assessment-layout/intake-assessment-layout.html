@@ -1,0 +1,38 @@
+<div class="intake-shell">
+  <header class="intake-header">
+    <a class="intake-brand" routerLink="/intake-assessment" aria-label="Baseline Health home">
+      <img src="assets/images/auth-logo.svg" alt="Baseline Health" />
+    </a>
+
+    <div class="security-chip">
+      <span class="security-chip__dot" aria-hidden="true"></span>
+      <span>HIPAA secure · auto-saved</span>
+    </div>
+
+    <a class="save-exit" routerLink="/auth/login">Save &amp; exit</a>
+  </header>
+
+  <main class="intake-main">
+    @if (flow.currentIndex() > 0) {
+      <section class="assessment-progress" aria-label="Assessment progress">
+        <div class="assessment-progress__meta">
+          <span>Your journey</span>
+          <strong>{{ progress() }}%</strong>
+        </div>
+        <div
+          class="assessment-progress__track"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          [attr.aria-valuenow]="progress()"
+        >
+          <span class="assessment-progress__fill" [style.width.%]="progress()"></span>
+        </div>
+      </section>
+    }
+
+    <div class="step-viewport">
+      <router-outlet />
+    </div>
+  </main>
+</div>
