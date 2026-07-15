@@ -1,0 +1,34 @@
+<section class="journey-card" aria-labelledby="journey-title">
+  <header class="journey-header">
+    <strong id="journey-title">YOUR CARE JOURNEY</strong>
+    <div class="journey-progress" aria-label="Care journey progress">
+      <span><i [style.width.%]="animatedProgress()"></i></span>
+      <b>{{ displayedProgress() }}%</b>
+    </div>
+  </header>
+
+  <div class="journey-steps">
+    @for (step of steps; track step.label; let index = $index) {
+    <article class="journey-step" [class]="stepState(index)">
+      <span class="journey-step__icon" aria-hidden="true">
+        @if (index === 0) {
+        <svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" /></svg>
+        } @else if (index === 1) {
+        <svg viewBox="0 0 24 24"><path d="m8 15 7-7M7 7h.01M16.5 16.5h.01M6 13l5 5M13 6l5 5" /></svg>
+        } @else if (index === 2) {
+        <svg viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="2" /><path d="M4 10h16" /></svg>
+        } @else if (index === 3) {
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3" /><path d="M6 19c.7-4 2.7-6 6-6s5.3 2 6 6" /></svg>
+        } @else {
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg>
+        }
+      </span>
+      <strong>{{ step.label }}</strong>
+      <small>{{ statusLabel(index) }}</small>
+    </article>
+    @if (index < steps.length - 1) {
+    <span class="journey-connector" [class.completed]="index < activeStep()"></span>
+    }
+    }
+  </div>
+</section>

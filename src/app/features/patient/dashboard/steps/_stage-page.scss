@@ -1,0 +1,40 @@
+.stage-page {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.5rem;
+
+  > article {
+    align-items: center;
+    background: #fff;
+    border: 0.0625rem solid #e2e6e9;
+    border-radius: 1.25rem;
+    box-shadow: 0 0.0625rem 0.125rem rgb(0 0 0 / 5%);
+    display: flex;
+    flex-direction: column;
+    min-height: 18rem;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  article > span {
+    font-size: 2rem;
+  }
+
+  h1 {
+    color: #111c27;
+    font-size: 1.5rem;
+    margin: 1rem 0 0.5rem;
+  }
+
+  p {
+    color: #6a7581;
+    font-size: 0.875rem;
+    margin: 0;
+  }
+}
+
+@media (max-width: 48rem) {
+  .stage-page {
+    padding: 1rem;
+  }
+}

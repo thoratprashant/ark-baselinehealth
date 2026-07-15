@@ -1,5 +1,6 @@
 $mobile: 30rem;
 $tablet: 47.9375rem;
+$tablet-portrait: 64rem;
 
 @mixin down($width) {
   @media (max-width: $width) {

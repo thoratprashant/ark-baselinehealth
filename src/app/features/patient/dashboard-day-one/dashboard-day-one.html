@@ -1,0 +1,28 @@
+<section class="dashboard-page">
+  <header class="patient-hero">
+    <div>
+      <span>WELCOME BACK</span>
+      <h1>Hello, Sam <i>👋</i></h1>
+      <p>Here's a quick overview of your care journey and what's next.</p>
+    </div>
+    <small>
+      <svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6.5" /><path d="m6 9 2 2 4-4" /></svg>
+      Intake Assessment complete
+    </small>
+  </header>
+
+  <app-care-journey [activeStep]="1" />
+
+  <article class="add-medication-card">
+    <span class="medication-icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32"><path d="m10 21 11-11M8 10h.01M22 22h.01M8 18l6 6M18 8l6 6" /></svg>
+    </span>
+    <h2>Add your medications</h2>
+    <p>Please give us details about the medications you are requesting</p>
+    <a class="primary-btn add-medication-button" routerLink="/patient/dashboard">
+      Add medications
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+    </a>
+    <small>You can add or update medications at any time from the Medications section</small>
+  </article>
+</section>
