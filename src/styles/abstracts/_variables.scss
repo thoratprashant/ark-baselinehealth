@@ -9,6 +9,18 @@ $color-border: #dce5e0;
 $color-topbar-border: #dde5ef;
 $color-white: #fff;
 $color-yellow: #ecd53d;
+$color-action: #2d6da5;
+$color-success: #239d6a;
+$color-danger: #e62c2c;
+$color-error: #b42318;
+$color-info: #38bdf8;
+$color-secondary-copy: #586b80;
+$color-surface-soft: #f0f0f0;
+$color-auth-background: #f9fbfa;
+$color-black: #000;
+$color-accent-teal: #4daab3;
+$color-accent-purple: #986aaf;
+$color-success-dark: #0f766e;
 
 // Layout colors
 $color-shell-background: #f7f8fa;
@@ -28,3 +40,22 @@ $control-height: 3rem;
 // Typography
 $font-primary: "DM Sans", sans-serif;
 $font-secondary: "Playfair Display", serif;
+
+// Global font scale
+$font-size-3xs: 0.4375rem;
+$font-size-2xs: 0.5625rem;
+$font-size-xs: 0.625rem;
+$font-size-sm: 0.75rem;
+$font-size-md: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.25rem;
+$font-size-xl: 1.5rem;
+$font-size-2xl: 1.75rem;
+
+// Responsive typography
+$font-size-button: clamp(0.8125rem, 0.78rem + 0.15vw, $font-size-md);
+$font-size-button-sm: clamp(0.5rem, 0.45rem + 0.25vw, $font-size-xs);
+$font-size-body-responsive: clamp($font-size-md, 0.8rem + 0.25vw, $font-size-base);
+$font-size-auth-heading: clamp($font-size-2xl, 1.675rem + 0.3vw, 1.875rem);
+$font-size-page-heading: clamp($font-size-xl, 1.35rem + 0.6vw, $font-size-2xl);
+$font-size-shell-heading: clamp($font-size-lg, 1.175rem + 0.3vw, 1.375rem);

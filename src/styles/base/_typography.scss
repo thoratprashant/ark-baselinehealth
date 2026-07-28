@@ -7,13 +7,13 @@
 .page {
   h2 {
     color: variables.$color-heading;
-    font-size: clamp(1.5rem, 1.35rem + 0.6vw, 1.75rem);
+    font-size: variables.$font-size-page-heading;
     margin: 0 0 0.5rem;
   }
 
   p {
     color: variables.$color-page-copy;
-    font-size: clamp(0.875rem, 0.8rem + 0.25vw, 1rem);
+    font-size: variables.$font-size-body-responsive;
     margin: 0;
   }
 }

@@ -1,5 +1,5 @@
 <section class="auth-flow d-flex flex-column w-100">
-  <div class="auth-heading d-flex flex-column align-items-center text-center">
+  <header class="auth-heading d-flex flex-column align-items-center text-center">
     <div class="heading-icon d-inline-flex align-items-center justify-content-center" aria-hidden="true">
       <svg viewBox="0 0 24 24">
         <path d="M10 7l5 5-5 5" />
@@ -9,7 +9,7 @@
     </div>
     <h1 class="font-secondary">Create your account</h1>
     <p>Medication refills are only a few clicks away</p>
-  </div>
+  </header>
 
   <form class="auth-card registration-card d-flex flex-column w-100">
     <label class="field form-label mb-0">
@@ -45,12 +45,107 @@
       </span>
     </label>
 
-    <label class="field form-label mb-0">
+    <section class="email-verification" aria-labelledby="email-verification-title">
+      <div class="verification-header">
+        <h2 id="email-verification-title">Verify your email address to continue</h2>
+        <button class="secondary-btn btn btn-sm flex-shrink-0" type="button">
+          <img src="assets/auth/registration-send-code.svg" alt="" aria-hidden="true" />
+          <span>Send Verification Code</span>
+        </button>
+      </div>
+
+      <p class="otp-label">Enter 6-digit OTP sent your email</p>
+
+      <div class="otp-row">
+        <div class="otp-inputs" aria-label="Six digit verification code">
+          <input
+            #otpInput
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            placeholder="−"
+            aria-label="OTP digit 1"
+            autocomplete="one-time-code"
+            (input)="handleOtpInput($event, 0)"
+            (keydown)="handleOtpKeydown($event, 0)"
+            (paste)="handleOtpPaste($event, 0)"
+          />
+          <input
+            #otpInput
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            placeholder="−"
+            aria-label="OTP digit 2"
+            (input)="handleOtpInput($event, 1)"
+            (keydown)="handleOtpKeydown($event, 1)"
+            (paste)="handleOtpPaste($event, 1)"
+          />
+          <input
+            #otpInput
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            placeholder="−"
+            aria-label="OTP digit 3"
+            (input)="handleOtpInput($event, 2)"
+            (keydown)="handleOtpKeydown($event, 2)"
+            (paste)="handleOtpPaste($event, 2)"
+          />
+          <input
+            #otpInput
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            placeholder="−"
+            aria-label="OTP digit 4"
+            (input)="handleOtpInput($event, 3)"
+            (keydown)="handleOtpKeydown($event, 3)"
+            (paste)="handleOtpPaste($event, 3)"
+          />
+          <input
+            #otpInput
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            placeholder="−"
+            aria-label="OTP digit 5"
+            (input)="handleOtpInput($event, 4)"
+            (keydown)="handleOtpKeydown($event, 4)"
+            (paste)="handleOtpPaste($event, 4)"
+          />
+          <input
+            #otpInput
+            type="text"
+            inputmode="numeric"
+            maxlength="1"
+            placeholder="−"
+            aria-label="OTP digit 6"
+            (input)="handleOtpInput($event, 5)"
+            (keydown)="handleOtpKeydown($event, 5)"
+            (paste)="handleOtpPaste($event, 5)"
+          />
+        </div>
+        <button class="primary-btn btn btn-sm flex-shrink-0" type="button">Verify Code</button>
+      </div>
+
+      <p class="resend-copy">
+        Didn’t receive it?
+        <button type="button">Resend OTP</button>
+      </p>
+
+      <div class="verified-message" role="status">
+        <img src="assets/auth/registration-verified.svg" alt="" aria-hidden="true" />
+        <span>Email Verified</span>
+      </div>
+    </section>
+
+    <label class="field mobile-field form-label mb-0">
       <span>Mobile Number*</span>
       <span class="input-shell d-flex align-items-center w-100">
         <svg aria-hidden="true" viewBox="0 0 24 24">
-          <rect x="7" y="3" width="10" height="18" rx="2" />
-          <path d="M10 6h4M11 18h2" />
+          <rect x="5" y="10" width="14" height="10" rx="2" />
+          <path d="M8 10V7a4 4 0 0 1 8 0v3" />
         </svg>
         <input
           class="form-control border-0 shadow-none p-0"
@@ -59,10 +154,11 @@
           autocomplete="tel"
         />
       </span>
+      <small>Non-Serviced State selection and the click here option to see the Serviced State.</small>
     </label>
 
     <fieldset class="field gender-field border-0 p-0 m-0">
-      <legend class="mb-2">Gender*</legend>
+      <legend>Gender*</legend>
       <div class="gender-options">
         <label class="gender-option">
           <input type="radio" name="gender" value="male" checked />
@@ -85,17 +181,16 @@
 
     <label class="field form-label mb-0">
       <span>State*</span>
-      <span class="input-shell d-flex align-items-center w-100">
-        <svg aria-hidden="true" viewBox="0 0 24 24">
-          <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
-          <circle cx="12" cy="10" r="2.5" />
-        </svg>
-        <input
-          class="form-control border-0 shadow-none p-0"
-          type="text"
-          placeholder="Enter your state name"
-          autocomplete="address-level1"
-        />
+      <span class="input-shell select-shell d-flex align-items-center w-100">
+        <img class="field-icon" src="assets/auth/registration-location.svg" alt="" aria-hidden="true" />
+        <select class="form-select border-0 shadow-none p-0" autocomplete="address-level1">
+          <option value="" selected disabled>Enter your state name</option>
+          <option value="california">California</option>
+          <option value="florida">Florida</option>
+          <option value="new-york">New York</option>
+          <option value="texas">Texas</option>
+        </select>
+        <img class="select-chevron" src="assets/auth/registration-chevron.svg" alt="" aria-hidden="true" />
       </span>
     </label>
 
@@ -169,13 +264,23 @@
       </span>
     </label>
 
-    <button class="primary-btn btn w-100" type="button">Create account</button>
+    <aside class="password-requirements">
+      <ul class="mb-0">
+        <li>Password must be at least 8 characters long.</li>
+        <li>Password must contain at least one uppercase letter.</li>
+        <li>Password must contain at least one numeric digit.</li>
+        <li>Password must contain at least one special character.</li>
+      </ul>
+    </aside>
+
+    <button class="primary-btn btn w-100 flex-shrink-0" type="button">Create account</button>
   </form>
 
-  <a class="signin-link text-center text-decoration-none" routerLink="/auth/login">
-    <span>Already have an account?</span>
-    <strong>Log In</strong>
-  </a>
-
-  <p class="security-note mb-0 text-center">Protected by HIPAA-compliant security</p>
+  <footer class="registration-footer d-flex flex-column align-items-center">
+    <a class="signin-link text-center text-decoration-none" routerLink="/auth/login">
+      <span>Already have an account?</span>
+      <strong>Log In</strong>
+    </a>
+    <p class="security-note mb-0 text-center">Protected by HIPAA-compliant security</p>
+  </footer>
 </section>

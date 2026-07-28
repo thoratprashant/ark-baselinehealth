@@ -175,11 +175,39 @@ app-intake-assessment-layout {
     flex: 1 1 auto;
     height: 100%;
     min-height: 0;
+    overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 2.2917rem;
     scrollbar-color: rgb(88 107 128 / 35%) transparent;
+    scrollbar-gutter: stable;
     scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      margin-block: 1.5rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgb(88 107 128 / 35%);
+      background-clip: padding-box;
+      border: 0.125rem solid transparent;
+      border-radius: 999rem;
+    }
+
+    &::-webkit-scrollbar-button {
+      display: none;
+      height: 0;
+      width: 0;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background: transparent;
+    }
   }
 
   .step-heading {
