@@ -1,0 +1,116 @@
+<div class="assessment-step treatment-flow-shell d-flex h-100 flex-column">
+  <article class="assessment-card treatment-flow-card">
+    <div class="assessment-card__scroll">
+      @for (question of [currentQuestion()]; track question.id) {
+        <div class="treatment-question d-flex flex-column gap-3 gap-lg-4">
+          <div class="treatment-eyebrow d-flex w-100 flex-wrap align-items-center gap-1">
+            <span aria-hidden="true"></span>
+            <strong>{{ config().eyebrowTitle }} -</strong>
+            <small>{{ config().eyebrowDescription }}</small>
+          </div>
+
+          @if (currentQuestionIndex() > 0) {
+            <div class="answer-summary p-3">
+              {{ config().summaryQuestion }}
+              <strong>You selected: {{ summaryAnswer() }}!</strong>
+            </div>
+          }
+
+          <h1 class="treatment-question__title mb-0">
+            @if (question.titleParts?.length) {
+              @for (part of question.titleParts; track $index) {
+                <span [class]="'is-' + (part.tone ?? 'default')">{{ part.text }}</span>
+              }
+            } @else {
+              {{ question.title }}
+            }
+          </h1>
+
+          <div
+            class="treatment-options row"
+            [class.g-2]="question.type === 'multi'"
+            [class.g-3]="question.type === 'single'"
+            [attr.role]="question.type === 'single' ? 'radiogroup' : 'group'"
+            [attr.aria-label]="question.title"
+          >
+            @for (option of question.options; track option.value) {
+              <div class="col-12 d-flex col-md-6">
+                <button
+                  class="treatment-option d-flex h-100 w-100 align-items-center justify-content-start gap-3 text-start"
+                  type="button"
+                  [class.selected]="isSelected(question.id, option.value)"
+                  [attr.role]="question.type === 'single' ? 'radio' : 'checkbox'"
+                  [attr.aria-checked]="isSelected(question.id, option.value)"
+                  (click)="
+                    question.type === 'single'
+                      ? selectSingle(question.id, option.value)
+                      : toggleMulti(question.id, option.value)
+                  "
+                >
+                  @if (question.type === 'single') {
+                    <span class="treatment-option__radio flex-shrink-0" aria-hidden="true"></span>
+                  }
+                  <span>{{ option.label }}</span>
+                  @if (question.type === 'multi' && isSelected(question.id, option.value)) {
+                    <svg
+                      class="treatment-option__check ms-auto flex-shrink-0"
+                      viewBox="0 0 16 16"
+                      aria-hidden="true"
+                    >
+                      <path d="m3.5 8 3 3 6-6" />
+                    </svg>
+                  }
+                </button>
+              </div>
+            }
+          </div>
+
+          @if (shouldShowExtraField(question)) {
+            <div class="conditional-field d-grid">
+              <label [for]="question.id + '-details'">{{ question.extraField?.placeholder }}</label>
+              <textarea
+                class="form-control"
+                [id]="question.id + '-details'"
+                [value]="textAnswers()[question.id] ?? ''"
+                [placeholder]="question.extraField?.placeholder ?? ''"
+                (input)="updateTextAnswer(question.id, $event)"
+              ></textarea>
+            </div>
+          }
+
+          @if (question.note) {
+            <p class="treatment-question__note d-flex align-items-center gap-2 mb-0">
+              <span
+                class="d-inline-flex align-items-center justify-content-center"
+                aria-hidden="true"
+                >i</span
+              >
+              {{ question.note }}
+            </p>
+          }
+        </div>
+      }
+    </div>
+  </article>
+
+  <footer class="step-actions d-flex align-items-center justify-content-between">
+    <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M16 10H5M9 6l-4 4 4 4" />
+      </svg>
+      <span>Back</span>
+    </button>
+
+    <button
+      class="primary-btn assessment-nav-btn"
+      type="button"
+      [disabled]="!canContinue()"
+      (click)="continue()"
+    >
+      <span>Continue</span>
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M4 10h11M11 6l4 4-4 4" />
+      </svg>
+    </button>
+  </footer>
+</div>

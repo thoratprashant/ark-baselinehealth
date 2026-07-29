@@ -76,6 +76,7 @@ app-patient-layout {
 .page {
   padding: 1.5rem;
 }
+textarea{resize: none !important;}
 
 @include breakpoints.down(breakpoints.$tablet) {
   app-admin-layout,

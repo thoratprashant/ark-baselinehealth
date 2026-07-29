@@ -2,22 +2,17 @@ import { DOCUMENT } from '@angular/common';
 import { Component, computed, effect, inject, signal, untracked } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
-import {
-  INTAKE_SECTIONS,
-  IntakeFlowService
-} from '../../features/intake-assessment/intake-flow.service';
+import { IntakeFlowService } from '../../features/intake-assessment/intake-flow.service';
 
 @Component({
   selector: 'app-intake-assessment-layout',
   imports: [RouterLink, RouterOutlet],
   templateUrl: './intake-assessment-layout.html',
-  styleUrl: './intake-assessment-layout.scss'
+  styleUrl: './intake-assessment-layout.scss',
 })
 export class IntakeAssessmentLayout {
   private readonly document = inject(DOCUMENT);
-  private readonly targetProgress = computed(
-    () => INTAKE_SECTIONS[this.flow.currentIndex()]?.progress ?? 0
-  );
+  private readonly targetProgress = computed(() => this.flow.progress());
   protected readonly animatedProgress = signal(0);
   protected readonly displayedProgress = computed(() => Math.round(this.animatedProgress()));
 

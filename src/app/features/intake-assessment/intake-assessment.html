@@ -1,16 +1,12 @@
 <div class="assessment-sections">
-  <section
-    class="assessment-section"
-    [class]="sectionState(0)"
-    [attr.aria-hidden]="flow.currentIndex() !== 0"
-    [attr.inert]="flow.currentIndex() === 0 ? null : ''"
-  >
-    <div class="assessment-step">
-      <form [formGroup]="consentForm" (ngSubmit)="continueFromWelcome()">
+  <section class="assessment-section" [class]="sectionState(0)" [attr.aria-hidden]="flow.currentIndex() !== 0"
+    [attr.inert]="flow.currentIndex() === 0 ? null : ''">
+    <div class="assessment-step d-flex h-100 flex-column">
+      <form class="d-flex h-100 flex-grow-1 flex-column" [formGroup]="consentForm" (ngSubmit)="continueFromWelcome()">
         <article class="assessment-card welcome-card">
           <div class="assessment-card__scroll">
-            <div class="step-heading">
-              <div class="step-eyebrow"><span></span>Welcome</div>
+            <div class="step-heading d-grid gap-1">
+              <div class="step-eyebrow d-flex align-items-center gap-2"><span></span>Welcome</div>
               <h1>Help us understand more <em>about you and your needs.</em></h1>
               <p>
                 We'll ask a few questions about your mental health, history, and medications. This
@@ -18,49 +14,55 @@
               </p>
             </div>
 
-            <div class="notice-grid">
-              <div class="notice-card notice-card--private">
-                <span class="notice-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <rect x="5" y="10" width="14" height="10" rx="2" />
-                    <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-                  </svg>
-                </span>
-                <div>
-                  <strong>Private &amp; protected</strong>
-                  <p>HIPAA-grade encryption. Only your care team can see your answers.</p>
+            <div class="row g-3 mt-4">
+              <div class="col-12 d-flex col-md-6">
+                <div class="notice-card notice-card--private d-flex w-100 align-items-start gap-3">
+                  <span class="notice-icon d-inline-flex flex-shrink-0 align-items-center justify-content-center"
+                    aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <rect x="5" y="10" width="14" height="10" rx="2" />
+                      <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                    </svg>
+                  </span>
+                  <div>
+                    <strong>Private &amp; protected</strong>
+                    <p>HIPAA-grade encryption. Only your care team can see your answers.</p>
+                  </div>
                 </div>
               </div>
 
-              <div class="notice-card notice-card--emergency">
-                <span class="notice-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M12 3 2.8 19h18.4L12 3Z" />
-                    <path d="M12 9v4M12 16h.01" />
-                  </svg>
-                </span>
-                <div>
-                  <strong>Emergency notice</strong>
-                  <p>
-                    If you're in crisis, don't wait. Call 988, 911, or go to urgent/emergency care.
-                  </p>
+              <div class="col-12 d-flex col-md-6">
+                <div class="notice-card notice-card--emergency d-flex w-100 align-items-start gap-3">
+                  <span class="notice-icon d-inline-flex flex-shrink-0 align-items-center justify-content-center"
+                    aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 3 2.8 19h18.4L12 3Z" />
+                      <path d="M12 9v4M12 16h.01" />
+                    </svg>
+                  </span>
+                  <div>
+                    <strong>Emergency notice</strong>
+                    <p>
+                      If you're in crisis, don't wait. Call 988, 911, or go to urgent/emergency
+                      care.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <fieldset class="consent-list">
+            <fieldset class="consent-list d-grid gap-2 mt-4">
               <legend>Consent</legend>
 
-              <label
-                class="consent-option"
-                [class.selected]="consentForm.controls.participation.value"
-              >
+              <label class="consent-option d-flex align-items-start gap-3"
+                [class.selected]="consentForm.controls.participation.value">
                 <input type="checkbox" formControlName="participation" />
-                <span class="consent-check" aria-hidden="true">
+                <span class="consent-check d-inline-flex flex-shrink-0 align-items-center justify-content-center"
+                  aria-hidden="true">
                   @if (consentForm.controls.participation.value) {
-                    <svg viewBox="0 0 16 16">
-                      <path d="m3.5 8 3 3 6-6" />
-                    </svg>
+                  <svg viewBox="0 0 16 16">
+                    <path d="m3.5 8 3 3 6-6" />
+                  </svg>
                   }
                 </span>
                 <span>
@@ -72,34 +74,33 @@
                 </span>
               </label>
 
-              <label class="consent-option" [class.selected]="consentForm.controls.privacy.value">
+              <label class="consent-option d-flex align-items-start gap-3"
+                [class.selected]="consentForm.controls.privacy.value">
                 <input type="checkbox" formControlName="privacy" />
-                <span class="consent-check" aria-hidden="true">
+                <span class="consent-check d-inline-flex flex-shrink-0 align-items-center justify-content-center"
+                  aria-hidden="true">
                   @if (consentForm.controls.privacy.value) {
-                    <svg viewBox="0 0 16 16">
-                      <path d="m3.5 8 3 3 6-6" />
-                    </svg>
+                  <svg viewBox="0 0 16 16">
+                    <path d="m3.5 8 3 3 6-6" />
+                  </svg>
                   }
                 </span>
                 <span>
                   <strong>Privacy Policy acknowledged</strong>
-                  <small
-                    >I have read the privacy policy and understand how my information is
-                    used.</small
-                  >
+                  <small>I have read the privacy policy and understand how my information is
+                    used.</small>
                 </span>
               </label>
 
-              <label
-                class="consent-option"
-                [class.selected]="consentForm.controls.communications.value"
-              >
+              <label class="consent-option d-flex align-items-start gap-3"
+                [class.selected]="consentForm.controls.communications.value">
                 <input type="checkbox" formControlName="communications" />
-                <span class="consent-check" aria-hidden="true">
+                <span class="consent-check d-inline-flex flex-shrink-0 align-items-center justify-content-center"
+                  aria-hidden="true">
                   @if (consentForm.controls.communications.value) {
-                    <svg viewBox="0 0 16 16">
-                      <path d="m3.5 8 3 3 6-6" />
-                    </svg>
+                  <svg viewBox="0 0 16 16">
+                    <path d="m3.5 8 3 3 6-6" />
+                  </svg>
                   }
                 </span>
                 <span>
@@ -111,12 +112,8 @@
           </div>
         </article>
 
-        <footer class="step-actions step-actions--end">
-          <button
-            class="primary-btn assessment-nav-btn"
-            type="submit"
-            [disabled]="consentForm.invalid"
-          >
+        <footer class="step-actions step-actions--end d-flex align-items-center justify-content-end">
+          <button class="primary-btn assessment-nav-btn" type="submit" [disabled]="consentForm.invalid">
             <span>Continue</span>
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <path d="M4 10h11M11 6l4 4-4 4" />
@@ -127,52 +124,50 @@
     </div>
   </section>
 
-  <section
-    class="assessment-section"
-    [class]="sectionState(1)"
-    [attr.aria-hidden]="flow.currentIndex() !== 1"
-    [attr.inert]="flow.currentIndex() === 1 ? null : ''"
-  >
-    <div class="assessment-step wellbeing-section">
+  <section class="assessment-section" [class]="sectionState(1)" [attr.aria-hidden]="flow.currentIndex() !== 1"
+    [attr.inert]="flow.currentIndex() === 1 ? null : ''">
+    <div class="assessment-step wellbeing-section d-flex h-100 flex-column">
       <article class="assessment-card wellbeing-card">
         <div class="assessment-card__scroll">
-          <div class="step-heading">
-            <div class="step-eyebrow"><span></span>Let's get started</div>
+          <div class="step-heading d-grid gap-1">
+            <div class="step-eyebrow d-flex align-items-center gap-2">
+              <span></span>Let's get started
+            </div>
             <h1>What brings you in today?</h1>
             <p>Pick all options below that apply to your past or current mental health journey.</p>
           </div>
 
-          <div class="concern-options" aria-label="Mental health concerns">
+          <div class="concern-options row g-3 mt-4" role="radiogroup" aria-label="Mental health concerns">
             @for (concern of concerns; track concern.label) {
-              <button
-                class="concern-pill"
-                type="button"
-                [class.selected]="selectedConcerns().has(concern.label)"
-                [attr.aria-pressed]="selectedConcerns().has(concern.label)"
-                (click)="toggleConcern(concern.label)"
-              >
-                <span class="concern-pill__icon" aria-hidden="true">{{ concern.icon }}</span>
+            <div class="col-12 d-flex col-sm-6 col-lg-auto">
+              <button class="concern-pill d-flex h-100 w-100 align-items-center justify-content-start gap-3 text-start"
+                type="button" role="radio" [class.selected]="selectedConcern() === concern.label"
+                [attr.aria-checked]="selectedConcern() === concern.label" (click)="selectConcern(concern.label)">
+                <span class="concern-pill__icon flex-shrink-0" aria-hidden="true">
+                  {{ concern.icon }}
+                </span>
                 <span class="concern-pill__label">{{ concern.label }}</span>
-                @if (selectedConcerns().has(concern.label)) {
-                  <svg class="concern-pill__check" viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="m3.5 8 3 3 6-6" />
-                  </svg>
+                @if (selectedConcern() === concern.label) {
+                <svg class="concern-pill__check flex-shrink-0" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="m3.5 8 3 3 6-6" />
+                </svg>
                 }
               </button>
+            </div>
             }
           </div>
 
-          <p class="selection-note">
+          <p class="selection-note d-flex align-items-center gap-2 mt-4 mb-0">
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <circle cx="10" cy="10" r="7.5" />
               <path d="M10 9v5M10 6.5h.01" />
             </svg>
-            Selected {{ selectedConcerns().size }} · there are no wrong answers.
+            Selected {{ selectedConcern() ? 1 : 0 }} · there are no wrong answers.
           </p>
         </div>
       </article>
 
-      <footer class="step-actions">
+      <footer class="step-actions d-flex align-items-center justify-content-between">
         <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
           <svg viewBox="0 0 20 20" aria-hidden="true">
             <path d="M16 10H5M9 6l-4 4 4 4" />
@@ -180,12 +175,8 @@
           <span>Back</span>
         </button>
 
-        <button
-          class="primary-btn assessment-nav-btn"
-          type="button"
-          [disabled]="selectedConcerns().size === 0"
-          (click)="continueFromWellbeing()"
-        >
+        <button class="primary-btn assessment-nav-btn" type="button"
+          [disabled]="selectedConcern() !== 'Generalized Anxiety Treatment'" (click)="continueFromWellbeing()">
           <span>Continue</span>
           <svg viewBox="0 0 20 20" aria-hidden="true">
             <path d="M4 10h11M11 6l4 4-4 4" />
@@ -193,5 +184,11 @@
         </button>
       </footer>
     </div>
+  </section>
+
+  <section class="assessment-section" [class]="sectionState(2)" [attr.aria-hidden]="flow.currentIndex() !== 2"
+    [attr.inert]="flow.currentIndex() === 2 ? null : ''">
+    <app-treatment-question-flow [config]="generalizedAnxietyFlow" (backRequested)="backFromTreatment()"
+      (progressChanged)="flow.setProgress($event)" />
   </section>
 </div>

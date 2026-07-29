@@ -2,6 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { TreatmentQuestionFlow } from './components/treatment-question-flow/treatment-question-flow';
+import { GENERALIZED_ANXIETY_FLOW } from './generalized-anxiety-flow.config';
 import { IntakeFlowService } from './intake-flow.service';
 
 interface WellbeingConcern {
@@ -13,7 +15,7 @@ type SectionState = 'is-active' | 'is-before' | 'is-after';
 
 @Component({
   selector: 'app-intake-assessment',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TreatmentQuestionFlow],
   templateUrl: './intake-assessment.html',
   styleUrl: './intake-assessment.scss',
 })
@@ -45,7 +47,8 @@ export class IntakeAssessment implements OnInit {
     { label: 'Social Anxiety & Agoraphobia Treatment', icon: '\u{1F3E0}' },
   ];
 
-  protected readonly selectedConcerns = signal(new Set<string>(['Generalized Anxiety Treatment']));
+  protected readonly selectedConcern = signal<string | null>(null);
+  protected readonly generalizedAnxietyFlow = GENERALIZED_ANXIETY_FLOW;
 
   ngOnInit(): void {
     this.flow.reset();
@@ -70,12 +73,8 @@ export class IntakeAssessment implements OnInit {
     }
   }
 
-  protected toggleConcern(label: string): void {
-    this.selectedConcerns.update((current) => {
-      const updated = new Set(current);
-      updated.has(label) ? updated.delete(label) : updated.add(label);
-      return updated;
-    });
+  protected selectConcern(label: string): void {
+    this.selectedConcern.set(label);
   }
 
   protected back(): void {
@@ -85,7 +84,13 @@ export class IntakeAssessment implements OnInit {
   }
 
   protected continueFromWellbeing(): void {
-    if (this.selectedConcerns().size > 0 && this.flow.goNext()) {
+    if (this.selectedConcern() === 'Generalized Anxiety Treatment' && this.flow.goNext()) {
+      this.scrollActiveSectionToTop();
+    }
+  }
+
+  protected backFromTreatment(): void {
+    if (this.flow.goBack()) {
       this.scrollActiveSectionToTop();
     }
   }
