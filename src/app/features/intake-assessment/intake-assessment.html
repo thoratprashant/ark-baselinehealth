@@ -1,415 +1,197 @@
 <div class="assessment-sections">
-  <section class="assessment-section" [class]="sectionState(0)" [attr.aria-hidden]="flow.currentIndex() !== 0"
-    [attr.inert]="flow.currentIndex() === 0 ? null : ''">
+  <section
+    class="assessment-section"
+    [class]="sectionState(0)"
+    [attr.aria-hidden]="flow.currentIndex() !== 0"
+    [attr.inert]="flow.currentIndex() === 0 ? null : ''"
+  >
     <div class="assessment-step">
       <form [formGroup]="consentForm" (ngSubmit)="continueFromWelcome()">
         <article class="assessment-card welcome-card">
-          <div class="step-heading">
-            <div class="step-eyebrow"><span></span>Welcome</div>
-            <h1>Help us understand more <em>about you and your needs.</em></h1>
-            <p>
-              We'll ask a few questions about your mental health, history, and medications.
-              This takes about 10–20 minutes......
-            </p>
-          </div>
+          <div class="assessment-card__scroll">
+            <div class="step-heading">
+              <div class="step-eyebrow"><span></span>Welcome</div>
+              <h1>Help us understand more <em>about you and your needs.</em></h1>
+              <p>
+                We'll ask a few questions about your mental health, history, and medications. This
+                takes about 10–20 minutes......
+              </p>
+            </div>
 
-          <div class="notice-grid">
-            <div class="notice-card notice-card--private">
-              <span class="notice-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <rect x="5" y="10" width="14" height="10" rx="2" />
-                  <path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
-              </span>
-              <div>
-                <strong>Private &amp; protected</strong>
-                <p>HIPAA-grade encryption. Only your care team can see your answers.</p>
+            <div class="notice-grid">
+              <div class="notice-card notice-card--private">
+                <span class="notice-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="5" y="10" width="14" height="10" rx="2" />
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                  </svg>
+                </span>
+                <div>
+                  <strong>Private &amp; protected</strong>
+                  <p>HIPAA-grade encryption. Only your care team can see your answers.</p>
+                </div>
+              </div>
+
+              <div class="notice-card notice-card--emergency">
+                <span class="notice-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 3 2.8 19h18.4L12 3Z" />
+                    <path d="M12 9v4M12 16h.01" />
+                  </svg>
+                </span>
+                <div>
+                  <strong>Emergency notice</strong>
+                  <p>
+                    If you're in crisis, don't wait. Call 988, 911, or go to urgent/emergency care.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div class="notice-card notice-card--emergency">
-              <span class="notice-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 3 2.8 19h18.4L12 3Z" />
-                  <path d="M12 9v4M12 16h.01" /></svg>
-              </span>
-              <div>
-                <strong>Emergency notice</strong>
-                <p>If you're in crisis, don't wait. Call 988, 911, or go to urgent/emergency care.</p>
-              </div>
-            </div>
+            <fieldset class="consent-list">
+              <legend>Consent</legend>
+
+              <label
+                class="consent-option"
+                [class.selected]="consentForm.controls.participation.value"
+              >
+                <input type="checkbox" formControlName="participation" />
+                <span class="consent-check" aria-hidden="true">
+                  @if (consentForm.controls.participation.value) {
+                    <svg viewBox="0 0 16 16">
+                      <path d="m3.5 8 3 3 6-6" />
+                    </svg>
+                  }
+                </span>
+                <span>
+                  <strong>I consent to participate</strong>
+                  <small>
+                    I acknowledge this assessment is voluntary and that the information I provide is
+                    accurate.
+                  </small>
+                </span>
+              </label>
+
+              <label class="consent-option" [class.selected]="consentForm.controls.privacy.value">
+                <input type="checkbox" formControlName="privacy" />
+                <span class="consent-check" aria-hidden="true">
+                  @if (consentForm.controls.privacy.value) {
+                    <svg viewBox="0 0 16 16">
+                      <path d="m3.5 8 3 3 6-6" />
+                    </svg>
+                  }
+                </span>
+                <span>
+                  <strong>Privacy Policy acknowledged</strong>
+                  <small
+                    >I have read the privacy policy and understand how my information is
+                    used.</small
+                  >
+                </span>
+              </label>
+
+              <label
+                class="consent-option"
+                [class.selected]="consentForm.controls.communications.value"
+              >
+                <input type="checkbox" formControlName="communications" />
+                <span class="consent-check" aria-hidden="true">
+                  @if (consentForm.controls.communications.value) {
+                    <svg viewBox="0 0 16 16">
+                      <path d="m3.5 8 3 3 6-6" />
+                    </svg>
+                  }
+                </span>
+                <span>
+                  <strong>Care communications</strong>
+                  <small>I agree to receive refill plan reminders via email or SMS.</small>
+                </span>
+              </label>
+            </fieldset>
           </div>
-
-          <fieldset class="consent-list">
-            <legend>Consent</legend>
-
-            <label class="consent-option" [class.selected]="consentForm.controls.participation.value">
-              <input type="checkbox" formControlName="participation" />
-              <span class="consent-check" aria-hidden="true">
-                @if (consentForm.controls.participation.value) {
-                <svg viewBox="0 0 16 16">
-                  <path d="m3.5 8 3 3 6-6" /></svg>
-                }
-              </span>
-              <span>
-                <strong>I consent to participate</strong>
-                <small>I acknowledge this assessment is voluntary and that the information I provide is
-                  accurate.</small>
-              </span>
-            </label>
-
-            <label class="consent-option" [class.selected]="consentForm.controls.privacy.value">
-              <input type="checkbox" formControlName="privacy" />
-              <span class="consent-check" aria-hidden="true">
-                @if (consentForm.controls.privacy.value) {
-                <svg viewBox="0 0 16 16">
-                  <path d="m3.5 8 3 3 6-6" /></svg>
-                }
-              </span>
-              <span>
-                <strong>Privacy Policy acknowledged</strong>
-                <small>I have read the privacy policy and understand how my information is used.</small>
-              </span>
-            </label>
-
-            <label class="consent-option" [class.selected]="consentForm.controls.communications.value">
-              <input type="checkbox" formControlName="communications" />
-              <span class="consent-check" aria-hidden="true">
-                @if (consentForm.controls.communications.value) {
-                <svg viewBox="0 0 16 16">
-                  <path d="m3.5 8 3 3 6-6" /></svg>
-                }
-              </span>
-              <span>
-                <strong>Care communications</strong>
-                <small>I agree to receive refill plan reminders via email or SMS.</small>
-              </span>
-            </label>
-          </fieldset>
         </article>
 
         <footer class="step-actions step-actions--end">
-          <button class="primary-btn assessment-nav-btn" type="submit" [disabled]="consentForm.invalid">
+          <button
+            class="primary-btn assessment-nav-btn"
+            type="submit"
+            [disabled]="consentForm.invalid"
+          >
             <span>Continue</span>
             <svg viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M4 10h11M11 6l4 4-4 4" /></svg>
+              <path d="M4 10h11M11 6l4 4-4 4" />
+            </svg>
           </button>
         </footer>
       </form>
     </div>
   </section>
 
-  <section class="assessment-section" [class]="sectionState(1)" [attr.aria-hidden]="flow.currentIndex() !== 1"
-    [attr.inert]="flow.currentIndex() === 1 ? null : ''">
+  <section
+    class="assessment-section"
+    [class]="sectionState(1)"
+    [attr.aria-hidden]="flow.currentIndex() !== 1"
+    [attr.inert]="flow.currentIndex() === 1 ? null : ''"
+  >
     <div class="assessment-step wellbeing-section">
       <article class="assessment-card wellbeing-card">
-        <div class="step-heading">
-          <div class="step-eyebrow"><span></span>Let's get started</div>
-          <h1>What brings you in today?</h1>
-          <p>Pick all options below that apply to your past or current mental health journey.</p>
-        </div>
-
-        <div class="concern-options" aria-label="Mental health concerns">
-          @for (concern of concerns; track concern.label) {
-          <button class="concern-pill" type="button" [class.selected]="selectedConcerns().has(concern.label)"
-            [attr.aria-pressed]="selectedConcerns().has(concern.label)" (click)="toggleConcern(concern.label)">
-            <span class="concern-pill__icon" aria-hidden="true">{{ concern.icon }}</span>
-            <span>{{ concern.label }}</span>
-            @if (selectedConcerns().has(concern.label)) {
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="m3.5 8 3 3 6-6" /></svg>
-            }
-          </button>
-          }
-        </div>
-
-        <p class="selection-note">
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <circle cx="10" cy="10" r="7.5" />
-            <path d="M10 9v5M10 6.5h.01" /></svg>
-          Selected {{ selectedConcerns().size }} · there are no wrong answers.
-        </p>
-      </article>
-
-      <footer class="step-actions">
-        <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <path d="M16 10H5M9 6l-4 4 4 4" /></svg>
-          <span>Back</span>
-        </button>
-
-        <button class="primary-btn assessment-nav-btn" type="button" [disabled]="selectedConcerns().size === 0"
-          (click)="continueFromWellbeing()">
-          <span>Continue</span>
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <path d="M4 10h11M11 6l4 4-4 4" /></svg>
-        </button>
-      </footer>
-    </div>
-  </section>
-
-  <section class="assessment-section" [class]="sectionState(2)" [attr.aria-hidden]="flow.currentIndex() !== 2"
-    [attr.inert]="flow.currentIndex() === 2 ? null : ''">
-    <div class="assessment-step phq9-section">
-      <article class="assessment-card phq9-card">
-        <div class="step-heading phq9-heading">
-          <div class="step-eyebrow"><span></span>Depressed Mood</div>
-          <h1>Over the past 2 weeks, how often have you been bothered by:</h1>
-          <blockquote>“Little interest or pleasure in doing things”</blockquote>
-        </div>
-
-        <div class="phq9-options" role="group" aria-label="Symptom frequency">
-          @for (answer of phq9Answers; track answer.label) {
-          <button class="phq9-option" type="button" role="checkbox"
-            [class.selected]="selectedPhq9Answers().has(answer.label)"
-            [attr.aria-checked]="selectedPhq9Answers().has(answer.label)"
-            (click)="togglePhq9Answer(answer.label)">
-            <span class="phq9-option__content">
-              @if (answer.icon) {
-              <span class="phq9-option__icon" aria-hidden="true">{{ answer.icon }}</span>
-              }
-              <span class="phq9-option__copy">
-                <strong>{{ answer.label }}</strong>
-                <small>{{ answer.description }}</small>
-              </span>
-            </span>
-            @if (selectedPhq9Answers().has(answer.label)) {
-            <svg viewBox="0 0 18 18" aria-hidden="true">
-              <path d="m3.75 9 3.25 3.25 7.25-7.25" />
-            </svg>
-            }
-          </button>
-          }
-        </div>
-      </article>
-
-      <footer class="step-actions">
-        <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <path d="M16 10H5M9 6l-4 4 4 4" /></svg>
-          <span>Back</span>
-        </button>
-
-        <button class="primary-btn assessment-nav-btn" type="button" [disabled]="selectedPhq9Answers().size === 0"
-          (click)="continueFromPhq9()">
-          <span>Continue</span>
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <path d="M4 10h11M11 6l4 4-4 4" /></svg>
-        </button>
-      </footer>
-    </div>
-  </section>
-
-  <section class="assessment-section" [class]="sectionState(3)" [attr.aria-hidden]="flow.currentIndex() !== 3"
-    [attr.inert]="flow.currentIndex() === 3 ? null : ''">
-    <div class="assessment-step safety-section">
-      <article class="assessment-card safety-card">
-        <div class="step-heading safety-heading">
-          <div class="step-eyebrow"><span></span>Safety Check</div>
-          <h1>Are you having thoughts of harming yourself or others?</h1>
-          <p>Your safety matters most. Please answer honestly.</p>
-        </div>
-
-        <div class="safety-options" role="radiogroup" aria-label="Safety check">
-          <button class="phq9-option safety-option safety-option--no" type="button" role="radio"
-            [class.selected]="selectedSafetyAnswer() === 'No'"
-            [attr.aria-checked]="selectedSafetyAnswer() === 'No'" (click)="selectSafetyAnswer('No')">
-            <span class="phq9-option__content">
-              <span class="safety-option__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7" /></svg>
-              </span>
-              <span class="phq9-option__copy">
-                <strong>No</strong>
-                <small>I’m not currently experiencing those thoughts</small>
-              </span>
-            </span>
-          </button>
-
-          <button class="phq9-option safety-option safety-option--yes" type="button" role="radio"
-            [class.selected]="selectedSafetyAnswer() === 'Yes'"
-            [attr.aria-checked]="selectedSafetyAnswer() === 'Yes'" (click)="selectSafetyAnswer('Yes')">
-            <span class="phq9-option__content">
-              <span class="safety-option__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 4 3.5 19h17L12 4Z" /><path d="M12 9v4M12 16h.01" />
-                </svg>
-              </span>
-              <span class="phq9-option__copy">
-                <strong>Yes</strong>
-                <small>Do not wait for a prescriber to respond, contact emergency services immediately</small>
-              </span>
-            </span>
-          </button>
-        </div>
-
-        <aside class="safety-alert">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 3 5 6v5c0 4.5 2.8 7.8 7 10 4.2-2.2 7-5.5 7-10V6l-7-3Z" />
-          </svg>
-          <p><strong>In immediate danger?</strong> Call <a href="tel:988">988</a> (Suicide &amp; Crisis Lifeline) or
-            <a href="tel:911">911</a>. Or go to your <strong class="safety-alert__emphasis">Local urgent
-              care/emergency department</strong> immediately.</p>
-        </aside>
-      </article>
-
-      <footer class="step-actions">
-        <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <path d="M16 10H5M9 6l-4 4 4 4" /></svg>
-          <span>Back</span>
-        </button>
-
-        <button class="primary-btn assessment-nav-btn" type="button" [disabled]="!selectedSafetyAnswer()"
-          (click)="continueFromSafety()">
-          <span>Continue</span>
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <path d="M4 10h11M11 6l4 4-4 4" /></svg>
-        </button>
-      </footer>
-    </div>
-  </section>
-
-  <section class="assessment-section" [class]="sectionState(4)" [attr.aria-hidden]="flow.currentIndex() !== 4"
-    [attr.inert]="flow.currentIndex() === 4 ? null : ''">
-    <div class="assessment-step history-section">
-      <form [formGroup]="historyForm" (ngSubmit)="continueFromHistory()">
-        <article class="assessment-card history-card">
-          <div class="step-heading history-heading">
-            <div class="step-eyebrow"><span></span>Psychiatric History · Question 1 of 4</div>
-            <h1>Your health background</h1>
-            <p>A complete picture helps your clinician personalize care. Skip anything that doesn't apply.</p>
-          </div>
-
-          <section class="history-panel" aria-labelledby="medical-history-title">
-            <header class="history-panel__header">
-              <span class="history-panel__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7V3Z" /><path d="M14 3v5h5M10 12h5M10 16h5" />
-                </svg>
-              </span>
-              <strong id="medical-history-title">Medical &amp; surgical history</strong>
-            </header>
-
-            <p class="history-panel__question">Have you been diagnosed with a seizure disorder or ever had a seizure
-              in your lifetime?</p>
-
-            <label class="history-field">
-              <span>List approximate number of lifetime seizures</span>
-              <input type="text" formControlName="lifetimeSeizures" placeholder="Type here....." />
-            </label>
-
-            <label class="history-field">
-              <span>Approximate date of last seizure</span>
-              <input type="text" formControlName="lastSeizureDate" placeholder="Type here....." />
-            </label>
-
-            <label class="history-field">
-              <span>Are you taking seizure medications?</span>
-              <input type="text" formControlName="seizureMedications" placeholder="Type here....." />
-            </label>
-
-            <fieldset class="history-field history-field--radio">
-              <legend>Are you taking the medication Wellbutrin (bupropion)?</legend>
-              <div class="history-radio-options">
-                <label>
-                  <input type="radio" formControlName="wellbutrin" value="Yes" />
-                  <span>Yes</span>
-                </label>
-                <label>
-                  <input type="radio" formControlName="wellbutrin" value="No" />
-                  <span>No</span>
-                </label>
-              </div>
-            </fieldset>
-          </section>
-        </article>
-
-        <footer class="step-actions">
-          <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
-            <svg viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M16 10H5M9 6l-4 4 4 4" /></svg>
-            <span>Back</span>
-          </button>
-
-          <button class="primary-btn assessment-nav-btn" type="submit">
-            <span>Continue</span>
-            <svg viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M4 10h11M11 6l4 4-4 4" /></svg>
-          </button>
-        </footer>
-      </form>
-    </div>
-  </section>
-
-  <section class="assessment-section" [class]="sectionState(5)" [attr.aria-hidden]="flow.currentIndex() !== 5"
-    [attr.inert]="flow.currentIndex() === 5 ? null : ''">
-    <div class="assessment-step medication-section">
-      <form [formGroup]="medicationForm" (ngSubmit)="continueFromMedication()">
-        <article class="assessment-card history-card medication-card">
+        <div class="assessment-card__scroll">
           <div class="step-heading">
-            <div class="step-eyebrow"><span></span>Medication History · Question 1 of 3</div>
-            <h1>List all your current medications</h1>
-            <p>Include all prescriptions (medical and psychiatric), over-the-counter, and supplements.</p>
+            <div class="step-eyebrow"><span></span>Let's get started</div>
+            <h1>What brings you in today?</h1>
+            <p>Pick all options below that apply to your past or current mental health journey.</p>
           </div>
 
-          <section class="history-panel medication-panel" aria-labelledby="regular-medications-title">
-            <header class="history-panel__header">
-              <span class="history-panel__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7V3Z" /><path d="M14 3v5h5M10 12h5M10 16h5" />
-                </svg>
-              </span>
-              <strong id="regular-medications-title">Regular medications</strong>
-            </header>
+          <div class="concern-options" aria-label="Mental health concerns">
+            @for (concern of concerns; track concern.label) {
+              <button
+                class="concern-pill"
+                type="button"
+                [class.selected]="selectedConcerns().has(concern.label)"
+                [attr.aria-pressed]="selectedConcerns().has(concern.label)"
+                (click)="toggleConcern(concern.label)"
+              >
+                <span class="concern-pill__icon" aria-hidden="true">{{ concern.icon }}</span>
+                <span class="concern-pill__label">{{ concern.label }}</span>
+                @if (selectedConcerns().has(concern.label)) {
+                  <svg class="concern-pill__check" viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="m3.5 8 3 3 6-6" />
+                  </svg>
+                }
+              </button>
+            }
+          </div>
 
-            <textarea class="medication-list-input" formControlName="currentMedications"
-              aria-label="Current medications" placeholder="Name - Dose - frequency - one per line"></textarea>
-          </section>
-        </article>
-
-        <footer class="step-actions">
-          <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
+          <p class="selection-note">
             <svg viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M16 10H5M9 6l-4 4 4 4" /></svg>
-            <span>Back</span>
-          </button>
-
-          <button class="primary-btn assessment-nav-btn" type="submit">
-            <span>Continue</span>
-            <svg viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M4 10h11M11 6l4 4-4 4" /></svg>
-          </button>
-        </footer>
-      </form>
-    </div>
-  </section>
-
-  <section class="assessment-section" [class]="sectionState(6)" [attr.aria-hidden]="flow.currentIndex() !== 6"
-    [attr.inert]="flow.currentIndex() === 6 ? null : ''">
-    <div class="assessment-step completed-section">
-      <article class="assessment-card completion-card">
-        <div class="completion-icon mb-4" aria-hidden="true">
-          <svg viewBox="0 0 40 40">
-            <path d="M20 7.5 22.8 17l9.7 3-9.7 3L20 32.5 17.2 23l-9.7-3 9.7-3L20 7.5Z" />
-            <path d="m30.5 6 .8 2.7L34 9.5l-2.7.8-.8 2.7-.8-2.7-2.7-.8 2.7-.8.8-2.7ZM8 29l.7 2.3L11 32l-2.3.7L8 35l-.7-2.3L5 32l2.3-.7L8 29Z" />
-          </svg>
+              <circle cx="10" cy="10" r="7.5" />
+              <path d="M10 9v5M10 6.5h.01" />
+            </svg>
+            Selected {{ selectedConcerns().size }} · there are no wrong answers.
+          </p>
         </div>
-
-        <div class="step-heading completion-heading">
-          <div class="step-eyebrow"><span></span>Submitted · 6/4/2026</div>
-          <h1><span>Thank you!</span> <em> You're all set</em></h1>
-          <p>Your intake is securely on its way to your care team. A prescriber will review your responses within 3–5
-            business days and reach out with your preliminary care plan.</p>
-        </div>
-
-        <ol class="completion-steps my-3">
-          <li>Your information has been “saved”.</li>
-          <li>Next you will need to complete the Medication Request.</li>
-          <li>Then select/pay for a subscription plan.</li>
-          <li>Finally, the assessment and medication request will be submitted to your clinical team.</li>
-        </ol>
-
-        <a class="completion-dashboard-link" routerLink="/patient/dashboard-day-one">Go to Dashboard</a>
       </article>
+
+      <footer class="step-actions">
+        <button class="secondary-btn assessment-nav-btn" type="button" (click)="back()">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M16 10H5M9 6l-4 4 4 4" />
+          </svg>
+          <span>Back</span>
+        </button>
+
+        <button
+          class="primary-btn assessment-nav-btn"
+          type="button"
+          [disabled]="selectedConcerns().size === 0"
+          (click)="continueFromWellbeing()"
+        >
+          <span>Continue</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M4 10h11M11 6l4 4-4 4" />
+          </svg>
+        </button>
+      </footer>
     </div>
   </section>
 </div>

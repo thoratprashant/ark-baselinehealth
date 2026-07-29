@@ -20,9 +20,6 @@ export class IntakeAssessmentLayout {
   );
   protected readonly animatedProgress = signal(0);
   protected readonly displayedProgress = computed(() => Math.round(this.animatedProgress()));
-  protected readonly isComplete = computed(
-    () => this.flow.currentIndex() === INTAKE_SECTIONS.length - 1
-  );
 
   constructor(protected readonly flow: IntakeFlowService) {
     effect((onCleanup) => {
