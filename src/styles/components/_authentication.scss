@@ -83,24 +83,7 @@ app-auth-layout {
     border: 1px solid rgba(variables.$color-accent-teal, 0.15);
     border-radius: 50%;
     position: absolute;
-  }
-  
-
-  .outline-large {
-    height: 10rem;
-    left: -2.5rem;
-    top: 0.375rem;
-    width: 10rem;
-  }
-
-  .outline-small {
-    border-color: rgba(variables.$color-accent-teal, 0.15);
-    height: 6rem;
-    right: -2rem;
-    top: -2rem;
-    width: 6rem;
-  }
-
+  } 
   .form-pane {
     overflow: hidden;
     padding-left: 1.5rem;
