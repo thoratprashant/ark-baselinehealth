@@ -1,5 +1,87 @@
 @use "../abstracts/variables" as variables;
 
+:root {
+  // Large desktop: above 1550px
+  --font-size-3xs: 7px;
+  --font-size-2xs: 9px;
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 28px;
+  --font-size-body: 16px;
+  --font-size-button: 14px;
+  --font-size-button-sm: 10px;
+  --font-size-auth-heading: 30px;
+  --font-size-page-heading: 28px;
+  --font-size-shell-heading: 22px;
+}
+
+// Small laptop: below 1550px through 1280px
+@media (max-width: 1549.98px) {
+  :root {
+    --font-size-3xs: 7px;
+    --font-size-2xs: 9px;
+    --font-size-xs: 10px;
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-base: 15px;
+    --font-size-lg: 18px;
+    --font-size-xl: 22px;
+    --font-size-2xl: 24px;
+    --font-size-body: 15px;
+    --font-size-button: 13px;
+    --font-size-button-sm: 9px;
+    --font-size-auth-heading: 22px;
+    --font-size-page-heading: 24px;
+    --font-size-shell-heading: 20px;
+  }
+}
+
+// iPad and small tablet: below 1280px through 980px
+@media (max-width: 1279.98px) {
+  :root {
+    --font-size-3xs: 6px;
+    --font-size-2xs: 8px;
+    --font-size-xs: 10px;
+    --font-size-sm: 11px;
+    --font-size-md: 13px;
+    --font-size-base: 14px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 22px;
+    --font-size-body: 14px;
+    --font-size-button: 13px;
+    --font-size-button-sm: 9px;
+    --font-size-auth-heading: 20px;
+    --font-size-page-heading: 22px;
+    --font-size-shell-heading: 18px;
+  }
+}
+
+// Mobile: below 980px
+@media (max-width: 979.98px) {
+  :root {
+    --font-size-3xs: 6px;
+    --font-size-2xs: 8px;
+    --font-size-xs: 10px;
+    --font-size-sm: 11px;
+    --font-size-md: 13px;
+    --font-size-base: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 18px;
+    --font-size-2xl: 20px;
+    --font-size-body: 14px;
+    --font-size-button: 12px;
+    --font-size-button-sm: 8px;
+    --font-size-auth-heading: 18px;
+    --font-size-page-heading: 20px;
+    --font-size-shell-heading: 18px;
+  }
+}
+
 .font-secondary {
   font-family: variables.$font-secondary;
 }

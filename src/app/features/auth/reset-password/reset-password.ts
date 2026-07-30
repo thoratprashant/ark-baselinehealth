@@ -7,7 +7,7 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 function passwordsMatch(control: AbstractControl): ValidationErrors | null {
   const newPassword = control.get('newPassword')?.value;
@@ -18,7 +18,7 @@ function passwordsMatch(control: AbstractControl): ValidationErrors | null {
 
 @Component({
   selector: 'app-reset-password',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule],
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.scss'
 })
@@ -33,7 +33,7 @@ export class ResetPassword {
         validators: [
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/)
         ]
       }),
       confirmPassword: new FormControl('', {
@@ -43,6 +43,8 @@ export class ResetPassword {
     },
     { validators: passwordsMatch }
   );
+
+  constructor(private readonly router: Router) {}
 
   protected togglePasswordVisibility(): void {
     this.passwordVisible.update((visible) => !visible);
@@ -58,6 +60,6 @@ export class ResetPassword {
       return;
     }
 
-    // Connect the reset-password API here when the backend endpoint is available.
+    void this.router.navigate(['/auth/login']);
   }
 }

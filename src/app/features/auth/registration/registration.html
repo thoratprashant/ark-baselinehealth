@@ -1,268 +1,283 @@
 <section class="auth-flow d-flex flex-column w-100">
-  <header class="auth-heading d-flex flex-column align-items-center text-center">
-    <div class="heading-icon d-inline-flex align-items-center justify-content-center" aria-hidden="true">
-      <svg viewBox="0 0 24 24">
-        <path d="M10 7l5 5-5 5" />
-        <path d="M15 12H3" />
-        <path d="M14 4h4a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-4" />
-      </svg>
-    </div>
-    <h1 class="font-secondary">Create your account</h1>
-    <p>Medication refills are only a few clicks away</p>
-  </header>
+  <form
+    class="auth-card registration-card d-flex flex-column w-100"
+    [formGroup]="registrationForm"
+    (ngSubmit)="submit()"
+    novalidate
+  >
+    <div class="row g-3">
+      <div class="col-12 col-sm-6">
+        <label class="field form-label mb-0 w-100">
+          <span>First Name*</span>
+          <span class="input-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('firstName')">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="3" />
+              <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+            </svg>
+            <input
+              class="form-control border-0 shadow-none p-0"
+              formControlName="firstName"
+              type="text"
+              placeholder="Enter your first name"
+              autocomplete="given-name"
+              [attr.aria-invalid]="isInvalid('firstName')"
+            />
+          </span>
+          @if (isInvalid('firstName')) {
+            <span class="invalid-feedback d-block">First name is required.</span>
+          }
+        </label>
+      </div>
 
-  <form class="auth-card registration-card d-flex flex-column w-100">
-    <label class="field form-label mb-0">
-      <span>Full Name*</span>
-      <span class="input-shell d-flex align-items-center w-100">
-        <svg aria-hidden="true" viewBox="0 0 24 24">
-          <path d="M4 6h16v12H4z" />
-          <path d="m4 7 8 6 8-6" />
-        </svg>
-        <input
-          class="form-control border-0 shadow-none p-0"
-          type="text"
-          placeholder="Enter your full name"
-          autocomplete="name"
-          autofocus
-        />
-      </span>
-    </label>
+      <div class="col-12 col-sm-6">
+        <label class="field form-label mb-0 w-100">
+          <span>Last Name*</span>
+          <span class="input-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('lastName')">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="3" />
+              <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+            </svg>
+            <input
+              class="form-control border-0 shadow-none p-0"
+              formControlName="lastName"
+              type="text"
+              placeholder="Enter your last name"
+              autocomplete="family-name"
+              [attr.aria-invalid]="isInvalid('lastName')"
+            />
+          </span>
+          @if (isInvalid('lastName')) {
+            <span class="invalid-feedback d-block">Last name is required.</span>
+          }
+        </label>
+      </div>
+    </div>
 
     <label class="field form-label mb-0">
       <span>Email Address*</span>
-      <span class="input-shell d-flex align-items-center w-100">
+      <span class="input-shell email-input-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('email')">
         <svg aria-hidden="true" viewBox="0 0 24 24">
           <path d="M4 6h16v12H4z" />
           <path d="m4 7 8 6 8-6" />
         </svg>
         <input
           class="form-control border-0 shadow-none p-0"
+          formControlName="email"
           type="email"
           placeholder="you@example.com"
           autocomplete="email"
+          [attr.aria-invalid]="isInvalid('email')"
         />
+        <button class="secondary-btn btn btn-sm flex-shrink-0" type="button" (click)="sendVerificationCode()">
+          <img src="assets/auth/registration-send-code.svg" alt="" aria-hidden="true" />
+          <span>Send Verification Code</span>
+        </button>
       </span>
+      @if (isInvalid('email')) {
+        <span class="invalid-feedback d-block">
+          @if (registrationForm.controls.email.hasError('required')) {
+            Email address is required.
+          } @else {
+            Enter a valid email address.
+          }
+        </span>
+      }
     </label>
 
     <section class="email-verification" aria-labelledby="email-verification-title">
       <div class="verification-header">
-        <h2 id="email-verification-title">Verify your email address to continue</h2>
-        <button class="secondary-btn btn btn-sm flex-shrink-0" type="button">
-          <img src="assets/auth/registration-send-code.svg" alt="" aria-hidden="true" />
-          <span>Send Verification Code</span>
-        </button>
+        <h2 id="email-verification-title">Enter 6-digit OTP sent your email</h2>
+        <p class="resend-copy">
+          Didn’t receive it?
+          <button type="button" (click)="sendVerificationCode()">Resend OTP</button>
+        </p>
       </div>
-
-      <p class="otp-label">Enter 6-digit OTP sent your email</p>
 
       <div class="otp-row">
         <div class="otp-inputs" aria-label="Six digit verification code">
-          <input
-            #otpInput
-            type="text"
-            inputmode="numeric"
-            maxlength="1"
-            placeholder="−"
-            aria-label="OTP digit 1"
-            autocomplete="one-time-code"
-            (input)="handleOtpInput($event, 0)"
-            (keydown)="handleOtpKeydown($event, 0)"
-            (paste)="handleOtpPaste($event, 0)"
-          />
-          <input
-            #otpInput
-            type="text"
-            inputmode="numeric"
-            maxlength="1"
-            placeholder="−"
-            aria-label="OTP digit 2"
-            (input)="handleOtpInput($event, 1)"
-            (keydown)="handleOtpKeydown($event, 1)"
-            (paste)="handleOtpPaste($event, 1)"
-          />
-          <input
-            #otpInput
-            type="text"
-            inputmode="numeric"
-            maxlength="1"
-            placeholder="−"
-            aria-label="OTP digit 3"
-            (input)="handleOtpInput($event, 2)"
-            (keydown)="handleOtpKeydown($event, 2)"
-            (paste)="handleOtpPaste($event, 2)"
-          />
-          <input
-            #otpInput
-            type="text"
-            inputmode="numeric"
-            maxlength="1"
-            placeholder="−"
-            aria-label="OTP digit 4"
-            (input)="handleOtpInput($event, 3)"
-            (keydown)="handleOtpKeydown($event, 3)"
-            (paste)="handleOtpPaste($event, 3)"
-          />
-          <input
-            #otpInput
-            type="text"
-            inputmode="numeric"
-            maxlength="1"
-            placeholder="−"
-            aria-label="OTP digit 5"
-            (input)="handleOtpInput($event, 4)"
-            (keydown)="handleOtpKeydown($event, 4)"
-            (paste)="handleOtpPaste($event, 4)"
-          />
-          <input
-            #otpInput
-            type="text"
-            inputmode="numeric"
-            maxlength="1"
-            placeholder="−"
-            aria-label="OTP digit 6"
-            (input)="handleOtpInput($event, 5)"
-            (keydown)="handleOtpKeydown($event, 5)"
-            (paste)="handleOtpPaste($event, 5)"
-          />
+          @for (digit of otpDigits; track $index) {
+            <input
+              #otpInput
+              class="form-control"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              placeholder="−"
+              [attr.aria-label]="'OTP digit ' + ($index + 1)"
+              [attr.autocomplete]="$index === 0 ? 'one-time-code' : null"
+              (input)="handleOtpInput($event, $index)"
+              (keydown)="handleOtpKeydown($event, $index)"
+              (paste)="handleOtpPaste($event, $index)"
+            />
+          }
         </div>
-        <button class="primary-btn btn btn-sm flex-shrink-0" type="button">Verify Code</button>
+        <button class="primary-btn btn btn-sm flex-shrink-0" type="button" (click)="verifyCode()">Verify Code</button>
       </div>
 
-      <p class="resend-copy">
-        Didn’t receive it?
-        <button type="button">Resend OTP</button>
-      </p>
+      @if (registrationForm.controls.otp.touched && registrationForm.controls.otp.invalid) {
+        <span class="invalid-feedback d-block">Enter the complete 6-digit verification code.</span>
+      }
 
-      <div class="verified-message" role="status">
-        <img src="assets/auth/registration-verified.svg" alt="" aria-hidden="true" />
-        <span>Email Verified</span>
-      </div>
+      @if (otpVerified()) {
+        <div class="verified-message" role="status">
+          <img src="assets/auth/registration-verified.svg" alt="" aria-hidden="true" />
+          <span>Email Verified</span>
+        </div>
+      }
     </section>
 
-    <label class="field mobile-field form-label mb-0">
-      <span>Mobile Number*</span>
-      <span class="input-shell d-flex align-items-center w-100">
-        <svg aria-hidden="true" viewBox="0 0 24 24">
-          <rect x="5" y="10" width="14" height="10" rx="2" />
-          <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-        </svg>
-        <input
-          class="form-control border-0 shadow-none p-0"
-          type="tel"
-          placeholder="Enter your mobile number"
-          autocomplete="tel"
-        />
-      </span>
-      <small>Non-Serviced State selection and the click here option to see the Serviced State.</small>
-    </label>
-
-    <fieldset class="field gender-field border-0 p-0 m-0">
-      <legend>Gender*</legend>
-      <div class="gender-options">
-        <label class="gender-option">
-          <input type="radio" name="gender" value="male" checked />
-          <span>Male</span>
-        </label>
-        <label class="gender-option">
-          <input type="radio" name="gender" value="female" />
-          <span>Female</span>
-        </label>
-        <label class="gender-option">
-          <input type="radio" name="gender" value="other" />
-          <span>Other</span>
-        </label>
-        <label class="gender-option gender-option-wide">
-          <input type="radio" name="gender" value="prefer-not-to-say" />
-          <span>Prefer not to say</span>
+    <div class="row g-3">
+      <div class="col-12 col-sm-6">
+        <label class="field form-label mb-0 w-100">
+          <span>Mobile Number*</span>
+          <span class="input-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('mobile')">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <rect x="5" y="3" width="14" height="18" rx="2" />
+              <path d="M9 18h6" />
+            </svg>
+            <input
+              class="form-control border-0 shadow-none p-0"
+              formControlName="mobile"
+              type="tel"
+              placeholder="Enter your mobile number"
+              autocomplete="tel"
+              [attr.aria-invalid]="isInvalid('mobile')"
+            />
+          </span>
+          @if (isInvalid('mobile')) {
+            <span class="invalid-feedback d-block">Enter a valid mobile number.</span>
+          }
         </label>
       </div>
-    </fieldset>
+
+      <div class="col-12 col-sm-6">
+        <label class="field form-label mb-0 w-100">
+          <span>Gender*</span>
+          <span class="input-shell select-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('gender')">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="3" />
+              <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+            </svg>
+            <select
+              class="form-select border-0 shadow-none p-0"
+              formControlName="gender"
+              [attr.aria-invalid]="isInvalid('gender')"
+            >
+              <option value="" disabled>Select your Gender</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="non-binary">Non-binary</option>
+              <option value="prefer-not-to-say">Prefer not to say</option>
+            </select>
+          </span>
+          @if (isInvalid('gender')) {
+            <span class="invalid-feedback d-block">Select your gender.</span>
+          }
+        </label>
+      </div>
+    </div>
 
     <label class="field form-label mb-0">
       <span>State*</span>
-      <span class="input-shell select-shell d-flex align-items-center w-100">
+      <span class="input-shell select-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('state')">
         <img class="field-icon" src="assets/auth/registration-location.svg" alt="" aria-hidden="true" />
-        <select class="form-select border-0 shadow-none p-0" autocomplete="address-level1">
-          <option value="" selected disabled>Enter your state name</option>
+        <select
+          class="form-select border-0 shadow-none p-0"
+          formControlName="state"
+          autocomplete="address-level1"
+          [attr.aria-invalid]="isInvalid('state')"
+        >
+          <option value="" disabled>Select your state</option>
           <option value="california">California</option>
           <option value="florida">Florida</option>
           <option value="new-york">New York</option>
           <option value="texas">Texas</option>
         </select>
-        <img class="select-chevron" src="assets/auth/registration-chevron.svg" alt="" aria-hidden="true" />
       </span>
+      @if (isInvalid('state')) {
+        <span class="invalid-feedback d-block">Select your state.</span>
+      }
+      <small class="state-note">Non-Serviced State selection and then click here to see the Serviced State.</small>
     </label>
 
-    <label class="field form-label mb-0">
-      <span>Password</span>
-      <span class="input-shell d-flex align-items-center w-100">
-        <svg aria-hidden="true" viewBox="0 0 24 24">
-          <rect x="5" y="10" width="14" height="10" rx="2" />
-          <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-        </svg>
-        <input
-          class="form-control border-0 shadow-none p-0"
-          [type]="passwordVisible() ? 'text' : 'password'"
-          placeholder="••••••••"
-          autocomplete="new-password"
-        />
-        <button
-          class="input-action"
-          type="button"
-          [attr.aria-label]="passwordVisible() ? 'Hide password' : 'Show password'"
-          [attr.aria-pressed]="passwordVisible()"
-          (click)="togglePasswordVisibility()"
-        >
-          <svg aria-hidden="true" viewBox="0 0 24 24">
-            @if (passwordVisible()) {
-              <path d="m2 2 20 20" />
-              <path d="M6.7 6.7C4.7 8.1 3.3 10.1 2 12c2.4 3.6 5.7 6 10 6 1.4 0 2.7-.3 3.9-.7" />
-              <path d="M10.7 5.1A10.5 10.5 0 0 1 12 5c4.3 0 7.6 2.4 10 7-.5.8-1.1 1.5-1.7 2.1" />
-              <path d="M14.1 14.1a3 3 0 0 1-4.2-4.2" />
-            } @else {
-              <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
-              <circle cx="12" cy="12" r="3" />
-            }
-          </svg>
-        </button>
-      </span>
-    </label>
+    <div class="row g-3">
+      <div class="col-12 col-sm-6">
+        <label class="field form-label mb-0 w-100">
+          <span>Password*</span>
+          <span class="input-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('password')">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <rect x="5" y="10" width="14" height="10" rx="2" />
+              <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+            </svg>
+            <input
+              class="form-control border-0 shadow-none p-0"
+              formControlName="password"
+              [type]="passwordVisible() ? 'text' : 'password'"
+              placeholder="••••••••"
+              autocomplete="new-password"
+              [attr.aria-invalid]="isInvalid('password')"
+            />
+            <button
+              class="input-action"
+              type="button"
+              [attr.aria-label]="passwordVisible() ? 'Hide password' : 'Show password'"
+              (click)="togglePasswordVisibility()"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </span>
+          @if (isInvalid('password')) {
+            <span class="invalid-feedback d-block">Enter a password that meets all requirements.</span>
+          }
+        </label>
+      </div>
 
-    <label class="field form-label mb-0">
-      <span>Confirm Password</span>
-      <span class="input-shell d-flex align-items-center w-100">
-        <svg aria-hidden="true" viewBox="0 0 24 24">
-          <rect x="5" y="10" width="14" height="10" rx="2" />
-          <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-        </svg>
-        <input
-          class="form-control border-0 shadow-none p-0"
-          [type]="confirmPasswordVisible() ? 'text' : 'password'"
-          placeholder="••••••••"
-          autocomplete="new-password"
-        />
-        <button
-          class="input-action"
-          type="button"
-          [attr.aria-label]="confirmPasswordVisible() ? 'Hide confirm password' : 'Show confirm password'"
-          [attr.aria-pressed]="confirmPasswordVisible()"
-          (click)="toggleConfirmPasswordVisibility()"
-        >
-          <svg aria-hidden="true" viewBox="0 0 24 24">
-            @if (confirmPasswordVisible()) {
-              <path d="m2 2 20 20" />
-              <path d="M6.7 6.7C4.7 8.1 3.3 10.1 2 12c2.4 3.6 5.7 6 10 6 1.4 0 2.7-.3 3.9-.7" />
-              <path d="M10.7 5.1A10.5 10.5 0 0 1 12 5c4.3 0 7.6 2.4 10 7-.5.8-1.1 1.5-1.7 2.1" />
-              <path d="M14.1 14.1a3 3 0 0 1-4.2-4.2" />
-            } @else {
-              <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
-              <circle cx="12" cy="12" r="3" />
-            }
-          </svg>
-        </button>
-      </span>
-    </label>
+      <div class="col-12 col-sm-6">
+        <label class="field form-label mb-0 w-100">
+          <span>Confirm Password*</span>
+          <span
+            class="input-shell d-flex align-items-center w-100"
+            [class.input-invalid]="isConfirmPasswordInvalid"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <rect x="5" y="10" width="14" height="10" rx="2" />
+              <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+            </svg>
+            <input
+              class="form-control border-0 shadow-none p-0"
+              formControlName="confirmPassword"
+              [type]="confirmPasswordVisible() ? 'text' : 'password'"
+              placeholder="••••••••"
+              autocomplete="new-password"
+              [attr.aria-invalid]="isConfirmPasswordInvalid"
+            />
+            <button
+              class="input-action"
+              type="button"
+              [attr.aria-label]="confirmPasswordVisible() ? 'Hide confirm password' : 'Show confirm password'"
+              (click)="toggleConfirmPasswordVisibility()"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
+          </span>
+          @if (isConfirmPasswordInvalid) {
+            <span class="invalid-feedback d-block">
+              @if (registrationForm.controls.confirmPassword.hasError('required')) {
+                Confirm password is required.
+              } @else {
+                Passwords do not match.
+              }
+            </span>
+          }
+        </label>
+      </div>
+    </div>
 
     <aside class="password-requirements">
       <ul class="mb-0">
@@ -273,14 +288,6 @@
       </ul>
     </aside>
 
-    <button class="primary-btn btn w-100 flex-shrink-0" type="button">Create account</button>
+    <button class="primary-btn btn w-100 flex-shrink-0" type="submit">Create account</button>
   </form>
-
-  <footer class="registration-footer d-flex flex-column align-items-center">
-    <a class="signin-link text-center text-decoration-none" routerLink="/auth/login">
-      <span>Already have an account?</span>
-      <strong>Log In</strong>
-    </a>
-    <p class="security-note mb-0 text-center">Protected by HIPAA-compliant security</p>
-  </footer>
 </section>

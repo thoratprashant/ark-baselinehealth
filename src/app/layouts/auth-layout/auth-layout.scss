@@ -1,0 +1,223 @@
+@use "../../../styles/abstracts/breakpoints" as breakpoints;
+@use "../../../styles/abstracts/variables" as variables;
+
+:host {
+  display: block;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.auth-layout {
+  background: linear-gradient(
+    151deg,
+    variables.$color-auth-background 0%,
+    rgba(variables.$color-topbar-border, 0.3) 50%,
+    variables.$color-auth-background 100%
+  );
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.ambient {
+  border-radius: 50%;
+  filter: blur(2rem);
+  opacity: 0.2;
+  pointer-events: none;
+  position: absolute;
+}
+
+.ambient-primary {
+  background: rgba(variables.$color-primary, 0.3);
+  height: 24.25rem;
+  left: -5rem;
+  top: -5.3125rem;
+  width: 24.25rem;
+}
+
+.ambient-secondary {
+  background: rgba(variables.$color-accent-teal, 0.2);
+  bottom: 2.625rem;
+  height: 20.3125rem;
+  right: 2.1875rem;
+  width: 20.3125rem;
+}
+
+.ambient-tertiary {
+  background: rgba(variables.$color-accent-purple, 0.15);
+  height: 17.4375rem;
+  left: 33%;
+  top: 58%;
+  transform: translateY(-50%);
+  width: 17.8125rem;
+}
+
+.brand-pane,
+.form-pane {
+  min-height: 0;
+  min-width: 0;
+  padding: 3rem 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.brand-wrap {
+  gap: 0.75rem;
+  width: min(28rem, 100%);
+}
+
+.auth-logo {
+  display: block;
+  height: auto; 
+}
+
+.auth-intro {
+  gap: 0.25rem;
+}
+
+.heading-icon {
+  background: rgba(variables.$color-primary, 0.1);
+  border: 0.0625rem solid rgba(variables.$color-primary, 0.2);
+  border-radius: variables.$radius-large;
+  color: variables.$color-primary;
+  height: 3.5rem;
+  margin-bottom: 0.25rem;
+  width: 3.5rem;
+
+  svg {
+    fill: none;
+    height: 1.75rem;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+    width: 1.75rem;
+  }
+}
+
+h1 {
+  color: variables.$color-text;
+  font-family: variables.$font-secondary;
+  font-size: variables.$font-size-auth-heading;
+  font-weight: 600;
+  letter-spacing: -0.046875rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.auth-intro > p {
+  color: variables.$color-muted;
+  font-size: variables.$font-size-body-responsive;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.intro-link {
+  color: variables.$color-primary;
+  font-size: variables.$font-size-md;
+  gap: 0.25rem;
+  justify-content: center;
+  line-height: 1.25rem;
+  margin-top: 0.25rem;
+
+  span {
+    color: variables.$color-muted;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  svg {
+    fill: none;
+    height: 1.5rem;
+    margin-right: 0.375rem;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+    width: 1.5rem;
+  }
+}
+
+.form-pane {
+  // gap: 1.5rem;
+  overflow: hidden;
+}
+
+.security-note {
+  bottom: 3rem;
+  color: rgba(variables.$color-muted, 0.6);
+  font-size: variables.$font-size-sm;
+  line-height: 1rem;
+  position: absolute;
+}
+
+@include breakpoints.down(56.25rem) {
+  :host {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .auth-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: auto;
+    min-height: 100dvh;
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+
+  .brand-pane {
+    padding: 2rem 1.5rem 0.75rem;
+  }
+
+  .brand-wrap {
+    gap: 0.5rem;
+  }
+
+  .auth-logo {
+    width: 12rem;
+  }
+
+  .heading-icon {
+    height: 3rem;
+    width: 3rem;
+
+    svg {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+  }
+
+  .form-pane {
+    justify-content: flex-start !important;
+    overflow: visible;
+    padding: 1rem 1.5rem 4rem;
+  }
+
+  .security-note {
+    bottom: 1.5rem;
+  }
+}
+
+@include breakpoints.down(breakpoints.$mobile) {
+  .brand-pane {
+    padding: 1.5rem 1rem 0.5rem;
+  }
+
+  .auth-logo {
+    width: 9.5rem;
+  }
+
+  .auth-intro > p {
+    font-size: variables.$font-size-md;
+  }
+
+  .form-pane {
+    padding-inline: 1rem;
+  }
+}

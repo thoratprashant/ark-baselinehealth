@@ -1,1 +1,35 @@
-/* Registration page styles are shared from the authentication stylesheet. */
+/*
+ * Registration-specific geometry is kept here as a component-scoped safeguard.
+ * Shared controls, validation, colors and responsive styling remain global.
+ */
+:host {
+  display: flex;
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
+}
+
+.auth-flow {
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}
+
+.registration-card {
+  flex: 0 0 auto;
+  height: calc(100vh - 60px); 
+  width: min(38.25rem, 100%) !important;
+}
+
+@media (max-width: 56.25rem) {
+  :host,
+  .auth-flow {
+    height: auto;
+    max-height: none;
+  }
+
+  .registration-card {
+    height: auto;
+    max-height: unset;
+  }
+}
