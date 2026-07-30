@@ -7,6 +7,9 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 
 function passwordsMatch(control: AbstractControl): ValidationErrors | null {
@@ -18,7 +21,7 @@ function passwordsMatch(control: AbstractControl): ValidationErrors | null {
 
 @Component({
   selector: 'app-reset-password',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatIconModule, MatInputModule],
   templateUrl: './reset-password.html',
   styleUrl: './reset-password.scss'
 })

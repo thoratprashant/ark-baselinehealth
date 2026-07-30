@@ -3,7 +3,10 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": "a9d05716-7d67-4891-b39d-2458ccf7d963"
+    "analytics": "a9d05716-7d67-4891-b39d-2458ccf7d963",
+    "cache": {
+      "enabled": false
+    }
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -32,6 +35,7 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
             "server": "src/main.server.ts",

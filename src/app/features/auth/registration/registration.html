@@ -9,20 +9,17 @@
       <div class="col-12 col-sm-6">
         <label class="field form-label mb-0 w-100">
           <span>First Name*</span>
-          <span class="input-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('firstName')">
-            <svg aria-hidden="true" viewBox="0 0 24 24">
-              <circle cx="12" cy="8" r="3" />
-              <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
-            </svg>
+          <mat-form-field class="auth-mat-field" appearance="outline" subscriptSizing="dynamic" [class.input-invalid]="isInvalid('firstName')">
+            <mat-icon matPrefix>person</mat-icon>
             <input
-              class="form-control border-0 shadow-none p-0"
+              matInput
               formControlName="firstName"
               type="text"
               placeholder="Enter your first name"
               autocomplete="given-name"
               [attr.aria-invalid]="isInvalid('firstName')"
             />
-          </span>
+          </mat-form-field>
           @if (isInvalid('firstName')) {
             <span class="invalid-feedback d-block">First name is required.</span>
           }
@@ -32,20 +29,17 @@
       <div class="col-12 col-sm-6">
         <label class="field form-label mb-0 w-100">
           <span>Last Name*</span>
-          <span class="input-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('lastName')">
-            <svg aria-hidden="true" viewBox="0 0 24 24">
-              <circle cx="12" cy="8" r="3" />
-              <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
-            </svg>
+          <mat-form-field class="auth-mat-field" appearance="outline" subscriptSizing="dynamic" [class.input-invalid]="isInvalid('lastName')">
+            <mat-icon matPrefix>person</mat-icon>
             <input
-              class="form-control border-0 shadow-none p-0"
+              matInput
               formControlName="lastName"
               type="text"
               placeholder="Enter your last name"
               autocomplete="family-name"
               [attr.aria-invalid]="isInvalid('lastName')"
             />
-          </span>
+          </mat-form-field>
           @if (isInvalid('lastName')) {
             <span class="invalid-feedback d-block">Last name is required.</span>
           }
@@ -55,24 +49,21 @@
 
     <label class="field form-label mb-0">
       <span>Email Address*</span>
-      <span class="input-shell email-input-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('email')">
-        <svg aria-hidden="true" viewBox="0 0 24 24">
-          <path d="M4 6h16v12H4z" />
-          <path d="m4 7 8 6 8-6" />
-        </svg>
+      <mat-form-field class="auth-mat-field email-mat-field" appearance="outline" subscriptSizing="dynamic" [class.input-invalid]="isInvalid('email')">
+        <mat-icon matPrefix>mail</mat-icon>
         <input
-          class="form-control border-0 shadow-none p-0"
+          matInput
           formControlName="email"
           type="email"
           placeholder="you@example.com"
           autocomplete="email"
           [attr.aria-invalid]="isInvalid('email')"
         />
-        <button class="secondary-btn btn btn-sm flex-shrink-0" type="button" (click)="sendVerificationCode()">
+        <button class="secondary-btn btn btn-sm flex-shrink-0" matSuffix type="button" (click)="sendVerificationCode()">
           <img src="assets/auth/registration-send-code.svg" alt="" aria-hidden="true" />
           <span>Send Verification Code</span>
         </button>
-      </span>
+      </mat-form-field>
       @if (isInvalid('email')) {
         <span class="invalid-feedback d-block">
           @if (registrationForm.controls.email.hasError('required')) {
@@ -130,20 +121,17 @@
       <div class="col-12 col-sm-6">
         <label class="field form-label mb-0 w-100">
           <span>Mobile Number*</span>
-          <span class="input-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('mobile')">
-            <svg aria-hidden="true" viewBox="0 0 24 24">
-              <rect x="5" y="3" width="14" height="18" rx="2" />
-              <path d="M9 18h6" />
-            </svg>
+          <mat-form-field class="auth-mat-field" appearance="outline" subscriptSizing="dynamic" [class.input-invalid]="isInvalid('mobile')">
+            <mat-icon matPrefix>phone_iphone</mat-icon>
             <input
-              class="form-control border-0 shadow-none p-0"
+              matInput
               formControlName="mobile"
               type="tel"
               placeholder="Enter your mobile number"
               autocomplete="tel"
               [attr.aria-invalid]="isInvalid('mobile')"
             />
-          </span>
+          </mat-form-field>
           @if (isInvalid('mobile')) {
             <span class="invalid-feedback d-block">Enter a valid mobile number.</span>
           }
@@ -153,23 +141,23 @@
       <div class="col-12 col-sm-6">
         <label class="field form-label mb-0 w-100">
           <span>Gender*</span>
-          <span class="input-shell select-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('gender')">
-            <svg aria-hidden="true" viewBox="0 0 24 24">
-              <circle cx="12" cy="8" r="3" />
-              <path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
-            </svg>
-            <select
-              class="form-select border-0 shadow-none p-0"
+          <mat-form-field class="auth-mat-field" appearance="outline" subscriptSizing="dynamic" [class.input-invalid]="isInvalid('gender')">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-select
+              class="app-mat-select"
               formControlName="gender"
+              placeholder="Select your Gender"
+              panelClass="app-select-panel"
+              disableOptionCentering
+              hideSingleSelectionIndicator
               [attr.aria-invalid]="isInvalid('gender')"
             >
-              <option value="" disabled>Select your Gender</option>
-              <option value="female">Female</option>
-              <option value="male">Male</option>
-              <option value="non-binary">Non-binary</option>
-              <option value="prefer-not-to-say">Prefer not to say</option>
-            </select>
-          </span>
+              <mat-option value="female">Female</mat-option>
+              <mat-option value="male">Male</mat-option>
+              <mat-option value="non-binary">Non-binary</mat-option>
+              <mat-option value="prefer-not-to-say">Prefer not to say</mat-option>
+            </mat-select>
+          </mat-form-field>
           @if (isInvalid('gender')) {
             <span class="invalid-feedback d-block">Select your gender.</span>
           }
@@ -179,21 +167,23 @@
 
     <label class="field form-label mb-0">
       <span>State*</span>
-      <span class="input-shell select-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('state')">
-        <img class="field-icon" src="assets/auth/registration-location.svg" alt="" aria-hidden="true" />
-        <select
-          class="form-select border-0 shadow-none p-0"
+      <mat-form-field class="auth-mat-field" appearance="outline" subscriptSizing="dynamic" [class.input-invalid]="isInvalid('state')">
+        <mat-icon matPrefix>location_on</mat-icon>
+        <mat-select
+          class="app-mat-select"
           formControlName="state"
-          autocomplete="address-level1"
+          placeholder="Select your state"
+          panelClass="app-select-panel"
+          disableOptionCentering
+          hideSingleSelectionIndicator
           [attr.aria-invalid]="isInvalid('state')"
         >
-          <option value="" disabled>Select your state</option>
-          <option value="california">California</option>
-          <option value="florida">Florida</option>
-          <option value="new-york">New York</option>
-          <option value="texas">Texas</option>
-        </select>
-      </span>
+          <mat-option value="california">California</mat-option>
+          <mat-option value="florida">Florida</mat-option>
+          <mat-option value="new-york">New York</mat-option>
+          <mat-option value="texas">Texas</mat-option>
+        </mat-select>
+      </mat-form-field>
       @if (isInvalid('state')) {
         <span class="invalid-feedback d-block">Select your state.</span>
       }
@@ -204,13 +194,10 @@
       <div class="col-12 col-sm-6">
         <label class="field form-label mb-0 w-100">
           <span>Password*</span>
-          <span class="input-shell d-flex align-items-center w-100" [class.input-invalid]="isInvalid('password')">
-            <svg aria-hidden="true" viewBox="0 0 24 24">
-              <rect x="5" y="10" width="14" height="10" rx="2" />
-              <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-            </svg>
+          <mat-form-field class="auth-mat-field" appearance="outline" subscriptSizing="dynamic" [class.input-invalid]="isInvalid('password')">
+            <mat-icon matPrefix>lock</mat-icon>
             <input
-              class="form-control border-0 shadow-none p-0"
+              matInput
               formControlName="password"
               [type]="passwordVisible() ? 'text' : 'password'"
               placeholder="••••••••"
@@ -219,16 +206,14 @@
             />
             <button
               class="input-action"
+              matSuffix
               type="button"
               [attr.aria-label]="passwordVisible() ? 'Hide password' : 'Show password'"
               (click)="togglePasswordVisibility()"
             >
-              <svg aria-hidden="true" viewBox="0 0 24 24">
-                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
+              <mat-icon>{{ passwordVisible() ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-          </span>
+          </mat-form-field>
           @if (isInvalid('password')) {
             <span class="invalid-feedback d-block">Enter a password that meets all requirements.</span>
           }
@@ -238,16 +223,15 @@
       <div class="col-12 col-sm-6">
         <label class="field form-label mb-0 w-100">
           <span>Confirm Password*</span>
-          <span
-            class="input-shell d-flex align-items-center w-100"
+          <mat-form-field
+            class="auth-mat-field"
+            appearance="outline"
+            subscriptSizing="dynamic"
             [class.input-invalid]="isConfirmPasswordInvalid"
           >
-            <svg aria-hidden="true" viewBox="0 0 24 24">
-              <rect x="5" y="10" width="14" height="10" rx="2" />
-              <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-            </svg>
+            <mat-icon matPrefix>lock</mat-icon>
             <input
-              class="form-control border-0 shadow-none p-0"
+              matInput
               formControlName="confirmPassword"
               [type]="confirmPasswordVisible() ? 'text' : 'password'"
               placeholder="••••••••"
@@ -256,16 +240,14 @@
             />
             <button
               class="input-action"
+              matSuffix
               type="button"
               [attr.aria-label]="confirmPasswordVisible() ? 'Hide confirm password' : 'Show confirm password'"
               (click)="toggleConfirmPasswordVisibility()"
             >
-              <svg aria-hidden="true" viewBox="0 0 24 24">
-                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
+              <mat-icon>{{ confirmPasswordVisible() ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-          </span>
+          </mat-form-field>
           @if (isConfirmPasswordInvalid) {
             <span class="invalid-feedback d-block">
               @if (registrationForm.controls.confirmPassword.hasError('required')) {

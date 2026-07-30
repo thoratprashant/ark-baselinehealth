@@ -5,6 +5,227 @@
 @use "styles/components/authentication";
 @use "styles/components/intake-assessment";
 @use "styles/components/global";
+
+/* Global Angular Material authentication form styling. */
+.auth-mat-field {
+  --mat-form-field-container-text-font: #{variables.$font-primary};
+  --mat-form-field-container-text-line-height: 1.25rem;
+  --mat-form-field-container-text-size: #{variables.$font-size-md};
+  --mat-form-field-container-text-tracking: 0;
+  --mat-form-field-container-text-weight: 400;
+  --mat-form-field-outlined-caret-color: #{variables.$color-secondary};
+  --mat-form-field-outlined-container-shape: #{variables.$radius-medium};
+  --mat-form-field-outlined-error-focus-outline-color: #{variables.$color-danger};
+  --mat-form-field-outlined-error-hover-outline-color: #{variables.$color-danger};
+  --mat-form-field-outlined-error-outline-color: #{variables.$color-danger};
+  --mat-form-field-outlined-focus-outline-color: #{variables.$color-secondary};
+  --mat-form-field-outlined-focus-outline-width: 0.0625rem;
+  --mat-form-field-outlined-hover-outline-color: #{rgba(variables.$color-border, 0.8)};
+  --mat-form-field-outlined-input-text-color: #{variables.$color-text};
+  --mat-form-field-outlined-input-text-placeholder-color: #{variables.$color-muted};
+  --mat-form-field-outlined-outline-color: #{rgba(variables.$color-border, 0.8)};
+  --mat-form-field-outlined-outline-width: 0.0625rem;
+
+  font-family: variables.$font-primary;
+  width: 100%;
+
+  .mat-mdc-text-field-wrapper {
+    background: transparent;
+    border-radius: variables.$radius-medium !important;
+    box-shadow: 0 0.0625rem 0.125rem rgba(variables.$color-black, 0.05);
+    height: variables.$control-height;
+    padding: 0 0.75rem;
+  }
+
+  .mdc-text-field--outlined,
+  .mdc-notched-outline {
+    border-radius: variables.$radius-medium !important;
+  }
+
+  .mdc-notched-outline__leading {
+    border-radius: variables.$radius-medium 0 0 variables.$radius-medium !important;
+  }
+
+  .mdc-notched-outline__trailing {
+    border-radius: 0 variables.$radius-medium variables.$radius-medium 0 !important;
+  }
+
+  .mat-mdc-form-field-flex {
+    align-items: center;
+    height: 100%;
+  }
+
+  .mat-mdc-form-field-infix {
+    min-height: 0;
+    padding: 0 !important;
+    width: auto;
+  }
+
+  .mat-mdc-input-element {
+    color: variables.$color-text;
+    font-family: variables.$font-primary !important;
+    font-size: variables.$font-size-md;
+    line-height: 1.25rem;
+
+    &::placeholder {
+      color: variables.$color-muted;
+      opacity: 1;
+    }
+  }
+
+  .mat-mdc-form-field-icon-prefix {
+    color: variables.$color-muted;
+    padding: 0;
+
+    .mat-icon {
+      font-size: 1rem;
+      height: 1rem;
+      line-height: 1rem;
+      width: 1rem;
+    }
+  }
+
+  .mat-mdc-form-field-icon-suffix {
+    padding: 0 0.25rem 0 0.5rem;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  &.mat-focused:not(.input-invalid):not(.mat-form-field-invalid) .mat-mdc-text-field-wrapper {
+    box-shadow: 0 0.0625rem 0.125rem rgba(variables.$color-black, 0.05);
+  }
+
+  &.input-invalid,
+  &.mat-form-field-invalid {
+    --mat-form-field-outlined-caret-color: #{variables.$color-danger};
+    --mat-form-field-outlined-focus-outline-color: #{variables.$color-danger};
+    --mat-form-field-outlined-hover-outline-color: #{variables.$color-danger};
+    --mat-form-field-outlined-outline-color: #{variables.$color-danger};
+
+    .mat-mdc-text-field-wrapper {
+      box-shadow: 0 0.0625rem 0.125rem rgba(variables.$color-black, 0.05);
+    }
+  }
+
+  .input-action {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: variables.$color-muted;
+    display: inline-flex;
+    justify-content: center;
+    margin-right: 0.5rem !important;
+    padding: 0;
+
+    .mat-icon {
+      font-size: 1rem;
+      height: 1rem;
+      line-height: 1rem;
+      width: 1rem;
+    }
+  }
+}
+
+.app-mat-select {
+  --mat-select-enabled-arrow-color: #{variables.$color-muted};
+  --mat-select-focused-arrow-color: #{variables.$color-muted};
+  --mat-select-trigger-text-font: #{variables.$font-primary};
+  --mat-select-trigger-text-line-height: 1.25rem;
+  --mat-select-trigger-text-size: #{variables.$font-size-md};
+  --mat-select-trigger-text-tracking: 0;
+  --mat-select-trigger-text-weight: 400;
+
+  align-items: center;
+  box-sizing: border-box;
+  color: variables.$color-text;
+  display: flex !important;
+  flex: 1 1 100%;
+  font-family: variables.$font-primary;
+  font-size: variables.$font-size-md;
+  height: 100%;
+  min-width: 0;
+  padding: 0;
+  width: 100% !important;
+
+  .mat-mdc-select-trigger {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 0;
+    width: 100%;
+  }
+
+  .mat-mdc-select-value {
+    align-items: center;
+    color: variables.$color-text;
+    display: flex;
+    height: 100%;
+  }
+
+  .mat-mdc-select-placeholder {
+    color: variables.$color-muted;
+    opacity: 1;
+  }
+
+  .mat-mdc-select-arrow-wrapper {
+    transform: none;
+  }
+
+  .mat-mdc-select-arrow {
+    color: variables.$color-muted;
+    transition: transform 180ms ease;
+  }
+
+  &.mat-select-open .mat-mdc-select-arrow {
+    transform: rotate(180deg);
+  }
+}
+
+/* The overlay width is calculated from the full-width mat-select trigger. */
+.cdk-overlay-pane .mat-mdc-select-panel.app-select-panel {
+  --mat-option-label-text-font: #{variables.$font-primary};
+  --mat-option-label-text-line-height: 1.25rem;
+  --mat-option-label-text-size: #{variables.$font-size-md};
+  --mat-option-label-text-tracking: 0;
+  --mat-option-label-text-weight: 400;
+
+  background: variables.$color-white;
+  border: 0.0625rem solid rgba(variables.$color-border, 0.8);
+  border-radius: variables.$radius-medium;
+  box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(variables.$color-black, 0.1),
+    0 0.25rem 0.375rem -0.25rem rgba(variables.$color-black, 0.1);
+  box-sizing: border-box;
+  margin-top: 0.375rem;
+  max-width: none;
+  padding: 0.375rem;
+  width: 100%;
+
+  .mat-mdc-option {
+    border-radius: 0.5rem;
+    color: variables.$color-text;
+    font-family: variables.$font-primary;
+    font-size: variables.$font-size-md;
+    min-height: 2.5rem;
+    padding-inline: 0.75rem;
+
+    .mdc-list-item__primary-text {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    &:hover:not(.mdc-list-item--disabled),
+    &.mat-mdc-option-active {
+      background: #f7fffc;
+    }
+
+    &.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+      background: rgba(variables.$color-secondary, 0.1);
+      color: variables.$color-secondary;
+    }
+  }
+}
+
 .route--wrapper > * {
   animation: showPageAnim 1000ms ease-out;
 } 

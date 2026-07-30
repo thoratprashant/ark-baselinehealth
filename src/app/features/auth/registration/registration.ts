@@ -7,6 +7,10 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 
 function passwordsMatch(control: AbstractControl): ValidationErrors | null {
@@ -17,7 +21,7 @@ function passwordsMatch(control: AbstractControl): ValidationErrors | null {
 
 @Component({
   selector: 'app-registration',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule],
   templateUrl: './registration.html',
   styleUrl: './registration.scss'
 })

@@ -39,62 +39,8 @@ app-registration {
     line-height: 1.25rem;
   }
 
-  .input-shell {
-    background: transparent;
-    border: 0.0625rem solid rgba(variables.$color-border, 0.8);
-    border-radius: variables.$radius-medium;
-    box-shadow: 0 0.0625rem 0.125rem rgba(variables.$color-black, 0.05);
-    height: variables.$control-height;
-    padding: 0 0.75rem;
-    transition: border-color 160ms ease, box-shadow 160ms ease;
-
-    &:focus-within {
-      border-color: variables.$color-secondary;
-      box-shadow: 0 0 0 0.0625rem variables.$color-secondary,
-        0 0.0625rem 0.125rem rgb(0 0 0 / 5%);
-    }
-
-    > svg {
-      color: variables.$color-muted;
-      fill: none;
-      flex: 0 0 1rem;
-      height: 1rem;
-      margin-right: 0.75rem;
-      stroke: currentColor;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-width: 1.8;
-      width: 1rem;
-    }
-
-    .form-control,
-    .form-select {
-      background-color: transparent;
-      color: variables.$color-text;
-      flex: 1 1 auto;
-      font-size: variables.$font-size-md;
-      min-width: 0;
-    }
-
-    .form-control::placeholder {
-      color: variables.$color-muted;
-      opacity: 1;
-    }
-
-    .form-select {
-      background-image: var(--bs-form-select-bg-img);
-      color: variables.$color-muted;
-      padding-right: 1.5rem !important;
-    }
-  }
-
-  .input-shell.input-invalid {
-    border-color: variables.$color-error;
-    box-shadow: 0 0 0 0.0625rem rgba(variables.$color-error, 0.18);
-  }
-
   .invalid-feedback {
-    color: variables.$color-error;
+    color: variables.$color-danger;
     font-size: variables.$font-size-sm;
     font-weight: 400;
     line-height: 1rem;
@@ -186,18 +132,6 @@ app-registration {
       padding-left: 0.5rem;
       padding-right: 0.5rem;
     }
-  }
-
-  .email-input-shell {
-    gap: 0.25rem;
-  }
-
-  .field-icon {
-    flex: 0 0 1rem;
-    height: 1rem;
-    margin-right: 0.75rem;
-    object-fit: contain;
-    width: 1rem;
   }
 
   .email-verification {
@@ -349,14 +283,8 @@ app-registration {
       padding: 1.25rem;
     }
 
-    .email-input-shell {
-      align-items: stretch !important;
-      height: auto;
-      padding-block: 0.625rem;
-
-      .secondary-btn {
-        white-space: nowrap;
-      }
+    .email-mat-field .secondary-btn {
+      white-space: nowrap;
     }
 
     .verification-header {
