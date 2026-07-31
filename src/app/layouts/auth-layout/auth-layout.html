@@ -1,13 +1,23 @@
-<main class="auth-layout container-fluid p-0">
+<main
+  class="auth-layout container-fluid p-0"
+  [class.auth-login]="page().key === 'login'"
+  [class.auth-forgot]="page().key === 'forgot-password'"
+  [class.auth-reset]="page().key === 'reset-password'"
+  [class.auth-registration]="page().key === 'registration'"
+>
   <span class="ambient ambient-primary" aria-hidden="true"></span>
   <span class="ambient ambient-secondary" aria-hidden="true"></span>
   <span class="ambient ambient-tertiary" aria-hidden="true"></span>
 
   <section class="brand-pane d-flex align-items-center justify-content-center" aria-label="Baseline Health">
-    <div class="brand-wrap d-flex flex-column align-items-center text-center">
+    <div class="brand-wrap d-flex align-items-center justify-content-center">
       <img class="auth-logo img-fluid" src="assets/images/auth-logo.svg" alt="Baseline Health" />
+    </div>
+  </section>
 
-      <div class="auth-intro d-flex flex-column align-items-center">
+  <section class="form-pane d-flex flex-column align-items-center route--wrapper">
+    <div class="auth-content d-flex flex-column align-items-center w-100">
+      <header class="auth-intro d-flex flex-column align-items-center text-center">
         <div class="heading-icon d-inline-flex align-items-center justify-content-center" aria-hidden="true">
           @if (page().icon === 'mail') {
             <svg viewBox="0 0 24 24">
@@ -31,25 +41,24 @@
 
         <h1>{{ page().title }}</h1>
         <p>{{ page().subtitle }}</p>
+      </header>
 
-        <a class="intro-link d-inline-flex align-items-center text-decoration-none" [routerLink]="page().link">
-          @if (page().showBackArrow) {
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M19 12H5" />
-              <path d="m12 19-7-7 7-7" />
-            </svg>
-          }
+      <router-outlet />
+
+      <a class="intro-link d-inline-flex align-items-center text-decoration-none mt-2 mb-1" [routerLink]="page().link">
+        @if (page().showBackArrow) {
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 12H5" />
+            <path d="m12 19-7-7 7-7" />
+          </svg>
+        }
+        @if (page().linkPrefix) {
           <span>{{ page().linkPrefix }}</span>
-          <strong>{{ page().linkLabel }}</strong>
-        </a>
-      </div>
+        }
+        <strong>{{ page().linkLabel }}</strong>
+      </a>
     </div>
-  </section>
 
-  <section class="form-pane d-flex flex-column align-items-center justify-content-center route--wrapper">
-    <router-outlet />
-    @if (page().key !== 'registration') {
-      <p class="security-note mb-0 text-center">Protected by HIPAA-compliant security</p>
-    }
+    <p class="security-note mb-0 text-center">Protected by HIPAA-compliant security</p>
   </section>
 </main>
