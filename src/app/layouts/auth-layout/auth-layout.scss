@@ -275,3 +275,46 @@ h1 {
     }
   } 
 }
+
+/* On mobile, the surrounding pane scrolls instead of the registration card. */
+@media (max-width: 56.25rem), (max-height: 37.5rem) and (pointer: coarse) {
+  .auth-registration .form-pane {
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+
+  .auth-registration .auth-content {
+    max-height: none;
+  }
+}
+
+/* Short mobile landscape screens scroll the pane, never the auth card. */
+@media (orientation: landscape) and (max-height: 37.5rem) and (pointer: coarse) {
+  .auth-login .form-pane,
+  .auth-forgot .form-pane,
+  .auth-reset .form-pane {
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+
+  .auth-login .auth-content,
+  .auth-forgot .auth-content,
+  .auth-reset .auth-content {
+    flex: 0 0 auto;
+    max-height: none;
+    padding-block: 0.5rem 1.5rem;
+  }
+}
+
+/* Vertically center the complete registration group when the viewport is tall enough. */
+@media (min-width: 56.3125rem) and (min-height: 50rem) {
+  .auth-registration .form-pane {
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .auth-registration .auth-content {
+    max-height: none;
+    padding-top: 0;
+  }
+}
