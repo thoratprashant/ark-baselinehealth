@@ -8,12 +8,7 @@
 }
 
 .auth-layout {
-  background: linear-gradient(
-    151deg,
-    variables.$color-auth-background 0%,
-    rgba(variables.$color-topbar-border, 0.3) 50%,
-    variables.$color-auth-background 100%
-  );
+  background: #f0f7f6;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   height: 100%;
