@@ -57,8 +57,14 @@
         }
         <strong>{{ page().linkLabel }}</strong>
       </a>
+
+      @if (page().key === 'registration') {
+        <p class="security-note mb-0 text-center">Protected by HIPAA-compliant security</p>
+      }
     </div>
 
-    <p class="security-note mb-0 text-center">Protected by HIPAA-compliant security</p>
+    @if (page().key !== 'registration') {
+      <p class="security-note mb-0 text-center">Protected by HIPAA-compliant security</p>
+    }
   </section>
 </main>

@@ -85,22 +85,28 @@ app-login {
 }
 
 app-registration {
-  height: 100%;
+  flex: 0 1 auto;
+  height: auto;
   max-height: 100%;
+  min-height: 0;
   width: 100%;
 
   .auth-flow {
     align-items: center;
-    height: 100%;
+    height: auto;
     justify-content: center;
+    max-height: 100%;
+    min-height: 0;
   }
 
   .registration-card {
     background: #fcfdfd;
-    flex: 0 0 auto;
+    flex: 0 1 auto;
     gap: 0.625rem;
-    height: min(40.1875rem, calc(100dvh - 16rem));
-    max-height: 40.1875rem;
+    height: auto;
+    max-height: 100%;
+    min-height: 0;
+    overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 1.5625rem;
@@ -255,18 +261,6 @@ app-registration {
     justify-content: center;
   }
 
-  app-registration {
-    height: 100%;
-    max-height: 100%;
-
-    .auth-flow {
-      height: 100%;
-    }
-
-    .registration-card {
-      height: calc(100dvh - 13rem);
-    }
-  }
 }
 
 @include breakpoints.down(breakpoints.$mobile) {
@@ -323,44 +317,3 @@ app-registration {
   }
 }
 
-/* Keep the registration card itself scrollbar-free on mobile portrait and landscape. */
-@media (max-width: 56.25rem), (max-height: 37.5rem) and (pointer: coarse) {
-  app-registration {
-    height: auto;
-    max-height: none;
-
-    .auth-flow {
-      height: auto;
-    }
-
-    .registration-card {
-      height: auto;
-      max-height: none;
-      overflow-y: visible;
-      overscroll-behavior: auto;
-      scrollbar-gutter: auto;
-      scrollbar-width: auto;
-    }
-  }
-}
-
-/* Large screens show the full registration card without an internal scrollbar. */
-@media (min-width: 56.3125rem) and (min-height: 50rem) {
-  app-registration {
-    height: auto;
-    max-height: none;
-
-    .auth-flow {
-      height: auto;
-    }
-
-    .registration-card {
-      height: auto;
-      max-height: none;
-      overflow-y: visible;
-      overscroll-behavior: auto;
-      scrollbar-gutter: auto;
-      scrollbar-width: auto;
-    }
-  }
-}
