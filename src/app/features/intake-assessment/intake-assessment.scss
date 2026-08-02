@@ -191,22 +191,22 @@ $intake-yellow: #f1c45e;
 }
 
 .concern-options {
-  --bs-gutter-y: 1.75rem;
+  --bs-gutter-y: 0.75rem;
 }
 
 .concern-pill {
   background: #f6faff;
   border: 0.0625rem solid $intake-border;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   color: $intake-navy;
   cursor: pointer;
   font-family: inherit;
-  font-size: clamp(0.875rem, 1.4vw, 1.25rem);
+  font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.25rem;
   max-width: 100%;
-  min-height: 3.3333rem;
-  padding: 1rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 0.75rem;
   transition:
     background-color 220ms ease,
     border-color 220ms ease,
@@ -247,7 +247,7 @@ $intake-yellow: #f1c45e;
 }
 
 .concern-pill__icon {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   line-height: 1;
 }
 
@@ -284,7 +284,7 @@ $intake-yellow: #f1c45e;
 
 @include breakpoints.down(breakpoints.$tablet) {
   .concern-pill {
-    font-size: 1rem;
+    font-size: 0.9375rem;
   }
 }
 
@@ -307,8 +307,8 @@ $intake-yellow: #f1c45e;
 
   .concern-pill {
     font-size: 0.875rem;
-    min-height: 3rem;
-    padding: 0.75rem;
+    min-height: 2.625rem;
+    padding: 0.5625rem 0.75rem;
   }
 
   .concern-pill__icon {
@@ -320,8 +320,8 @@ $intake-yellow: #f1c45e;
   .concern-pill {
     border-radius: 1rem;
     font-size: 0.9375rem;
-    min-height: 3rem;
-    padding: 0.75rem;
+    min-height: 2.625rem;
+    padding: 0.5625rem 0.75rem;
   }
 
   .concern-pill__icon {

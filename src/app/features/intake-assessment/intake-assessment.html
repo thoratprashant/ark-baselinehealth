@@ -14,7 +14,7 @@
               </p>
             </div>
 
-            <div class="row g-3 mt-4">
+            <div class="row g-2 mt-2">
               <div class="col-12 d-flex col-md-6">
                 <div class="notice-card notice-card--private d-flex w-100 align-items-start gap-3">
                   <span class="notice-icon d-inline-flex flex-shrink-0 align-items-center justify-content-center"
@@ -137,10 +137,10 @@
             <p>Pick all options below that apply to your past or current mental health journey.</p>
           </div>
 
-          <div class="concern-options row g-3 mt-4" role="radiogroup" aria-label="Mental health concerns">
+          <div class="concern-options row g-2 mt-2" role="radiogroup" aria-label="Mental health concerns">
             @for (concern of concerns; track concern.label) {
             <div class="col-12 d-flex col-sm-6 col-lg-auto">
-              <button class="concern-pill d-flex h-100 w-100 align-items-center justify-content-start gap-3 text-start"
+              <button class="concern-pill d-flex h-100 w-100 align-items-center justify-content-start gap-2 text-start"
                 type="button" role="radio" [class.selected]="selectedConcern() === concern.label"
                 [attr.aria-checked]="selectedConcern() === concern.label" (click)="selectConcern(concern.label)">
                 <span class="concern-pill__icon flex-shrink-0" aria-hidden="true">
