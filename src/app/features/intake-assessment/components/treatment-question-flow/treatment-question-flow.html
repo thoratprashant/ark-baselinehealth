@@ -5,13 +5,13 @@
         <div class="treatment-question d-flex flex-column gap-2 gap-lg-3">
           <div class="treatment-eyebrow d-flex w-100 flex-wrap align-items-center gap-1">
             <span aria-hidden="true"></span>
-            <strong>{{ config().eyebrowTitle }} -</strong>
-            <small>{{ config().eyebrowDescription }}</small>
+            <strong>{{ currentConfig().eyebrowTitle }} -</strong>
+            <small>{{ currentConfig().eyebrowDescription }}</small>
           </div>
 
-          @if (currentQuestionIndex() > 0) {
+          @if (showAnswerSummary()) {
             <div class="answer-summary p-3">
-              {{ config().summaryQuestion }}
+              {{ currentConfig().summaryQuestion }}
               <strong>You selected: {{ summaryAnswer() }}!</strong>
             </div>
           }
@@ -34,7 +34,7 @@
             [attr.aria-label]="question.title"
           >
             @for (option of question.options; track option.value) {
-              <div class="col-12 d-flex col-md-6">
+              <div class="col-12 d-flex" [class.col-md-6]="question.layout !== 'single-column'">
                 <button
                   class="treatment-option d-flex h-100 w-100 align-items-center justify-content-start gap-3 text-start"
                   type="button"

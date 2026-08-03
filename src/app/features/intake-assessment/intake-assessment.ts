@@ -1,9 +1,13 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { TreatmentQuestionFlow } from './components/treatment-question-flow/treatment-question-flow';
+import {
+  TreatmentFlowConfig,
+  TreatmentQuestionFlow,
+} from './components/treatment-question-flow/treatment-question-flow';
 import { GENERALIZED_ANXIETY_FLOW } from './generalized-anxiety-flow.config';
+import { INSOMNIA_FLOW } from './insomnia-flow.config';
 import { IntakeFlowService } from './intake-flow.service';
 
 interface WellbeingConcern {
@@ -47,8 +51,21 @@ export class IntakeAssessment implements OnInit {
     { label: 'Social Anxiety & Agoraphobia Treatment', icon: '\u{1F3E0}' },
   ];
 
-  protected readonly selectedConcern = signal<string | null>(null);
-  protected readonly generalizedAnxietyFlow = GENERALIZED_ANXIETY_FLOW;
+  protected readonly selectedConcerns = signal<readonly string[]>([]);
+  private readonly treatmentFlowsByConcern: Readonly<Record<string, TreatmentFlowConfig>> = {
+    'Generalized Anxiety Treatment': GENERALIZED_ANXIETY_FLOW,
+    'Insomnia Treatment': INSOMNIA_FLOW,
+  };
+  protected readonly selectedTreatmentFlows = computed(() =>
+    this.selectedConcerns()
+      .map((concern) => this.treatmentFlowsByConcern[concern])
+      .filter((config): config is TreatmentFlowConfig => Boolean(config)),
+  );
+  protected readonly treatmentFlowKey = computed(() =>
+    this.selectedTreatmentFlows()
+      .map((config) => config.id)
+      .join('|'),
+  );
 
   ngOnInit(): void {
     this.flow.reset();
@@ -74,7 +91,23 @@ export class IntakeAssessment implements OnInit {
   }
 
   protected selectConcern(label: string): void {
-    this.selectedConcern.set(label);
+    if (!this.hasTreatmentFlow(label)) {
+      return;
+    }
+
+    this.selectedConcerns.update((selected) =>
+      selected.includes(label)
+        ? selected.filter((concern) => concern !== label)
+        : [...selected, label],
+    );
+  }
+
+  protected isConcernSelected(label: string): boolean {
+    return this.selectedConcerns().includes(label);
+  }
+
+  protected hasTreatmentFlow(label: string): boolean {
+    return Boolean(this.treatmentFlowsByConcern[label]);
   }
 
   protected back(): void {
@@ -84,7 +117,7 @@ export class IntakeAssessment implements OnInit {
   }
 
   protected continueFromWellbeing(): void {
-    if (this.selectedConcern() === 'Generalized Anxiety Treatment' && this.flow.goNext()) {
+    if (this.selectedTreatmentFlows().length > 0 && this.flow.goNext()) {
       this.scrollActiveSectionToTop();
     }
   }

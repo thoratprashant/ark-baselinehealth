@@ -18,6 +18,7 @@ export interface TreatmentQuestionExtraField {
 export interface TreatmentQuestion {
   id: string;
   type: 'single' | 'multi';
+  layout?: 'single-column' | 'two-column';
   title: string;
   titleParts?: readonly TreatmentQuestionTitlePart[];
   options: readonly TreatmentQuestionOption[];
@@ -48,7 +49,7 @@ export interface TreatmentFlowResult {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TreatmentQuestionFlow {
-  readonly config = input.required<TreatmentFlowConfig>();
+  readonly configs = input.required<readonly TreatmentFlowConfig[]>();
   readonly backRequested = output<void>();
   readonly completed = output<TreatmentFlowResult>();
   readonly progressChanged = output<number>();
@@ -57,9 +58,18 @@ export class TreatmentQuestionFlow {
   protected readonly answers = signal<TreatmentAnswers>({});
   protected readonly textAnswers = signal<Record<string, string>>({});
 
-  protected readonly currentQuestion = computed(
-    () => this.config().questions[this.currentQuestionIndex()],
+  protected readonly queuedQuestions = computed(() =>
+    this.configs().flatMap((config) =>
+      config.questions.map((question, questionIndex) => ({ config, question, questionIndex })),
+    ),
   );
+
+  protected readonly currentItem = computed(
+    () => this.queuedQuestions()[this.currentQuestionIndex()],
+  );
+
+  protected readonly currentQuestion = computed(() => this.currentItem().question);
+  protected readonly currentConfig = computed(() => this.currentItem().config);
 
   protected readonly canContinue = computed(() => {
     const question = this.currentQuestion();
@@ -71,10 +81,16 @@ export class TreatmentQuestionFlow {
   });
 
   protected readonly summaryAnswer = computed(() => {
-    const firstQuestion = this.config().questions[0];
+    const firstQuestion = this.currentConfig().questions[0];
     const answer = this.answers()[firstQuestion.id];
     return typeof answer === 'string' ? answer : '';
   });
+
+  protected readonly showAnswerSummary = computed(
+    () =>
+      this.currentItem().questionIndex > 0 &&
+      Boolean(this.currentConfig().summaryQuestion && this.summaryAnswer()),
+  );
 
   protected selectSingle(questionId: string, value: string): void {
     this.answers.update((answers) => ({ ...answers, [questionId]: value }));
@@ -127,7 +143,7 @@ export class TreatmentQuestionFlow {
       return;
     }
 
-    if (this.currentQuestionIndex() < this.config().questions.length - 1) {
+    if (this.currentQuestionIndex() < this.queuedQuestions().length - 1) {
       this.currentQuestionIndex.update((index) => index + 1);
       this.emitProgress();
       this.scrollCardToTop();
@@ -141,8 +157,13 @@ export class TreatmentQuestionFlow {
   }
 
   private emitProgress(): void {
-    const progress = this.config().progress;
-    this.progressChanged.emit(progress[this.currentQuestionIndex()] ?? progress.at(-1) ?? 0);
+    const questionCount = this.queuedQuestions().length;
+    const progress =
+      questionCount > 1
+        ? 70 + Math.round((this.currentQuestionIndex() / (questionCount - 1)) * 25)
+        : 95;
+
+    this.progressChanged.emit(progress);
   }
 
   private scrollCardToTop(): void {

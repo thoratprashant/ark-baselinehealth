@@ -137,17 +137,18 @@
             <p>Pick all options below that apply to your past or current mental health journey.</p>
           </div>
 
-          <div class="concern-options row g-2 mt-2" role="radiogroup" aria-label="Mental health concerns">
+          <div class="concern-options row g-2 mt-2" role="group" aria-label="Mental health concerns">
             @for (concern of concerns; track concern.label) {
             <div class="col-12 d-flex col-sm-6 col-lg-auto">
               <button class="concern-pill d-flex h-100 w-100 align-items-center justify-content-start gap-2 text-start"
-                type="button" role="radio" [class.selected]="selectedConcern() === concern.label"
-                [attr.aria-checked]="selectedConcern() === concern.label" (click)="selectConcern(concern.label)">
+                type="button" role="checkbox" [class.selected]="isConcernSelected(concern.label)"
+                [disabled]="!hasTreatmentFlow(concern.label)"
+                [attr.aria-checked]="isConcernSelected(concern.label)" (click)="selectConcern(concern.label)">
                 <span class="concern-pill__icon flex-shrink-0" aria-hidden="true">
                   {{ concern.icon }}
                 </span>
                 <span class="concern-pill__label">{{ concern.label }}</span>
-                @if (selectedConcern() === concern.label) {
+                @if (isConcernSelected(concern.label)) {
                 <svg class="concern-pill__check flex-shrink-0" viewBox="0 0 16 16" aria-hidden="true">
                   <path d="m3.5 8 3 3 6-6" />
                 </svg>
@@ -157,12 +158,12 @@
             }
           </div>
 
-          <p class="selection-note d-flex align-items-center gap-2 mt-4 mb-0">
+          <p class="selection-note selection-note--current d-flex align-items-center gap-2 mt-4 mb-0">
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <circle cx="10" cy="10" r="7.5" />
               <path d="M10 9v5M10 6.5h.01" />
             </svg>
-            Selected {{ selectedConcern() ? 1 : 0 }} · there are no wrong answers.
+            Selected {{ selectedConcerns().length }} &middot; there are no wrong answers.
           </p>
         </div>
       </article>
@@ -176,7 +177,7 @@
         </button>
 
         <button class="primary-btn assessment-nav-btn" type="button"
-          [disabled]="selectedConcern() !== 'Generalized Anxiety Treatment'" (click)="continueFromWellbeing()">
+          [disabled]="selectedTreatmentFlows().length === 0" (click)="continueFromWellbeing()">
           <span>Continue</span>
           <svg viewBox="0 0 20 20" aria-hidden="true">
             <path d="M4 10h11M11 6l4 4-4 4" />
@@ -188,7 +189,11 @@
 
   <section class="assessment-section" [class]="sectionState(2)" [attr.aria-hidden]="flow.currentIndex() !== 2"
     [attr.inert]="flow.currentIndex() === 2 ? null : ''">
-    <app-treatment-question-flow [config]="generalizedAnxietyFlow" (backRequested)="backFromTreatment()"
-      (progressChanged)="flow.setProgress($event)" />
+    @if (selectedTreatmentFlows().length > 0) {
+      @for (configs of [selectedTreatmentFlows()]; track treatmentFlowKey()) {
+        <app-treatment-question-flow [configs]="configs" (backRequested)="backFromTreatment()"
+          (progressChanged)="flow.setProgress($event)" />
+      }
+    }
   </section>
 </div>
