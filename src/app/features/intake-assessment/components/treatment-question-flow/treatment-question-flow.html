@@ -16,6 +16,10 @@
             </div>
           }
 
+          @if (question.context) {
+            <div class="answer-summary p-3">{{ question.context }}</div>
+          }
+
           <h1 class="treatment-question__title mb-0">
             @if (question.titleParts?.length) {
               @for (part of question.titleParts; track $index) {
@@ -34,11 +38,16 @@
             [attr.aria-label]="question.title"
           >
             @for (option of question.options; track option.value) {
-              <div class="col-12 d-flex" [class.col-md-6]="question.layout !== 'single-column'">
+              <div class="col-12 d-flex flex-column" [class.col-md-6]="question.layout !== 'single-column'">
                 <button
                   class="treatment-option d-flex h-100 w-100 align-items-center justify-content-start gap-3 text-start"
                   type="button"
                   [class.selected]="isSelected(question.id, option.value)"
+                  [class.has-inline-field]="
+                    question.extraField?.placement === 'inside-option' &&
+                    question.extraField?.showWhen === option.value &&
+                    isSelected(question.id, option.value)
+                  "
                   [attr.role]="question.type === 'single' ? 'radio' : 'checkbox'"
                   [attr.aria-checked]="isSelected(question.id, option.value)"
                   (click)="
@@ -47,7 +56,7 @@
                       : toggleMulti(question.id, option.value)
                   "
                 >
-                  @if (question.type === 'single') {
+                  @if (question.type === 'single' && question.showRadio !== false) {
                     <span class="treatment-option__radio flex-shrink-0" aria-hidden="true"></span>
                   }
                   <span>{{ option.label }}</span>
@@ -61,11 +70,176 @@
                     </svg>
                   }
                 </button>
+
+                @if (
+                  question.extraField?.placement === 'inside-option' &&
+                  question.extraField?.showWhen === option.value &&
+                  isSelected(question.id, option.value)
+                ) {
+                  <div class="conditional-field treatment-option__extra d-grid">
+                    <label [for]="question.id + '-details'">{{ question.extraField?.placeholder }}</label>
+                    <textarea
+                      class="form-control"
+                      [id]="question.id + '-details'"
+                      [value]="textAnswers()[question.id] ?? ''"
+                      [placeholder]="question.extraField?.placeholder ?? ''"
+                      (input)="updateTextAnswer(question.id, $event)"
+                    ></textarea>
+                  </div>
+                }
               </div>
             }
           </div>
 
-          @if (shouldShowExtraField(question)) {
+          @for (group of question.optionGroups ?? []; track group.label) {
+            <section class="treatment-option-group">
+              <button
+                class="treatment-option-group__toggle d-flex w-100 align-items-center justify-content-between text-start"
+                type="button"
+                [attr.aria-expanded]="isOptionGroupExpanded(question.id, group.label)"
+                (click)="toggleOptionGroup(question.id, group.label)"
+              >
+                <strong>{{ group.label }}</strong>
+                <img
+                  src="assets/auth/registration-chevron.svg"
+                  alt=""
+                  aria-hidden="true"
+                  [class.is-expanded]="isOptionGroupExpanded(question.id, group.label)"
+                />
+              </button>
+
+              @if (isOptionGroupExpanded(question.id, group.label)) {
+                <div class="treatment-option-group__options d-grid gap-2">
+                  @for (option of group.options; track option.value) {
+                    <button
+                      class="treatment-option d-flex w-100 align-items-center justify-content-start gap-3 text-start"
+                      type="button"
+                      [class.selected]="isSelected(question.id, option.value)"
+                      role="checkbox"
+                      [attr.aria-checked]="isSelected(question.id, option.value)"
+                      (click)="toggleMulti(question.id, option.value)"
+                    >
+                      <span>{{ option.label }}</span>
+                      @if (isSelected(question.id, option.value)) {
+                        <svg
+                          class="treatment-option__check ms-auto flex-shrink-0"
+                          viewBox="0 0 16 16"
+                          aria-hidden="true"
+                        >
+                          <path d="m3.5 8 3 3 6-6" />
+                        </svg>
+                      }
+                    </button>
+                  }
+                </div>
+              }
+            </section>
+          }
+
+          @if (question.trailingOptions?.length) {
+            <div class="treatment-options row g-2" role="group" [attr.aria-label]="question.title">
+              @for (option of question.trailingOptions; track option.value) {
+                <div class="col-12 d-flex flex-column">
+                  <button
+                    class="treatment-option d-flex w-100 align-items-center justify-content-start gap-3 text-start"
+                    type="button"
+                    [class.selected]="isSelected(question.id, option.value)"
+                    role="checkbox"
+                    [attr.aria-checked]="isSelected(question.id, option.value)"
+                    (click)="toggleMulti(question.id, option.value)"
+                  >
+                    <span>{{ option.label }}</span>
+                    @if (isSelected(question.id, option.value)) {
+                      <svg
+                        class="treatment-option__check ms-auto flex-shrink-0"
+                        viewBox="0 0 16 16"
+                        aria-hidden="true"
+                      >
+                        <path d="m3.5 8 3 3 6-6" />
+                      </svg>
+                    }
+                  </button>
+                </div>
+              }
+            </div>
+          }
+
+          @if (shouldShowConditionalPanel(question) && question.conditionalPanel; as panel) {
+            <section class="treatment-followup-panel d-grid gap-2">
+              <h2>{{ panel.title }}</h2>
+
+              @for (option of panel.options ?? []; track option.value) {
+                <button
+                  class="treatment-option d-flex w-100 align-items-center justify-content-start gap-3 text-start"
+                  type="button"
+                  [class.selected]="isSelected(panel.id, option.value)"
+                  role="checkbox"
+                  [attr.aria-checked]="isSelected(panel.id, option.value)"
+                  (click)="toggleMulti(panel.id, option.value)"
+                >
+                  <span>{{ option.label }}</span>
+                  @if (isSelected(panel.id, option.value)) {
+                    <svg
+                      class="treatment-option__check ms-auto flex-shrink-0"
+                      viewBox="0 0 16 16"
+                      aria-hidden="true"
+                    >
+                      <path d="m3.5 8 3 3 6-6" />
+                    </svg>
+                  }
+                </button>
+              }
+
+              @for (field of panel.fields ?? []; track field.id) {
+                @if (field.type === 'single') {
+                  <fieldset class="treatment-followup-field d-grid gap-2">
+                    <legend>{{ field.label }}</legend>
+                    <div class="row g-2">
+                      @for (option of field.options ?? []; track option.value) {
+                        <div class="col-12 col-sm-6">
+                          <button
+                            class="treatment-option d-flex w-100 align-items-center justify-content-start gap-3 text-start"
+                            type="button"
+                            [class.selected]="isSelected(field.id, option.value)"
+                            role="radio"
+                            [attr.aria-checked]="isSelected(field.id, option.value)"
+                            (click)="selectSingle(field.id, option.value)"
+                          >
+                            <span class="treatment-option__radio flex-shrink-0" aria-hidden="true"></span>
+                            <span>{{ option.label }}</span>
+                          </button>
+                        </div>
+                      }
+                    </div>
+                  </fieldset>
+                } @else {
+                  <label class="conditional-field treatment-followup-field d-grid">
+                    <span>{{ field.label }}</span>
+                    @if (field.type === 'textarea') {
+                      <textarea
+                        class="form-control"
+                        [value]="textAnswers()[field.id] ?? ''"
+                        [placeholder]="field.placeholder ?? ''"
+                        (input)="updateTextAnswer(field.id, $event)"
+                      ></textarea>
+                    } @else {
+                      <input
+                        class="form-control"
+                        type="text"
+                        [value]="textAnswers()[field.id] ?? ''"
+                        [placeholder]="field.placeholder ?? ''"
+                        (input)="updateTextAnswer(field.id, $event)"
+                      />
+                    }
+                  </label>
+                }
+              }
+            </section>
+          }
+
+          @if (
+            shouldShowExtraField(question) && question.extraField?.placement !== 'inside-option'
+          ) {
             <div class="conditional-field d-grid">
               <label [for]="question.id + '-details'">{{ question.extraField?.placeholder }}</label>
               <textarea

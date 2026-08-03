@@ -5,6 +5,11 @@ export interface TreatmentQuestionOption {
   value: string;
 }
 
+export interface TreatmentQuestionOptionGroup {
+  label: string;
+  options: readonly TreatmentQuestionOption[];
+}
+
 export interface TreatmentQuestionTitlePart {
   text: string;
   tone?: 'accent' | 'highlight';
@@ -13,17 +18,40 @@ export interface TreatmentQuestionTitlePart {
 export interface TreatmentQuestionExtraField {
   placeholder: string;
   showWhen: string;
+  placement?: 'after-options' | 'inside-option';
+}
+
+export interface TreatmentQuestionConditionalField {
+  id: string;
+  label: string;
+  placeholder?: string;
+  type: 'text' | 'textarea' | 'single';
+  options?: readonly TreatmentQuestionOption[];
+}
+
+export interface TreatmentQuestionConditionalPanel {
+  id: string;
+  showWhen: string;
+  title: string;
+  options?: readonly TreatmentQuestionOption[];
+  fields?: readonly TreatmentQuestionConditionalField[];
 }
 
 export interface TreatmentQuestion {
   id: string;
   type: 'single' | 'multi';
   layout?: 'single-column' | 'two-column';
+  optional?: boolean;
+  showRadio?: boolean;
+  context?: string;
   title: string;
   titleParts?: readonly TreatmentQuestionTitlePart[];
   options: readonly TreatmentQuestionOption[];
+  optionGroups?: readonly TreatmentQuestionOptionGroup[];
+  trailingOptions?: readonly TreatmentQuestionOption[];
   note?: string;
   extraField?: TreatmentQuestionExtraField;
+  conditionalPanel?: TreatmentQuestionConditionalPanel;
 }
 
 export interface TreatmentFlowConfig {
@@ -57,6 +85,7 @@ export class TreatmentQuestionFlow {
   protected readonly currentQuestionIndex = signal(0);
   protected readonly answers = signal<TreatmentAnswers>({});
   protected readonly textAnswers = signal<Record<string, string>>({});
+  protected readonly collapsedGroups = signal<ReadonlySet<string>>(new Set());
 
   protected readonly queuedQuestions = computed(() =>
     this.configs().flatMap((config) =>
@@ -74,6 +103,10 @@ export class TreatmentQuestionFlow {
   protected readonly canContinue = computed(() => {
     const question = this.currentQuestion();
     const answer = this.answers()[question.id];
+
+    if (question.optional) {
+      return true;
+    }
 
     return question.type === 'multi'
       ? Array.isArray(answer) && answer.length > 0
@@ -102,6 +135,8 @@ export class TreatmentQuestionFlow {
   }
 
   protected toggleMulti(questionId: string, value: string): void {
+    const wasSelected = this.isSelected(questionId, value);
+
     this.answers.update((answers) => {
       const current = answers[questionId];
       const selected = new Set(Array.isArray(current) ? current : []);
@@ -109,6 +144,11 @@ export class TreatmentQuestionFlow {
 
       return { ...answers, [questionId]: [...selected] };
     });
+
+    const question = this.currentQuestion();
+    if (wasSelected && question.extraField?.showWhen === value) {
+      this.textAnswers.update((answers) => ({ ...answers, [questionId]: '' }));
+    }
   }
 
   protected isSelected(questionId: string, value: string): boolean {
@@ -116,9 +156,34 @@ export class TreatmentQuestionFlow {
     return Array.isArray(answer) ? answer.includes(value) : answer === value;
   }
 
+  protected toggleOptionGroup(questionId: string, groupLabel: string): void {
+    const key = `${questionId}:${groupLabel}`;
+    this.collapsedGroups.update((collapsed) => {
+      const next = new Set(collapsed);
+      next.has(key) ? next.delete(key) : next.add(key);
+      return next;
+    });
+  }
+
+  protected isOptionGroupExpanded(questionId: string, groupLabel: string): boolean {
+    return !this.collapsedGroups().has(`${questionId}:${groupLabel}`);
+  }
+
   protected shouldShowExtraField(question: TreatmentQuestion): boolean {
+    if (!question.extraField) {
+      return false;
+    }
+
+    const answer = this.answers()[question.id];
+    return Array.isArray(answer)
+      ? answer.includes(question.extraField.showWhen)
+      : answer === question.extraField.showWhen;
+  }
+
+  protected shouldShowConditionalPanel(question: TreatmentQuestion): boolean {
     return Boolean(
-      question.extraField && this.answers()[question.id] === question.extraField.showWhen,
+      question.conditionalPanel &&
+        this.answers()[question.id] === question.conditionalPanel.showWhen,
     );
   }
 

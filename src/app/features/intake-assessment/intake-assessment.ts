@@ -8,6 +8,9 @@ import {
 } from './components/treatment-question-flow/treatment-question-flow';
 import { GENERALIZED_ANXIETY_FLOW } from './generalized-anxiety-flow.config';
 import { INSOMNIA_FLOW } from './insomnia-flow.config';
+import { MAJOR_DEPRESSIVE_DISORDER_FLOW } from './major-depressive-disorder-flow.config';
+import { OCD_FLOW } from './ocd-flow.config';
+import { PMDD_FLOW } from './pmdd-flow.config';
 import { IntakeFlowService } from './intake-flow.service';
 
 interface WellbeingConcern {
@@ -55,6 +58,9 @@ export class IntakeAssessment implements OnInit {
   private readonly treatmentFlowsByConcern: Readonly<Record<string, TreatmentFlowConfig>> = {
     'Generalized Anxiety Treatment': GENERALIZED_ANXIETY_FLOW,
     'Insomnia Treatment': INSOMNIA_FLOW,
+    'Major Depressive Disorder Treatment': MAJOR_DEPRESSIVE_DISORDER_FLOW,
+    'OCD Treatment': OCD_FLOW,
+    'Premenstrual Dysphoric Disorder Treatment': PMDD_FLOW,
   };
   protected readonly selectedTreatmentFlows = computed(() =>
     this.selectedConcerns()
