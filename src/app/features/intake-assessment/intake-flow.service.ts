@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 
 export type IntakeFlowDirection = 'forward' | 'back' | 'none';
 
@@ -6,6 +6,7 @@ export const INTAKE_SECTIONS = [
   { id: 'welcome', progress: 0 },
   { id: 'wellbeing', progress: 7 },
   { id: 'treatment', progress: 70 },
+  { id: 'completed', progress: 100 },
 ] as const;
 
 @Injectable({ providedIn: 'root' })
@@ -13,6 +14,7 @@ export class IntakeFlowService {
   readonly direction = signal<IntakeFlowDirection>('none');
   readonly currentIndex = signal(0);
   readonly progress = signal(0);
+  readonly isComplete = computed(() => this.currentIndex() === INTAKE_SECTIONS.length - 1);
 
   goNext(): boolean {
     if (this.currentIndex() >= INTAKE_SECTIONS.length - 1) {

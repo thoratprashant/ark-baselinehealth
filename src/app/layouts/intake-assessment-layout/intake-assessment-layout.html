@@ -17,7 +17,7 @@
   </header>
 
   <main class="intake-main d-flex flex-column overflow-hidden">
-    @if (flow.currentIndex() > 0) {
+    @if (flow.currentIndex() > 0 && !flow.isComplete()) {
       <section
         class="assessment-progress d-grid flex-shrink-0 gap-2 mb-2"
         aria-label="Assessment progress"

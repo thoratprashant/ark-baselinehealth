@@ -1,13 +1,15 @@
-@use "styles/abstracts/variables";
-@use "styles/abstracts/breakpoints";
-@use "styles/base/typography";
-@use "styles/base/buttons";
-@use "styles/components/authentication";
-@use "styles/components/intake-assessment";
-@use "styles/components/global";
+@use 'styles/abstracts/variables';
+@use 'styles/abstracts/breakpoints';
+@use 'styles/base/typography';
+@use 'styles/base/buttons';
+@use 'styles/base/forms';
+@use 'styles/components/authentication';
+@use 'styles/components/intake-assessment';
+@use 'styles/components/global';
 
-/* Global Angular Material authentication form styling. */
-.auth-mat-field {
+/* Global Angular Material form styling. */
+.auth-mat-field,
+.app-mat-field {
   --mat-form-field-container-text-font: #{variables.$font-primary};
   --mat-form-field-container-text-line-height: 1.25rem;
   --mat-form-field-container-text-size: #{variables.$font-size-md};
@@ -97,6 +99,18 @@
     box-shadow: 0 0.0625rem 0.125rem rgba(variables.$color-black, 0.05);
   }
 
+  &.input-valid:not(.input-invalid):not(.mat-form-field-invalid) {
+    --mat-form-field-outlined-caret-color: #{variables.$color-success};
+    --mat-form-field-outlined-focus-outline-color: #{variables.$color-success};
+    --mat-form-field-outlined-hover-outline-color: #{variables.$color-success};
+    --mat-form-field-outlined-outline-color: #{variables.$color-success};
+  }
+
+  &.mat-form-field-disabled .mat-mdc-text-field-wrapper {
+    background: #f4f7f9;
+    cursor: not-allowed;
+  }
+
   &.input-invalid,
   &.mat-form-field-invalid {
     --mat-form-field-outlined-caret-color: #{variables.$color-danger};
@@ -125,6 +139,30 @@
       line-height: 1rem;
       width: 1rem;
     }
+  }
+}
+
+/* Match application Material selects to the Bootstrap field dimensions. */
+.app-mat-field {
+  --mat-form-field-outlined-container-shape: #{variables.$radius-small};
+
+  .mat-mdc-text-field-wrapper {
+    border-radius: variables.$radius-small !important;
+    height: 2.875rem;
+    padding-inline: 1rem;
+  }
+
+  .mdc-text-field--outlined,
+  .mdc-notched-outline {
+    border-radius: variables.$radius-small !important;
+  }
+
+  .mdc-notched-outline__leading {
+    border-radius: variables.$radius-small 0 0 variables.$radius-small !important;
+  }
+
+  .mdc-notched-outline__trailing {
+    border-radius: 0 variables.$radius-small variables.$radius-small 0 !important;
   }
 }
 
@@ -193,7 +231,8 @@
   background: variables.$color-white;
   border: 0.0625rem solid rgba(variables.$color-border, 0.8);
   border-radius: variables.$radius-medium;
-  box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(variables.$color-black, 0.1),
+  box-shadow:
+    0 0.625rem 0.9375rem -0.1875rem rgba(variables.$color-black, 0.1),
     0 0.25rem 0.375rem -0.25rem rgba(variables.$color-black, 0.1);
   box-sizing: border-box;
   margin-top: 0.375rem;
@@ -228,7 +267,7 @@
 
 .route--wrapper > * {
   animation: showPageAnim 1000ms ease-out;
-} 
+}
 @keyframes showPageAnim {
   from {
     opacity: 0;

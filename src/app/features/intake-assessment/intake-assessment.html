@@ -1,8 +1,16 @@
 <div class="assessment-sections">
-  <section class="assessment-section" [class]="sectionState(0)" [attr.aria-hidden]="flow.currentIndex() !== 0"
-    [attr.inert]="flow.currentIndex() === 0 ? null : ''">
+  <section
+    class="assessment-section"
+    [class]="sectionState(0)"
+    [attr.aria-hidden]="flow.currentIndex() !== 0"
+    [attr.inert]="flow.currentIndex() === 0 ? null : ''"
+  >
     <div class="assessment-step d-flex h-100 flex-column">
-      <form class="d-flex h-100 flex-grow-1 flex-column" [formGroup]="consentForm" (ngSubmit)="continueFromWelcome()">
+      <form
+        class="d-flex h-100 flex-grow-1 flex-column"
+        [formGroup]="consentForm"
+        (ngSubmit)="continueFromWelcome()"
+      >
         <article class="assessment-card welcome-card">
           <div class="assessment-card__scroll">
             <div class="step-heading d-grid gap-1">
@@ -17,8 +25,10 @@
             <div class="row g-2 mt-2">
               <div class="col-12 d-flex col-md-6">
                 <div class="notice-card notice-card--private d-flex w-100 align-items-start gap-3">
-                  <span class="notice-icon d-inline-flex flex-shrink-0 align-items-center justify-content-center"
-                    aria-hidden="true">
+                  <span
+                    class="notice-icon d-inline-flex flex-shrink-0 align-items-center justify-content-center"
+                    aria-hidden="true"
+                  >
                     <svg viewBox="0 0 24 24">
                       <rect x="5" y="10" width="14" height="10" rx="2" />
                       <path d="M8 10V7a4 4 0 0 1 8 0v3" />
@@ -32,9 +42,13 @@
               </div>
 
               <div class="col-12 d-flex col-md-6">
-                <div class="notice-card notice-card--emergency d-flex w-100 align-items-start gap-3">
-                  <span class="notice-icon d-inline-flex flex-shrink-0 align-items-center justify-content-center"
-                    aria-hidden="true">
+                <div
+                  class="notice-card notice-card--emergency d-flex w-100 align-items-start gap-3"
+                >
+                  <span
+                    class="notice-icon d-inline-flex flex-shrink-0 align-items-center justify-content-center"
+                    aria-hidden="true"
+                  >
                     <svg viewBox="0 0 24 24">
                       <path d="M12 3 2.8 19h18.4L12 3Z" />
                       <path d="M12 9v4M12 16h.01" />
@@ -54,15 +68,19 @@
             <fieldset class="consent-list d-grid gap-2 mt-4">
               <legend>Consent</legend>
 
-              <label class="consent-option d-flex align-items-start gap-3"
-                [class.selected]="consentForm.controls.participation.value">
+              <label
+                class="consent-option d-flex align-items-start gap-3"
+                [class.selected]="consentForm.controls.participation.value"
+              >
                 <input type="checkbox" formControlName="participation" />
-                <span class="consent-check d-inline-flex flex-shrink-0 align-items-center justify-content-center"
-                  aria-hidden="true">
+                <span
+                  class="consent-check d-inline-flex flex-shrink-0 align-items-center justify-content-center"
+                  aria-hidden="true"
+                >
                   @if (consentForm.controls.participation.value) {
-                  <svg viewBox="0 0 16 16">
-                    <path d="m3.5 8 3 3 6-6" />
-                  </svg>
+                    <svg viewBox="0 0 16 16">
+                      <path d="m3.5 8 3 3 6-6" />
+                    </svg>
                   }
                 </span>
                 <span>
@@ -74,33 +92,43 @@
                 </span>
               </label>
 
-              <label class="consent-option d-flex align-items-start gap-3"
-                [class.selected]="consentForm.controls.privacy.value">
+              <label
+                class="consent-option d-flex align-items-start gap-3"
+                [class.selected]="consentForm.controls.privacy.value"
+              >
                 <input type="checkbox" formControlName="privacy" />
-                <span class="consent-check d-inline-flex flex-shrink-0 align-items-center justify-content-center"
-                  aria-hidden="true">
+                <span
+                  class="consent-check d-inline-flex flex-shrink-0 align-items-center justify-content-center"
+                  aria-hidden="true"
+                >
                   @if (consentForm.controls.privacy.value) {
-                  <svg viewBox="0 0 16 16">
-                    <path d="m3.5 8 3 3 6-6" />
-                  </svg>
+                    <svg viewBox="0 0 16 16">
+                      <path d="m3.5 8 3 3 6-6" />
+                    </svg>
                   }
                 </span>
                 <span>
                   <strong>Privacy Policy acknowledged</strong>
-                  <small>I have read the privacy policy and understand how my information is
-                    used.</small>
+                  <small
+                    >I have read the privacy policy and understand how my information is
+                    used.</small
+                  >
                 </span>
               </label>
 
-              <label class="consent-option d-flex align-items-start gap-3"
-                [class.selected]="consentForm.controls.communications.value">
+              <label
+                class="consent-option d-flex align-items-start gap-3"
+                [class.selected]="consentForm.controls.communications.value"
+              >
                 <input type="checkbox" formControlName="communications" />
-                <span class="consent-check d-inline-flex flex-shrink-0 align-items-center justify-content-center"
-                  aria-hidden="true">
+                <span
+                  class="consent-check d-inline-flex flex-shrink-0 align-items-center justify-content-center"
+                  aria-hidden="true"
+                >
                   @if (consentForm.controls.communications.value) {
-                  <svg viewBox="0 0 16 16">
-                    <path d="m3.5 8 3 3 6-6" />
-                  </svg>
+                    <svg viewBox="0 0 16 16">
+                      <path d="m3.5 8 3 3 6-6" />
+                    </svg>
                   }
                 </span>
                 <span>
@@ -112,8 +140,14 @@
           </div>
         </article>
 
-        <footer class="step-actions step-actions--end d-flex align-items-center justify-content-end">
-          <button class="primary-btn assessment-nav-btn" type="submit" [disabled]="consentForm.invalid">
+        <footer
+          class="step-actions step-actions--end d-flex align-items-center justify-content-end"
+        >
+          <button
+            class="primary-btn assessment-nav-btn"
+            type="submit"
+            [disabled]="consentForm.invalid"
+          >
             <span>Continue</span>
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <path d="M4 10h11M11 6l4 4-4 4" />
@@ -124,8 +158,12 @@
     </div>
   </section>
 
-  <section class="assessment-section" [class]="sectionState(1)" [attr.aria-hidden]="flow.currentIndex() !== 1"
-    [attr.inert]="flow.currentIndex() === 1 ? null : ''">
+  <section
+    class="assessment-section"
+    [class]="sectionState(1)"
+    [attr.aria-hidden]="flow.currentIndex() !== 1"
+    [attr.inert]="flow.currentIndex() === 1 ? null : ''"
+  >
     <div class="assessment-step wellbeing-section d-flex h-100 flex-column">
       <article class="assessment-card wellbeing-card">
         <div class="assessment-card__scroll">
@@ -137,28 +175,43 @@
             <p>Pick all options below that apply to your past or current mental health journey.</p>
           </div>
 
-          <div class="concern-options row g-2 mt-2" role="group" aria-label="Mental health concerns">
+          <div
+            class="concern-options row g-2 mt-2"
+            role="group"
+            aria-label="Mental health concerns"
+          >
             @for (concern of concerns; track concern.label) {
-            <div class="col-12 d-flex col-sm-6 col-lg-auto">
-              <button class="concern-pill d-flex h-100 w-100 align-items-center justify-content-start gap-2 text-start"
-                type="button" role="checkbox" [class.selected]="isConcernSelected(concern.label)"
-                [disabled]="!hasTreatmentFlow(concern.label)"
-                [attr.aria-checked]="isConcernSelected(concern.label)" (click)="selectConcern(concern.label)">
-                <span class="concern-pill__icon flex-shrink-0" aria-hidden="true">
-                  {{ concern.icon }}
-                </span>
-                <span class="concern-pill__label">{{ concern.label }}</span>
-                @if (isConcernSelected(concern.label)) {
-                <svg class="concern-pill__check flex-shrink-0" viewBox="0 0 16 16" aria-hidden="true">
-                  <path d="m3.5 8 3 3 6-6" />
-                </svg>
-                }
-              </button>
-            </div>
+              <div class="col-12 d-flex col-sm-6 col-lg-auto">
+                <button
+                  class="concern-pill d-flex h-100 w-100 align-items-center justify-content-start gap-2 text-start"
+                  type="button"
+                  role="checkbox"
+                  [class.selected]="isConcernSelected(concern.label)"
+                  [disabled]="!hasTreatmentFlow(concern.label)"
+                  [attr.aria-checked]="isConcernSelected(concern.label)"
+                  (click)="selectConcern(concern.label)"
+                >
+                  <span class="concern-pill__icon flex-shrink-0" aria-hidden="true">
+                    {{ concern.icon }}
+                  </span>
+                  <span class="concern-pill__label">{{ concern.label }}</span>
+                  @if (isConcernSelected(concern.label)) {
+                    <svg
+                      class="concern-pill__check flex-shrink-0"
+                      viewBox="0 0 16 16"
+                      aria-hidden="true"
+                    >
+                      <path d="m3.5 8 3 3 6-6" />
+                    </svg>
+                  }
+                </button>
+              </div>
             }
           </div>
 
-          <p class="selection-note selection-note--current d-flex align-items-center gap-2 mt-4 mb-0">
+          <p
+            class="selection-note selection-note--current d-flex align-items-center gap-2 mt-4 mb-0"
+          >
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <circle cx="10" cy="10" r="7.5" />
               <path d="M10 9v5M10 6.5h.01" />
@@ -176,8 +229,12 @@
           <span>Back</span>
         </button>
 
-        <button class="primary-btn assessment-nav-btn" type="button"
-          [disabled]="selectedTreatmentFlows().length === 0" (click)="continueFromWellbeing()">
+        <button
+          class="primary-btn assessment-nav-btn"
+          type="button"
+          [disabled]="selectedTreatmentFlows().length === 0"
+          (click)="continueFromWellbeing()"
+        >
           <span>Continue</span>
           <svg viewBox="0 0 20 20" aria-hidden="true">
             <path d="M4 10h11M11 6l4 4-4 4" />
@@ -187,13 +244,86 @@
     </div>
   </section>
 
-  <section class="assessment-section" [class]="sectionState(2)" [attr.aria-hidden]="flow.currentIndex() !== 2"
-    [attr.inert]="flow.currentIndex() === 2 ? null : ''">
+  <section
+    class="assessment-section"
+    [class]="sectionState(2)"
+    [attr.aria-hidden]="flow.currentIndex() !== 2"
+    [attr.inert]="flow.currentIndex() === 2 ? null : ''"
+  >
     @if (selectedTreatmentFlows().length > 0) {
       @for (configs of [selectedTreatmentFlows()]; track treatmentFlowKey()) {
-        <app-treatment-question-flow [configs]="configs" (backRequested)="backFromTreatment()"
-          (progressChanged)="flow.setProgress($event)" />
+        <app-treatment-question-flow
+          [configs]="configs"
+          (backRequested)="backFromTreatment()"
+          (progressChanged)="flow.setProgress($event)"
+          (completed)="completeAssessment($event)"
+        />
       }
+    }
+  </section>
+
+  <section
+    class="assessment-section"
+    [class]="sectionState(3)"
+    [attr.aria-hidden]="flow.currentIndex() !== 3"
+    [attr.inert]="flow.currentIndex() === 3 ? null : ''"
+  >
+    @if (completedTreatment()) {
+      <div class="completed-step h-100 overflow-auto px-0 pt-4 px-md-3 pt-lg-5" aria-live="polite">
+        <article
+          class="completion-card d-flex flex-column align-items-start gap-4 bg-white border rounded-5 p-4 p-lg-5 shadow-sm"
+        >
+          <div
+            class="completion-icon d-inline-flex align-items-center justify-content-center flex-shrink-0 rounded-4"
+            aria-hidden="true"
+          >
+            <img class="d-block" src="assets/intake/completed-sparkle.svg" alt="" />
+          </div>
+
+          <div class="d-flex w-100 flex-column align-items-start gap-2">
+            <p
+              class="completion-badge d-inline-flex align-items-center gap-2 rounded-pill border bg-white px-3 py-1 mb-0"
+            >
+              <span class="rounded-circle" aria-hidden="true"></span>
+              Submitted &middot; {{ submittedDate() }}
+            </p>
+
+            <h1 class="completion-title mt-2 mb-0"><span>Thank you!</span> You're all set</h1>
+            <p class="completion-copy mb-0">
+              Your intake is securely on its way to your care team. A prescriber will review your
+              responses within 3–5 business days and reach out with your preliminary care plan.
+            </p>
+          </div>
+
+          <ol
+            class="completion-next-steps d-grid w-100 gap-2 rounded-4 border p-3 p-lg-4 mb-0 list-unstyled"
+          >
+            <li class="d-flex align-items-start gap-2">
+              <strong>1</strong><span>Your information has been saved.</span>
+            </li>
+            <li class="d-flex align-items-start gap-2">
+              <strong>2</strong><span>Next, you will need to complete the Medication Request.</span>
+            </li>
+            <li class="d-flex align-items-start gap-2">
+              <strong>3</strong><span>Then select and pay for a subscription plan.</span>
+            </li>
+            <li class="d-flex align-items-start gap-2">
+              <strong>4</strong
+              ><span
+                >Finally, the assessment and medication request will be submitted to your clinical
+                team.</span
+              >
+            </li>
+          </ol>
+
+          <a
+            class="completion-dashboard-link fw-bold text-decoration-underline"
+            routerLink="/patient/dashboard-day-one"
+          >
+            Go to Dashboard
+          </a>
+        </article>
+      </div>
     }
   </section>
 </div>

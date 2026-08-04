@@ -1,9 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import {
   TreatmentFlowConfig,
+  TreatmentFlowResult,
   TreatmentQuestionFlow,
 } from './components/treatment-question-flow/treatment-question-flow';
 import { GENERALIZED_ANXIETY_FLOW } from './generalized-anxiety-flow.config';
@@ -22,7 +24,7 @@ type SectionState = 'is-active' | 'is-before' | 'is-after';
 
 @Component({
   selector: 'app-intake-assessment',
-  imports: [ReactiveFormsModule, TreatmentQuestionFlow],
+  imports: [ReactiveFormsModule, RouterLink, TreatmentQuestionFlow],
   templateUrl: './intake-assessment.html',
   styleUrl: './intake-assessment.scss',
 })
@@ -55,6 +57,8 @@ export class IntakeAssessment implements OnInit {
   ];
 
   protected readonly selectedConcerns = signal<readonly string[]>([]);
+  protected readonly completedTreatment = signal<TreatmentFlowResult | null>(null);
+  protected readonly submittedDate = signal('');
   private readonly treatmentFlowsByConcern: Readonly<Record<string, TreatmentFlowConfig>> = {
     'Generalized Anxiety Treatment': GENERALIZED_ANXIETY_FLOW,
     'Insomnia Treatment': INSOMNIA_FLOW,
@@ -132,6 +136,23 @@ export class IntakeAssessment implements OnInit {
     if (this.flow.goBack()) {
       this.scrollActiveSectionToTop();
     }
+  }
+
+  protected completeAssessment(result: TreatmentFlowResult): void {
+    this.completedTreatment.set(result);
+    this.submittedDate.set(this.formatSubmissionDate(new Date()));
+
+    if (this.flow.goNext()) {
+      this.scrollActiveSectionToTop();
+    }
+  }
+
+  private formatSubmissionDate(date: Date): string {
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'numeric',
+      day: 'numeric',
+      year: 'numeric',
+    }).format(date);
   }
 
   private scrollActiveSectionToTop(): void {
