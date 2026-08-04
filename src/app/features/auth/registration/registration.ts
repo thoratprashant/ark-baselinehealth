@@ -31,6 +31,7 @@ export class Registration {
   protected readonly otpDigits = Array.from({ length: 6 });
   protected readonly passwordVisible = signal(false);
   protected readonly confirmPasswordVisible = signal(false);
+  protected readonly verificationCodeSent = signal(false);
   protected readonly otpVerified = signal(false);
   protected readonly registrationForm = new FormGroup(
     {
@@ -150,7 +151,25 @@ export class Registration {
   }
 
   protected sendVerificationCode(): void {
-    this.registrationForm.controls.email.markAsTouched();
+    const emailControl = this.registrationForm.controls.email;
+    emailControl.markAsTouched();
+
+    if (emailControl.invalid) {
+      return;
+    }
+
+    this.registrationForm.controls.otp.reset('');
+    this.otpInputs?.forEach((input) => {
+      input.nativeElement.value = '';
+    });
+    this.otpVerified.set(false);
+    this.verificationCodeSent.set(true);
+  }
+
+  protected handleEmailChange(): void {
+    this.registrationForm.controls.otp.reset('');
+    this.otpVerified.set(false);
+    this.verificationCodeSent.set(false);
   }
 
   protected verifyCode(): void {

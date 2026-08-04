@@ -150,6 +150,21 @@ app-registration {
     padding: 0.75rem;
   }
 
+  .email-sent-message {
+    align-items: center;
+    color: variables.$color-success;
+    display: flex;
+    font-size: variables.$font-size-xs;
+    font-weight: 500;
+    gap: 0.25rem;
+
+    img {
+      height: 0.75rem;
+      object-fit: contain;
+      width: 0.75rem;
+    }
+  }
+
   .verification-header {
     align-items: center;
     display: flex;
@@ -218,7 +233,7 @@ app-registration {
     border-radius: 0.375rem;
     color: variables.$color-success;
     display: flex;
-    font-size: variables.$font-size-3xs;
+    font-size: variables.$font-size-xs;
     gap: 0.25rem;
     height: 1.5rem;
     padding: 0 0.375rem;

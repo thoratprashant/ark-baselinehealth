@@ -58,6 +58,7 @@
           placeholder="you@example.com"
           autocomplete="email"
           [attr.aria-invalid]="isInvalid('email')"
+          (input)="handleEmailChange()"
         />
         <button class="secondary-btn btn btn-sm flex-shrink-0" matSuffix type="button" (click)="sendVerificationCode()">
           <img src="assets/auth/registration-send-code.svg" alt="" aria-hidden="true" />
@@ -75,47 +76,61 @@
       }
     </label>
 
-    <section class="email-verification" aria-labelledby="email-verification-title">
-      <div class="verification-header">
-        <h2 id="email-verification-title">Enter 6-digit OTP sent your email</h2>
-        <p class="resend-copy">
-          Didn’t receive it?
-          <button type="button" (click)="sendVerificationCode()">Resend OTP</button>
-        </p>
+    @if (verificationCodeSent()) {
+      <div class="email-sent-message" role="status">
+        <img src="assets/auth/registration-verified.svg" alt="" aria-hidden="true" />
+        <span>Email sent</span>
       </div>
 
-      <div class="otp-row">
-        <div class="otp-inputs" aria-label="Six digit verification code">
-          @for (digit of otpDigits; track $index) {
-            <input
-              #otpInput
-              class="form-control"
-              type="text"
-              inputmode="numeric"
-              maxlength="1"
-              placeholder="−"
-              [attr.aria-label]="'OTP digit ' + ($index + 1)"
-              [attr.autocomplete]="$index === 0 ? 'one-time-code' : null"
-              (input)="handleOtpInput($event, $index)"
-              (keydown)="handleOtpKeydown($event, $index)"
-              (paste)="handleOtpPaste($event, $index)"
-            />
-          }
+      <section class="email-verification" aria-labelledby="email-verification-title">
+        <div class="verification-header">
+          <h2 id="email-verification-title">Enter 6-digit OTP sent your email</h2>
+          <p class="resend-copy">
+            Didn’t receive it?
+            <button type="button" (click)="sendVerificationCode()">Resend OTP</button>
+          </p>
         </div>
-        <button class="primary-btn btn btn-sm flex-shrink-0" type="button" (click)="verifyCode()">Verify Code</button>
-      </div>
 
-      @if (registrationForm.controls.otp.touched && registrationForm.controls.otp.invalid) {
-        <span class="invalid-feedback d-block">Enter the complete 6-digit verification code.</span>
-      }
-
-      @if (otpVerified()) {
-        <div class="verified-message" role="status">
-          <img src="assets/auth/registration-verified.svg" alt="" aria-hidden="true" />
-          <span>Email Verified</span>
+        <div class="otp-row">
+          <div class="otp-inputs" aria-label="Six digit verification code">
+            @for (digit of otpDigits; track $index) {
+              <input
+                #otpInput
+                class="form-control"
+                type="text"
+                inputmode="numeric"
+                maxlength="1"
+                placeholder="−"
+                [attr.aria-label]="'OTP digit ' + ($index + 1)"
+                [attr.autocomplete]="$index === 0 ? 'one-time-code' : null"
+                (input)="handleOtpInput($event, $index)"
+                (keydown)="handleOtpKeydown($event, $index)"
+                (paste)="handleOtpPaste($event, $index)"
+              />
+            }
+          </div>
+          <button
+            class="primary-btn btn btn-sm flex-shrink-0"
+            type="button"
+            [disabled]="registrationForm.controls.otp.invalid"
+            (click)="verifyCode()"
+          >
+            Verify Code
+          </button>
         </div>
-      }
-    </section>
+
+        @if (registrationForm.controls.otp.touched && registrationForm.controls.otp.invalid) {
+          <span class="invalid-feedback d-block">Enter the complete 6-digit verification code.</span>
+        }
+
+        @if (otpVerified()) {
+          <div class="verified-message" role="status">
+            <img src="assets/auth/registration-verified.svg" alt="" aria-hidden="true" />
+            <span>Email Verified</span>
+          </div>
+        }
+      </section>
+    }
 
     <div class="row g-3">
       <div class="col-12 col-sm-6">
