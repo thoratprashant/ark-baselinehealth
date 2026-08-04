@@ -91,7 +91,7 @@
             }
           </div>
 
-          @for (group of question.optionGroups ?? []; track group.label) {
+          <!-- @for (group of question.optionGroups ?? []; track group.label) {
             <section class="treatment-option-group">
               <button
                 class="treatment-option-group__toggle d-flex w-100 align-items-center justify-content-between text-start"
@@ -108,7 +108,7 @@
                 />
               </button>
 
-              @if (isOptionGroupExpanded(question.id, group.label)) {
+                @if (isOptionGroupExpanded(question.id, group.label)) {
                 <div class="treatment-option-group__options d-grid gap-2">
                   @for (option of group.options; track option.value) {
                     <button
@@ -132,9 +132,9 @@
                     </button>
                   }
                 </div>
-              }
+              }  
             </section>
-          }
+          } -->
 
           @if (question.trailingOptions?.length) {
             <div class="treatment-options row g-2" role="group" [attr.aria-label]="question.title">
