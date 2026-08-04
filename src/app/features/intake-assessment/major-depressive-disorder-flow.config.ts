@@ -40,24 +40,47 @@ export const MAJOR_DEPRESSIVE_DISORDER_FLOW: TreatmentFlowConfig = {
       optionGroups: [
         {
           label: 'Changes in appetite',
+          collapsible: true,
+          singleSelect: true,
           options: [
-            { label: 'Reduced', value: 'appetite-reduced' },
+            {
+              label: 'Reduced',
+              value: 'appetite-reduced',
+              followUp: {
+                title: 'Did you experience unintentional',
+                singleSelect: true,
+                options: [
+                  { label: 'Weight loss', value: 'unintentional-weight-loss' },
+                  { label: 'Weight gain', value: 'unintentional-weight-gain' },
+                ],
+              },
+            },
             { label: 'Increased', value: 'appetite-increased' },
-            { label: 'Weight loss', value: 'unintentional-weight-loss' },
-            { label: 'Weight gain', value: 'unintentional-weight-gain' },
           ],
         },
         {
           label: 'Changes in sleep',
+          collapsible: true,
+          singleSelect: true,
           options: [
-            { label: 'Reduced', value: 'sleep-reduced' },
+            {
+              label: 'Reduced',
+              value: 'sleep-reduced',
+              followUp: {
+                singleSelect: true,
+                options: [
+                  { label: 'Trouble falling asleep', value: 'trouble-falling-asleep' },
+                  { label: 'Trouble staying asleep', value: 'trouble-staying-asleep' },
+                ],
+              },
+            },
             { label: 'Increased', value: 'sleep-increased' },
-            { label: 'Trouble falling asleep', value: 'trouble-falling-asleep' },
-            { label: 'Trouble staying asleep', value: 'trouble-staying-asleep' },
           ],
         },
         {
           label: 'Changes in motor function',
+          collapsible: false,
+          singleSelect: true,
           options: [
             {
               label: 'More restless or fidgeting more than usual',
@@ -119,23 +142,34 @@ export const MAJOR_DEPRESSIVE_DISORDER_FLOW: TreatmentFlowConfig = {
       conditionalPanel: {
         id: 'mdd-psychotic-symptoms',
         showWhen: 'Yes',
-        title: 'What symptoms did you have?',
+        title: 'What symptoms did you have ?',
+        collapsible: true,
         options: [
           {
             label: 'Delusional thoughts (beliefs that are not based in reality)',
             value: 'delusional-thoughts',
           },
-          { label: 'Hallucinations', value: 'hallucinations' },
           {
-            label: 'Seeing things others cannot see or cannot be real',
-            value: 'visual-hallucinations',
+            label: 'Hallucinations',
+            value: 'hallucinations',
+            followUp: {
+              options: [
+                {
+                  label: 'Seeing things others cannot see or cannot be real',
+                  value: 'visual-hallucinations',
+                },
+                {
+                  label: 'Hearing things others cannot hear or cannot be real',
+                  value: 'auditory-hallucinations',
+                },
+                {
+                  label: 'Incoherent speech (babbling that makes no sense)',
+                  value: 'incoherent-speech',
+                },
+                { label: 'Odd behaviors or catatonia', value: 'odd-behaviors-catatonia' },
+              ],
+            },
           },
-          {
-            label: 'Hearing things others cannot hear or cannot be real',
-            value: 'auditory-hallucinations',
-          },
-          { label: 'Incoherent speech (babbling that makes no sense)', value: 'incoherent-speech' },
-          { label: 'Odd behaviors or catatonia', value: 'odd-behaviors-catatonia' },
         ],
         fields: [
           {

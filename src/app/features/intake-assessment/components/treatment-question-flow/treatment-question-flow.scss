@@ -129,6 +129,10 @@ $intake-yellow: #f1c45e;
     box-shadow: 0 0.375rem 1rem rgb(45 109 165 / 10%);
     transform: translateY(-0.0625rem);
   }
+
+  .treatment-group-choice .treatment-option--group:hover {
+    transform: none;
+  }
 }
 
 .treatment-option__radio {
@@ -198,6 +202,38 @@ $intake-yellow: #f1c45e;
 
 .treatment-option-group__options {
   margin-top: 0.75rem;
+}
+
+.treatment-option-group__title,
+.treatment-group-followup h3 {
+  color: $intake-navy;
+  font: inherit;
+  font-weight: 600;
+}
+
+.treatment-option-group--static {
+  background: rgb(245 251 255 / 60%);
+}
+
+.treatment-group-choice {
+  border: 0.0625rem solid transparent;
+  border-radius: 1.5rem;
+  overflow: hidden;
+
+  &.selected {
+    background: rgb(45 109 165 / 15%);
+    border-color: $intake-blue;
+  }
+}
+
+.treatment-option--group.selected {
+  background: transparent;
+  border-color: transparent;
+}
+
+.treatment-group-followup {
+  background: rgb(255 255 255 / 60%);
+  border-radius: 1.25rem;
 }
 
 .treatment-followup-panel {

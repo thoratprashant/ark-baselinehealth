@@ -3,11 +3,20 @@ import { ChangeDetectionStrategy, Component, computed, input, output, signal } f
 export interface TreatmentQuestionOption {
   label: string;
   value: string;
+  followUp?: TreatmentQuestionOptionFollowUp;
+}
+
+export interface TreatmentQuestionOptionFollowUp {
+  title?: string;
+  options: readonly TreatmentQuestionOption[];
+  singleSelect?: boolean;
 }
 
 export interface TreatmentQuestionOptionGroup {
   label: string;
   options: readonly TreatmentQuestionOption[];
+  collapsible?: boolean;
+  singleSelect?: boolean;
 }
 
 export interface TreatmentQuestionTitlePart {
@@ -33,6 +42,7 @@ export interface TreatmentQuestionConditionalPanel {
   id: string;
   showWhen: string;
   title: string;
+  collapsible?: boolean;
   options?: readonly TreatmentQuestionOption[];
   fields?: readonly TreatmentQuestionConditionalField[];
 }
@@ -151,6 +161,75 @@ export class TreatmentQuestionFlow {
     }
   }
 
+  protected toggleGroupedOption(
+    questionId: string,
+    group: TreatmentQuestionOptionGroup,
+    option: TreatmentQuestionOption,
+  ): void {
+    const wasSelected = this.isSelected(questionId, option.value);
+    const valuesToRemove = group.singleSelect
+      ? group.options.flatMap((groupOption) => [
+          groupOption.value,
+          ...(groupOption.followUp?.options.map((followUp) => followUp.value) ?? []),
+        ])
+      : [option.value, ...(option.followUp?.options.map((followUp) => followUp.value) ?? [])];
+
+    this.answers.update((answers) => {
+      const current = answers[questionId];
+      const selected = new Set(Array.isArray(current) ? current : []);
+
+      valuesToRemove.forEach((value) => selected.delete(value));
+      if (!wasSelected) {
+        selected.add(option.value);
+      }
+
+      return { ...answers, [questionId]: [...selected] };
+    });
+  }
+
+  protected selectGroupedFollowUp(
+    questionId: string,
+    followUp: TreatmentQuestionOptionFollowUp,
+    value: string,
+  ): void {
+    const wasSelected = this.isSelected(questionId, value);
+
+    this.answers.update((answers) => {
+      const current = answers[questionId];
+      const selected = new Set(Array.isArray(current) ? current : []);
+
+      if (followUp.singleSelect) {
+        followUp.options.forEach((option) => selected.delete(option.value));
+      }
+
+      if (!wasSelected) {
+        selected.add(value);
+      } else if (!followUp.singleSelect) {
+        selected.delete(value);
+      }
+
+      return { ...answers, [questionId]: [...selected] };
+    });
+  }
+
+  protected toggleNestedMulti(questionId: string, option: TreatmentQuestionOption): void {
+    const wasSelected = this.isSelected(questionId, option.value);
+
+    this.answers.update((answers) => {
+      const current = answers[questionId];
+      const selected = new Set(Array.isArray(current) ? current : []);
+
+      if (wasSelected) {
+        selected.delete(option.value);
+        option.followUp?.options.forEach((followUp) => selected.delete(followUp.value));
+      } else {
+        selected.add(option.value);
+      }
+
+      return { ...answers, [questionId]: [...selected] };
+    });
+  }
+
   protected isSelected(questionId: string, value: string): boolean {
     const answer = this.answers()[questionId];
     return Array.isArray(answer) ? answer.includes(value) : answer === value;
@@ -183,7 +262,7 @@ export class TreatmentQuestionFlow {
   protected shouldShowConditionalPanel(question: TreatmentQuestion): boolean {
     return Boolean(
       question.conditionalPanel &&
-        this.answers()[question.id] === question.conditionalPanel.showWhen,
+      this.answers()[question.id] === question.conditionalPanel.showWhen,
     );
   }
 
