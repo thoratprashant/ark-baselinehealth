@@ -39,13 +39,6 @@ export const routes: Routes = [
       import('./features/provider/provider.routes').then((m) => m.PROVIDER_ROUTES)
   },
   {
-    path: 'admin',
-    loadComponent: () =>
-      import('./layouts/admin-layout/admin-layout').then((m) => m.AdminLayout),
-    loadChildren: () =>
-      import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES)
-  },
-  {
     path: '**',
     redirectTo: 'auth/login'
   }
