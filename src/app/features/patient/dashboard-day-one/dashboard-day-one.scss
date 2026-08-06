@@ -54,7 +54,7 @@ $border: #e2e6e9;
   }
 
   h1 {
-    font-size: 1.875rem;
+    font-size: clamp(1.5rem, 2vw, 1.875rem);
     line-height: 2.25rem;
     margin: 0.25rem 0;
   }

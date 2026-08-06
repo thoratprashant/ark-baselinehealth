@@ -1,4 +1,4 @@
-@use "../../../styles/abstracts/breakpoints" as breakpoints;
+@use '../../../styles/abstracts/breakpoints' as breakpoints;
 
 $patient-blue: #238ee7;
 $patient-navy: #153f60;
@@ -17,15 +17,15 @@ $patient-bg: #f4fbff;
   background: $patient-bg;
   color: $patient-text;
   display: grid;
-  font-family: "Inter", "DM Sans", sans-serif;
-  grid-template-areas: "header header" "main main";
+  font-family: 'Inter', 'DM Sans', sans-serif;
+  grid-template-areas: 'header header' 'main main';
   grid-template-columns: 13.75rem minmax(0, 1fr);
   grid-template-rows: 4.0625rem minmax(0, 1fr);
   height: 100dvh;
   overflow: hidden;
 
   &--with-sidebar {
-    grid-template-areas: "header header" "sidebar main";
+    grid-template-areas: 'header header' 'sidebar main';
   }
 }
 
@@ -212,6 +212,22 @@ $patient-bg: #f4fbff;
   }
 }
 
+.sidebar-mobile-header {
+  display: none;
+}
+
+.sidebar-mobile-brand {
+  height: 2.5rem;
+  width: 5.625rem;
+
+  img {
+    display: block;
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
+  }
+}
+
 .patient-nav {
   display: grid;
   gap: 0.25rem;
@@ -226,7 +242,10 @@ $patient-bg: #f4fbff;
     min-height: 2.5rem;
     padding: 0 0.75rem;
     text-decoration: none;
-    transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
 
     &:hover {
       background: #edf7ff;
@@ -347,7 +366,7 @@ $patient-bg: #f4fbff;
   (max-width: breakpoints.$tablet-portrait) and (orientation: portrait) {
   .patient-shell,
   .patient-shell--with-sidebar {
-    grid-template-areas: "header" "main";
+    grid-template-areas: 'header' 'main';
     grid-template-columns: 1fr;
   }
 
@@ -402,7 +421,7 @@ $patient-bg: #f4fbff;
     display: flex;
     height: 2.5rem;
     justify-content: center;
-    margin: -0.5rem -0.25rem 0.75rem auto;
+    margin: 0;
     width: 2.5rem;
 
     svg {
@@ -413,6 +432,14 @@ $patient-bg: #f4fbff;
       stroke-width: 1.6;
       width: 1.25rem;
     }
+  }
+
+  .sidebar-mobile-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: -0.5rem -0.25rem 0.75rem 0;
+    min-height: 2.5rem;
   }
 
   .sidebar-backdrop {
