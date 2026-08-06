@@ -293,6 +293,16 @@ $intake-yellow: #f1c45e;
     0 1.25rem 3.75rem -1.875rem rgb(20 40 80 / 18%) !important;
 }
 
+@media (max-width: 30rem), (max-width: 64rem) and (max-height: 47.9375rem) {
+  .completed-step {
+    height: 100%;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
 .completion-icon {
   background: linear-gradient(140deg, $intake-blue 12%, $intake-yellow 90%);
   height: 3.9375rem;
