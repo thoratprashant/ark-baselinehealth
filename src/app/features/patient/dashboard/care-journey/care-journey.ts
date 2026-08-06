@@ -4,25 +4,47 @@ import { Component, effect, inject, input, signal, untracked } from '@angular/co
 interface JourneyStep {
   label: string;
   completeLabel: string;
+  icon: string;
 }
 
 @Component({
   selector: 'app-care-journey',
   templateUrl: './care-journey.html',
-  styleUrl: './care-journey.scss'
+  styleUrl: './care-journey.scss',
 })
 export class CareJourney {
   private readonly document = inject(DOCUMENT);
 
   readonly activeStep = input(1);
+  readonly useFigmaIcons = input(false);
   protected readonly animatedProgress = signal(0);
   protected readonly displayedProgress = signal(0);
   protected readonly steps: readonly JourneyStep[] = [
-    { label: 'Intake Assessment', completeLabel: 'Completed' },
-    { label: 'Medication Request', completeLabel: 'Active' },
-    { label: 'Membership & Payment', completeLabel: 'Upcoming' },
-    { label: 'Doctor Review', completeLabel: 'Upcoming' },
-    { label: 'Prescription Sent', completeLabel: 'Upcoming' }
+    {
+      label: 'Intake Assessment',
+      completeLabel: 'Completed',
+      icon: 'assets/dashboard-day-one/intake-assessment.svg',
+    },
+    {
+      label: 'Medication Request',
+      completeLabel: 'Active',
+      icon: 'assets/dashboard-day-one/medication-request.svg',
+    },
+    {
+      label: 'Membership & Payment',
+      completeLabel: 'Upcoming',
+      icon: 'assets/dashboard-day-one/membership-payment.svg',
+    },
+    {
+      label: 'Doctor Review',
+      completeLabel: 'Upcoming',
+      icon: 'assets/dashboard-day-one/doctor-review.svg',
+    },
+    {
+      label: 'Prescription Sent',
+      completeLabel: 'Upcoming',
+      icon: 'assets/dashboard-day-one/prescription-sent.svg',
+    },
   ];
 
   constructor() {

@@ -31,7 +31,7 @@ $border: #e2e6e9;
   &::after {
     background: rgb(35 142 231 / 28%);
     border-radius: 50%;
-    content: "";
+    content: '';
     filter: blur(2rem);
     height: 12rem;
     position: absolute;
@@ -134,7 +134,7 @@ $border: #e2e6e9;
 
   > small {
     color: $muted;
-    font-size: 0.5rem;
+    font-size: 0.625rem;
     margin-top: 0.75rem;
   }
 }
@@ -149,14 +149,10 @@ $border: #e2e6e9;
   justify-content: center;
   width: 3rem;
 
-  svg {
-    fill: none;
-    height: 2rem;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.4;
-    width: 2rem;
+  img {
+    display: block;
+    height: 1.5rem;
+    width: 1.5rem;
   }
 }
 

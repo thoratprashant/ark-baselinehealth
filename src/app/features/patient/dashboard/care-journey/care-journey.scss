@@ -135,6 +135,18 @@ $border: #e2e6e9;
   }
 }
 
+.journey-step__icon-image {
+  display: block;
+  height: 1rem;
+  object-fit: contain;
+  width: 1rem;
+}
+
+.journey-step__icon-image--complete {
+  height: 100%;
+  width: 100%;
+}
+
 .journey-connector {
   background: #9dacb8;
   flex: 1 1 5.9375rem;
