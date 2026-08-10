@@ -30,6 +30,7 @@ export class PatientProfile {
   protected readonly pharmacySearchComplete = signal(false);
   protected readonly pharmacySaved = signal(false);
   protected readonly isEditingProfile = signal(false);
+  protected readonly renewalPreference = signal<'auto' | 'manual'>('auto');
   protected readonly profileSuccessFields = signal<ReadonlySet<ProfileControlName>>(new Set());
   protected readonly pharmacySuccessFields = signal<ReadonlySet<PharmacyControlName>>(new Set());
 

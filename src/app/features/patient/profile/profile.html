@@ -36,184 +36,212 @@
         <span></span>Profile Details
       </h2>
 
-      <div class="row g-3">
-        <div class="col-12 col-md-6 col-xl-4">
-          <div class="app-form-field">
-            <label class="app-form-label" for="profile-first-name">First Name*</label>
-            <input
-              class="app-form-control form-control"
-              id="profile-first-name"
-              type="text"
-              formControlName="firstName"
-              placeholder="Enter your first name"
-              autocomplete="given-name"
-              [class.is-invalid]="profileInvalid('firstName')"
-              [class.is-valid]="profileValid('firstName')"
-              (input)="clearProfileSuccess('firstName')"
-              (blur)="showProfileFieldSuccess('firstName')"
-            />
-            @if (profileInvalid('firstName')) {
-              <p class="app-field-message app-field-message--error">
-                <mat-icon>error</mat-icon>Enter at least 2 characters.
-              </p>
-            } @else if (profileValid('firstName')) {
-              <p class="app-field-message app-field-message--success">
-                <mat-icon>check_circle</mat-icon>First name looks good.
-              </p>
-            }
+      <div class="profile-details-layout d-flex align-items-center gap-3 gap-xl-4">
+        <div
+          class="profile-photo-card d-flex flex-column align-items-center gap-2 border rounded-3 p-3"
+        >
+          <div
+            class="profile-photo-preview d-flex align-items-center justify-content-center border"
+          >
+            <img src="/assets/profile/profile-user.svg" alt="" aria-hidden="true" />
           </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4">
-          <div class="app-form-field">
-            <label class="app-form-label" for="profile-last-name">Last Name*</label>
-            <input
-              class="app-form-control form-control"
-              id="profile-last-name"
-              type="text"
-              formControlName="lastName"
-              placeholder="Enter your last name"
-              autocomplete="family-name"
-              [class.is-invalid]="profileInvalid('lastName')"
-              [class.is-valid]="profileValid('lastName')"
-              (input)="clearProfileSuccess('lastName')"
-              (blur)="showProfileFieldSuccess('lastName')"
-            />
-            @if (profileInvalid('lastName')) {
-              <p class="app-field-message app-field-message--error">
-                <mat-icon>error</mat-icon>Enter at least 2 characters.
-              </p>
-            } @else if (profileValid('lastName')) {
-              <p class="app-field-message app-field-message--success">
-                <mat-icon>check_circle</mat-icon>Last name looks good.
-              </p>
-            }
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4">
-          <div class="app-form-field">
-            <label class="app-form-label" for="profile-email">Email Address*</label>
-            <input
-              class="app-form-control form-control"
-              id="profile-email"
-              type="email"
-              formControlName="email"
-              placeholder="you@example.com"
-              autocomplete="email"
-              [class.is-invalid]="profileInvalid('email')"
-              [class.is-valid]="profileValid('email')"
-              (input)="clearProfileSuccess('email')"
-              (blur)="showProfileFieldSuccess('email')"
-            />
-            @if (profileInvalid('email')) {
-              <p class="app-field-message app-field-message--error">
-                <mat-icon>error</mat-icon>Enter a valid email address.
-              </p>
-            } @else if (profileValid('email')) {
-              <p class="app-field-message app-field-message--success">
-                <mat-icon>check_circle</mat-icon>Email address is valid.
-              </p>
-            }
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4">
-          <div class="app-form-field">
-            <label class="app-form-label" for="profile-mobile">Mobile Number*</label>
-            <input
-              class="app-form-control form-control"
-              id="profile-mobile"
-              type="tel"
-              formControlName="mobile"
-              placeholder="Enter your mobile number"
-              autocomplete="tel"
-              [class.is-invalid]="profileInvalid('mobile')"
-              [class.is-valid]="profileValid('mobile')"
-              (input)="clearProfileSuccess('mobile')"
-              (blur)="showProfileFieldSuccess('mobile')"
-            />
-            @if (profileInvalid('mobile')) {
-              <p class="app-field-message app-field-message--error">
-                <mat-icon>error</mat-icon>Enter a 10–15 digit mobile number.
-              </p>
-            } @else if (profileValid('mobile')) {
-              <p class="app-field-message app-field-message--success">
-                <mat-icon>check_circle</mat-icon>Mobile number is valid.
-              </p>
-            }
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4">
-          <div class="app-form-field">
-            <label class="app-form-label" for="profile-state">State*</label>
-            <mat-form-field
-              class="app-mat-field"
-              appearance="outline"
-              subscriptSizing="dynamic"
-              [class.input-invalid]="profileInvalid('state')"
-              [class.input-valid]="profileValid('state')"
+          <div class="profile-photo-actions d-flex align-items-center justify-content-center gap-2">
+            <button
+              class="profile-photo-button d-inline-flex align-items-center justify-content-center border"
+              type="button"
+              aria-label="Upload profile photo"
             >
-              <mat-select
-                class="app-mat-select"
-                id="profile-state"
-                formControlName="state"
-                placeholder="Select your state"
-                panelClass="app-select-panel"
-                disableOptionCentering
-                hideSingleSelectionIndicator
-                (selectionChange)="showProfileFieldSuccess('state')"
-              >
-                <mat-option value="california">California</mat-option>
-                <mat-option value="florida">Florida</mat-option>
-                <mat-option value="nebraska">Nebraska</mat-option>
-                <mat-option value="new-york">New York</mat-option>
-                <mat-option value="texas">Texas</mat-option>
-              </mat-select>
-            </mat-form-field>
-            @if (profileInvalid('state')) {
-              <p class="app-field-message app-field-message--error">
-                <mat-icon>error</mat-icon>Select your state.
-              </p>
-            } @else if (profileValid('state')) {
-              <p class="app-field-message app-field-message--success">
-                <mat-icon>check_circle</mat-icon>State selected.
-              </p>
-            }
+              <img src="/assets/profile/profile-upload.svg" alt="" aria-hidden="true" />
+            </button>
+            <button
+              class="profile-photo-button d-inline-flex align-items-center justify-content-center border"
+              type="button"
+              aria-label="Remove profile photo"
+            >
+              <img src="/assets/profile/profile-trash.svg" alt="" aria-hidden="true" />
+            </button>
           </div>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-4">
-          <fieldset class="app-form-field border-0 m-0 p-0">
-            <legend class="app-form-label float-none w-auto">Gender*</legend>
-            <div class="d-flex align-items-center flex-wrap gap-3 py-2">
-              @for (option of ['Male', 'Female', 'Other']; track option) {
-                <div class="app-form-check form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    formControlName="gender"
-                    [id]="'gender-' + option.toLowerCase()"
-                    [value]="option.toLowerCase()"
-                    (change)="showProfileFieldSuccess('gender')"
-                  />
-                  <label class="form-check-label" [for]="'gender-' + option.toLowerCase()">{{
-                    option
-                  }}</label>
-                </div>
+        <div class="row g-3 flex-grow-1">
+          <div class="col-12 col-md-6 col-xl-4">
+            <div class="app-form-field">
+              <label class="app-form-label" for="profile-first-name">First Name*</label>
+              <input
+                class="app-form-control form-control"
+                id="profile-first-name"
+                type="text"
+                formControlName="firstName"
+                placeholder="Enter your first name"
+                autocomplete="given-name"
+                [class.is-invalid]="profileInvalid('firstName')"
+                [class.is-valid]="profileValid('firstName')"
+                (input)="clearProfileSuccess('firstName')"
+                (blur)="showProfileFieldSuccess('firstName')"
+              />
+              @if (profileInvalid('firstName')) {
+                <p class="app-field-message app-field-message--error">
+                  <mat-icon>error</mat-icon>Enter at least 2 characters.
+                </p>
+              } @else if (profileValid('firstName')) {
+                <p class="app-field-message app-field-message--success">
+                  <mat-icon>check_circle</mat-icon>First name looks good.
+                </p>
               }
             </div>
-            @if (profileInvalid('gender')) {
-              <p class="app-field-message app-field-message--error">
-                <mat-icon>error</mat-icon>Select a gender.
-              </p>
-            } @else if (profileValid('gender')) {
-              <p class="app-field-message app-field-message--success">
-                <mat-icon>check_circle</mat-icon>Selection saved.
-              </p>
-            }
-          </fieldset>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-4">
+            <div class="app-form-field">
+              <label class="app-form-label" for="profile-last-name">Last Name*</label>
+              <input
+                class="app-form-control form-control"
+                id="profile-last-name"
+                type="text"
+                formControlName="lastName"
+                placeholder="Enter your last name"
+                autocomplete="family-name"
+                [class.is-invalid]="profileInvalid('lastName')"
+                [class.is-valid]="profileValid('lastName')"
+                (input)="clearProfileSuccess('lastName')"
+                (blur)="showProfileFieldSuccess('lastName')"
+              />
+              @if (profileInvalid('lastName')) {
+                <p class="app-field-message app-field-message--error">
+                  <mat-icon>error</mat-icon>Enter at least 2 characters.
+                </p>
+              } @else if (profileValid('lastName')) {
+                <p class="app-field-message app-field-message--success">
+                  <mat-icon>check_circle</mat-icon>Last name looks good.
+                </p>
+              }
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-4">
+            <div class="app-form-field">
+              <label class="app-form-label" for="profile-email">Email Address*</label>
+              <input
+                class="app-form-control form-control"
+                id="profile-email"
+                type="email"
+                formControlName="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                [class.is-invalid]="profileInvalid('email')"
+                [class.is-valid]="profileValid('email')"
+                (input)="clearProfileSuccess('email')"
+                (blur)="showProfileFieldSuccess('email')"
+              />
+              @if (profileInvalid('email')) {
+                <p class="app-field-message app-field-message--error">
+                  <mat-icon>error</mat-icon>Enter a valid email address.
+                </p>
+              } @else if (profileValid('email')) {
+                <p class="app-field-message app-field-message--success">
+                  <mat-icon>check_circle</mat-icon>Email address is valid.
+                </p>
+              }
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-4">
+            <div class="app-form-field">
+              <label class="app-form-label" for="profile-mobile">Mobile Number*</label>
+              <input
+                class="app-form-control form-control"
+                id="profile-mobile"
+                type="tel"
+                formControlName="mobile"
+                placeholder="Enter your mobile number"
+                autocomplete="tel"
+                [class.is-invalid]="profileInvalid('mobile')"
+                [class.is-valid]="profileValid('mobile')"
+                (input)="clearProfileSuccess('mobile')"
+                (blur)="showProfileFieldSuccess('mobile')"
+              />
+              @if (profileInvalid('mobile')) {
+                <p class="app-field-message app-field-message--error">
+                  <mat-icon>error</mat-icon>Enter a 10–15 digit mobile number.
+                </p>
+              } @else if (profileValid('mobile')) {
+                <p class="app-field-message app-field-message--success">
+                  <mat-icon>check_circle</mat-icon>Mobile number is valid.
+                </p>
+              }
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-4">
+            <div class="app-form-field">
+              <label class="app-form-label" for="profile-state">State*</label>
+              <mat-form-field
+                class="app-mat-field"
+                appearance="outline"
+                subscriptSizing="dynamic"
+                [class.input-invalid]="profileInvalid('state')"
+                [class.input-valid]="profileValid('state')"
+              >
+                <mat-select
+                  class="app-mat-select"
+                  id="profile-state"
+                  formControlName="state"
+                  placeholder="Select your state"
+                  panelClass="app-select-panel"
+                  disableOptionCentering
+                  hideSingleSelectionIndicator
+                  (selectionChange)="showProfileFieldSuccess('state')"
+                >
+                  <mat-option value="california">California</mat-option>
+                  <mat-option value="florida">Florida</mat-option>
+                  <mat-option value="nebraska">Nebraska</mat-option>
+                  <mat-option value="new-york">New York</mat-option>
+                  <mat-option value="texas">Texas</mat-option>
+                </mat-select>
+              </mat-form-field>
+              @if (profileInvalid('state')) {
+                <p class="app-field-message app-field-message--error">
+                  <mat-icon>error</mat-icon>Select your state.
+                </p>
+              } @else if (profileValid('state')) {
+                <p class="app-field-message app-field-message--success">
+                  <mat-icon>check_circle</mat-icon>State selected.
+                </p>
+              }
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-4">
+            <fieldset class="app-form-field border-0 m-0 p-0">
+              <legend class="app-form-label float-none w-auto">Gender*</legend>
+              <div class="d-flex align-items-center flex-wrap gap-3 py-2">
+                @for (option of ['Male', 'Female', 'Other']; track option) {
+                  <div class="app-form-check form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      formControlName="gender"
+                      [id]="'gender-' + option.toLowerCase()"
+                      [value]="option.toLowerCase()"
+                      (change)="showProfileFieldSuccess('gender')"
+                    />
+                    <label class="form-check-label" [for]="'gender-' + option.toLowerCase()">{{
+                      option
+                    }}</label>
+                  </div>
+                }
+              </div>
+              @if (profileInvalid('gender')) {
+                <p class="app-field-message app-field-message--error">
+                  <mat-icon>error</mat-icon>Select a gender.
+                </p>
+              } @else if (profileValid('gender')) {
+                <p class="app-field-message app-field-message--success">
+                  <mat-icon>check_circle</mat-icon>Selection saved.
+                </p>
+              }
+            </fieldset>
+          </div>
         </div>
       </div>
 
@@ -248,17 +276,18 @@
       novalidate
     >
       <p class="text-secondary small fw-semibold mb-0">Search Pharmacy</p>
-      <div class="row g-2 align-items-start">
-        <div class="col-12 col-lg">
+      <div class="pharmacy-search-row d-flex align-items-start gap-3">
+        <div class="pharmacy-name-field flex-grow-1">
           <div class="app-form-field">
             <div class="position-relative">
-              <mat-icon
-                class="position-absolute top-50 start-0 translate-middle-y ms-3 text-primary fs-6"
+              <img
+                class="pharmacy-search-icon position-absolute top-50 start-0 translate-middle-y"
+                src="/assets/profile/profile-search.svg"
+                alt=""
                 aria-hidden="true"
-                >search</mat-icon
-              >
+              />
               <input
-                class="app-form-control form-control ps-5"
+                class="app-form-control pharmacy-search-input form-control"
                 type="search"
                 formControlName="pharmacyName"
                 placeholder="Pharmacy name"
@@ -276,7 +305,7 @@
             }
           </div>
         </div>
-        <div class="col-12 col-sm-8 col-lg-2">
+        <div class="pharmacy-zip-field">
           <div class="app-form-field">
             <input
               class="app-form-control form-control"
@@ -298,8 +327,10 @@
             }
           </div>
         </div>
-        <div class="col-12 col-sm-4 col-lg-auto d-flex justify-content-end">
-          <button class="primary-btn btn btn-md" type="submit">Search</button>
+        <div class="pharmacy-search-action d-flex justify-content-end">
+          <button class="primary-btn btn btn-md pharmacy-search-button" type="submit">
+            Search
+          </button>
         </div>
       </div>
       @if (pharmacySearchComplete()) {
@@ -312,7 +343,12 @@
     <div class="d-flex flex-column gap-2">
       <p class="text-secondary small fw-semibold mb-0">Selected Pharmacy</p>
       <article class="pharmacy-card d-flex align-items-center gap-2 border rounded-3 p-3">
-        <span class="pharmacy-indicator rounded-circle flex-shrink-0" aria-hidden="true"></span>
+        <img
+          class="pharmacy-indicator flex-shrink-0"
+          src="/assets/profile/profile-check.svg"
+          alt=""
+          aria-hidden="true"
+        />
         <div>
           <div class="pharmacy-name d-flex align-items-center flex-wrap gap-2">
             <strong>CVS Pharmacy #4827</strong
@@ -340,13 +376,76 @@
 
   <section
     class="d-flex flex-column gap-3 bg-white border rounded-3 p-3"
+    aria-labelledby="renewal-title"
+  >
+    <header class="d-flex flex-column gap-1">
+      <h2
+        class="section-badge d-inline-flex align-items-center align-self-start gap-2 rounded-pill bg-white border text-uppercase px-3 py-1 mb-0"
+        id="renewal-title"
+      >
+        <span></span>Renewal Preference
+      </h2>
+      <p class="text-secondary small mb-0">Select your preferred subscription renewal method</p>
+    </header>
+
+    <div
+      class="renewal-options d-flex flex-column gap-2"
+      role="radiogroup"
+      aria-labelledby="renewal-title"
+    >
+      <button
+        class="renewal-option d-flex align-items-center gap-3 border rounded-3 p-3 text-start"
+        type="button"
+        role="radio"
+        [class.renewal-option--selected]="renewalPreference() === 'auto'"
+        [attr.aria-checked]="renewalPreference() === 'auto'"
+        (click)="renewalPreference.set('auto')"
+      >
+        <span class="renewal-check d-flex align-items-center justify-content-center flex-shrink-0">
+          @if (renewalPreference() === 'auto') {
+            <img src="/assets/profile/profile-renewal-check.svg" alt="" aria-hidden="true" />
+          }
+        </span>
+        <span class="d-flex flex-column gap-1">
+          <strong>Auto Renewal</strong>
+          <small
+            >Your subscription will automatically renew at the end of each billing cycle.</small
+          >
+        </span>
+      </button>
+      <button
+        class="renewal-option d-flex align-items-center gap-3 border rounded-3 p-3 text-start"
+        type="button"
+        role="radio"
+        [class.renewal-option--selected]="renewalPreference() === 'manual'"
+        [attr.aria-checked]="renewalPreference() === 'manual'"
+        (click)="renewalPreference.set('manual')"
+      >
+        <span class="renewal-check d-flex align-items-center justify-content-center flex-shrink-0">
+          @if (renewalPreference() === 'manual') {
+            <img src="/assets/profile/profile-renewal-check.svg" alt="" aria-hidden="true" />
+          }
+        </span>
+        <span class="d-flex flex-column gap-1">
+          <strong>Manual Renewal</strong>
+          <small
+            >You will receive a reminder to manually renew your subscription before it
+            expires.</small
+          >
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <section
+    class="d-flex flex-column gap-3 bg-white border rounded-3 p-3"
     aria-labelledby="subscription-title"
   >
     <h2
       class="section-badge d-inline-flex align-items-center align-self-start gap-2 rounded-pill bg-white border text-uppercase px-3 py-1 mb-0"
       id="subscription-title"
     >
-      <span></span>Your Subscription
+      <span></span>Your Membership Plan
     </h2>
     <article class="subscription-card d-flex flex-column gap-3 border rounded-3 p-3 p-sm-4">
       <div
@@ -362,13 +461,13 @@
       </div>
       <div class="subscription-details d-flex flex-wrap gap-4 border-top pt-3">
         <div class="subscription-detail d-flex align-items-center gap-2">
-          <mat-icon aria-hidden="true">calendar_today</mat-icon>
+          <img src="/assets/profile/profile-calendar.svg" alt="" aria-hidden="true" />
           <div class="d-flex flex-column">
             <span>Next Billing Date</span><strong>Aug 15, 2026</strong>
           </div>
         </div>
         <div class="subscription-detail d-flex align-items-center gap-2">
-          <mat-icon aria-hidden="true">medication</mat-icon>
+          <img src="/assets/profile/profile-pill.svg" alt="" aria-hidden="true" />
           <div class="d-flex flex-column"><span>Medications Covered</span><strong>2</strong></div>
         </div>
       </div>
