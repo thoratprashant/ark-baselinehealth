@@ -1,18 +1,33 @@
-<section class="dashboard-page">
+<section class="dashboard-page align-content-start">
   <header class="patient-hero">
     <div>
       <span>WELCOME BACK</span>
       <h1>Hello, Sam <i>👋</i></h1>
       <p>Here's a quick overview of your care journey and what's next.</p>
     </div>
-    <small>
-      <svg viewBox="0 0 18 18" aria-hidden="true">
-        <circle cx="9" cy="9" r="6.5" />
-        <path d="m6 9 2 2 4-4" />
-      </svg>
-      Intake Assessment complete
-    </small>
   </header>
+
+  @if (showAssessmentStatus()) {
+    <aside
+      class="d-flex align-items-center gap-2 border border-success rounded-3 bg-success bg-opacity-10 px-2 py-1"
+      aria-label="Intake assessment status"
+    >
+      <img
+        class="d-block flex-shrink-0"
+        src="assets/dashboard-day-one/intake-complete.png"
+        width="14"
+        height="14"
+        alt=""
+        aria-hidden="true"
+      />
+      <span class="d-flex flex-column justify-content-center small lh-sm">
+        <strong class="text-black fw-medium">Intake Assessment complete</strong>
+        <small class="text-secondary fw-medium"
+          >Your medication request is currently being set up.</small
+        >
+      </span>
+    </aside>
+  }
 
   <app-care-journey [activeStep]="1" [useFigmaIcons]="true" />
 
@@ -24,7 +39,14 @@
     <p>Please give us details about the medications you are requesting</p>
     <a class="primary-btn add-medication-button" routerLink="/patient/dashboard">
       Add medications
-      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+      <img
+        class="d-block flex-shrink-0"
+        src="assets/dashboard-day-one/add-medications-arrow.png"
+        width="14"
+        height="14"
+        alt=""
+        aria-hidden="true"
+      />
     </a>
     <small>You can add or update medications at any time from the Medications section</small>
   </article>
