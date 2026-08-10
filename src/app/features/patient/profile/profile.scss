@@ -47,15 +47,19 @@ $profile-soft-blue: #f0f8ff;
   background: #fff;
   border-color: $profile-border !important;
   border-radius: 1.5rem;
+  container-type: inline-size;
   height: 6.25rem;
   overflow: hidden;
   width: 6.25rem;
+}
 
-  img {
-    display: block;
-    height: 1.5rem;
-    width: 1.5rem;
-  }
+.profile-photo-initials {
+  color: #586b80;
+  font-size: clamp(2rem, 40cqi, 2.5rem);
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  width: 3.6875rem;
 }
 
 .profile-photo-actions {
@@ -277,11 +281,7 @@ $profile-soft-blue: #f0f8ff;
   .profile-details-layout {
     align-items: stretch !important;
     flex-direction: column;
-  }
-
-  .profile-photo-card {
-    align-self: flex-start;
-  }
+  } 
 }
 
 @media (max-width: 47.99875rem) {
